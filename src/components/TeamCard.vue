@@ -22,7 +22,7 @@
           class="min-h-[36px]"
         >
           <template #item="{ element }">
-            <SlotRow :slot="slot" @remove="$emit('removeSlot', sIdx)" />
+            <SlotRow :slot="element" @remove="$emit('removeSlot', sIdx)" />
           </template>
         </draggable>
       </div>
@@ -51,7 +51,8 @@ const onDropIntoSlot = (evt, slotIndex) => {
 
     targetSlot.userId = droppedItem.userId;
     targetSlot.displayName = droppedItem.displayName || droppedItem.username || '';
-    targetSlot.roleOrClass = droppedItem.className || droppedItem.role || '';
+    targetSlot.className = droppedItem.className || '';
+    targetSlot.roleName = droppedItem.roleName || '';
   }
 };
 
@@ -60,6 +61,7 @@ const onRemoveFromSlot = (slotIndex) => {
 
   targetSlot.userId = null;
   targetSlot.displayName = '';
-  targetSlot.roleOrClass = '';
+  targetSlot.className = '';
+  targetSlot.roleName = '';
 };
 </script>

@@ -4,7 +4,8 @@
       <!-- Thẻ thành viên: giống hệt giao diện ở hàng chờ -->
       <MemberCard
         :displayName="slot.displayName"
-        :className="slot.roleOrClass"
+        :className="slot.className"
+        :roleName="slot.roleName"
         removable
         @remove="$emit('remove')"
         class="flex-1 min-w-0"
