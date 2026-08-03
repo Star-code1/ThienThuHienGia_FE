@@ -29,6 +29,9 @@ importers:
       vue:
         specifier: ^3.5.40
         version: 3.5.40
+      vue-router:
+        specifier: ^4.5.0
+        version: 4.6.4(vue@3.5.40)
       vuedraggable:
         specifier: ^4.1.0
         version: 4.1.0(vue@3.5.40)
@@ -2099,6 +2102,11 @@ snapshots:
       '@vue/runtime-dom': 3.5.40
       '@vue/server-renderer': 3.5.40
       '@vue/shared': 3.5.40
+
+  vue-router@4.6.4(vue@3.5.40):
+    dependencies:
+      '@vue/devtools-api': 8.2.1
+      vue: 3.5.40
 
   vuedraggable@4.1.0(vue@3.5.40):
     dependencies:
