@@ -52,6 +52,7 @@
         :isEditMode="isEditMode"
         @toggleCheck="(sIdx) => $emit('toggleCheck', { tIdx, sIdx })"
         @removeSlot="(sIdx) => $emit('removeSlot', { tIdx, sIdx })"
+        @clickSlot="(sIdx) => $emit('clickSlot', { tIdx, sIdx })"
       />
     </div>
   </div>
@@ -66,5 +67,5 @@ defineProps({
   isEditMode: { type: Boolean, default: false }
 });
 
-defineEmits(['toggleCheck', 'removeSlot']);
+defineEmits(['toggleCheck', 'removeSlot', 'clickSlot']);
 </script>

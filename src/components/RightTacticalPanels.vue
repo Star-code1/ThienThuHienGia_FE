@@ -1,11 +1,9 @@
 <template>
   <div class="w-64 shrink-0 flex flex-col gap-2.5 select-none font-sans">
-
-
-    <!-- Box 1: CHỐT ĐIỂM DANH & THỐNG KÊ PHÁI -->
-    <div class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-3 shadow-lg flex flex-col justify-between">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-[#93c5fd] mb-2 border-b border-[#18263e] pb-1">
-        {{ panels.rollCall?.title || 'CHỐT ĐIỂM DANH' }}
+    <!-- Box 1: CHỐT ĐIỂM DANH & VÕ PHÁI -->
+    <div class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-3 shadow-lg flex flex-col justify-between backdrop-blur-md">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-[#93c5fd] mb-2 border-b border-[#18263e] pb-1 font-serif">
+        {{ panels.rollCall?.title || 'CHỐT ĐIỂM DANH & VÕ PHÁI' }}
       </div>
 
       <!-- Donut Ring Chart SVG -->
@@ -26,18 +24,18 @@
           />
         </svg>
 
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <span class="text-xl font-extrabold text-white tracking-tighter">
+        <div class="absolute inset-0 flex flex-col items-center justify-center font-serif">
+          <span class="text-xl font-extrabold text-white tracking-tighter font-mono">
             {{ store.totalAssigned }}
           </span>
           <span class="text-[9px] uppercase tracking-wider text-[#64748b] font-semibold">
-            ĐÃ XẾP
+            ĐÃ AN VỊ
           </span>
         </div>
       </div>
 
-      <!-- Danh sách thống kê số lượng từng Phái (Không giới hạn chỉ tiêu) -->
-      <div class="space-y-1.5 my-2">
+      <!-- Danh sách thống kê số lượng từng Phái -->
+      <div class="space-y-1.5 my-2 font-serif">
         <div
           v-for="item in classStatsList"
           :key="item.name"
@@ -58,7 +56,6 @@
             <span class="text-[#cbd5e1] font-medium text-[11px]">{{ item.name }}</span>
           </div>
 
-          <!-- Hiển thị trực tiếp số lượng người thuộc phái trong đội hình -->
           <span class="font-mono text-[11px] font-bold text-[#f5c518] bg-[#f5c518]/10 px-1.5 py-0.2 rounded border border-[#f5c518]/20">
             {{ item.count }} người
           </span>
@@ -66,7 +63,7 @@
       </div>
 
       <!-- Footer tổng quan Điểm Danh & Báo Bận -->
-      <div class="pt-2 mt-1 border-t border-[#18263e] space-y-1 text-xs font-medium text-[#94a3b8]">
+      <div class="pt-2 mt-1 border-t border-[#18263e] space-y-1 text-xs font-medium text-[#94a3b8] font-serif">
         <div class="flex justify-between items-center">
           <span class="text-[11px]">Điểm Danh</span>
           <span class="font-mono text-[#f5c518] font-bold">
@@ -74,40 +71,40 @@
           </span>
         </div>
         <div class="flex justify-between items-center">
-          <span class="text-[11px]">Báo Bận</span>
+          <span class="text-[11px]">Cáo Bận</span>
           <span class="font-mono text-[#ef5757] font-bold">
-            {{ panels.rollCall?.totalBusy || 9 }} người
+            {{ panels.rollCall?.totalBusy || 9 }} đệ tử
           </span>
         </div>
       </div>
     </div>
 
-    <!-- Box 2: RỪNG 1 (TRÁI) -->
+    <!-- Box 2: TIÊN PHONG TRÁI -->
     <div
-      class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-2.5 shadow-lg relative transition-all"
+      class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-2.5 shadow-lg relative transition-all backdrop-blur-md"
       :class="{ 'ring-2 ring-blue-500 bg-[#3b82f6]/10': isEditMode && dragOverRung === 'rung1' }"
       @dragover.prevent="dragOverRung = 'rung1'"
       @dragleave="dragOverRung = null"
       @drop="onDropToRung($event, 'rung1')"
     >
-      <div class="text-[11px] font-bold uppercase tracking-wider text-[#ef5757] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-[#ef5757] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center font-serif">
         <template v-if="!isEditMode">
-          <span>{{ panels.rung1?.title || 'RỪNG 1 (TRÁI)' }}</span>
+          <span>{{ panels.rung1?.title || 'TIÊN PHONG TRÁI' }}</span>
         </template>
         <template v-else>
           <input
             v-model="panels.rung1.title"
-            placeholder="Tiêu đề Rừng 1..."
-            class="bg-[#060a12] text-[11px] font-bold text-[#ef5757] px-1 py-0.5 rounded border border-[#2a3f63] w-full"
+            placeholder="Tiêu đề Tiên Phong Trái..."
+            class="bg-[#060a12] text-[11px] font-bold text-[#ef5757] px-1 py-0.5 rounded border border-[#2a3f63] w-full font-serif"
           />
         </template>
       </div>
 
-      <!-- Thẻ Trưởng Rừng 1 -->
+      <!-- Thẻ Tiên Phong Trái -->
       <div
         :draggable="isEditMode && !!panels.rung1?.userId"
         @dragstart="onDragLeaderStart($event, panels.rung1, 'rung1')"
-        class="bg-[#0e1626]/80 border border-[#1e2e4a] rounded p-2 flex items-center gap-2.5 transition relative group"
+        class="bg-[#0e1626]/80 border border-[#1e2e4a] rounded p-2 flex items-center gap-2.5 transition relative group font-serif"
         :class="{
           'cursor-grab active:cursor-grabbing hover:border-[#3b82f6]': isEditMode && !!panels.rung1?.userId,
           'border-dashed border-[#3b82f6]/40': isEditMode && !panels.rung1?.userId
@@ -120,7 +117,7 @@
               :src="getLeaderIcon(panels.rung1?.class)"
               class="w-6 h-6 object-contain"
             />
-            <span v-else>{{ panels.rung1?.leaderName?.charAt(0) || 'B' }}</span>
+            <span v-else>{{ panels.rung1?.leaderName?.charAt(0) || 'P' }}</span>
           </div>
           <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#5865F2] rounded-full flex items-center justify-center text-[8px] text-white">
             💬
@@ -130,57 +127,73 @@
         <div class="flex-1 min-w-0">
           <template v-if="panels.rung1?.leaderName">
             <div class="text-xs font-bold text-[#ef5757] truncate flex items-center gap-1">
-              {{ panels.rung1.leaderName }}
+              <span>{{ panels.rung1.leaderName }}</span>
+              <span
+                v-if="panels.rung1?.isExternal || panels.rung1?.userId?.startsWith('ext_')"
+                class="text-[8px] px-1 py-0.2 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 font-bold uppercase tracking-wider font-serif"
+                title="Lính Đánh Thuê Ngoại Bang"
+              >
+                ĐÁNH THUÊ
+              </span>
             </div>
             <div class="text-[10px] text-[#64748b] truncate mt-0.5">
-              {{ panels.rung1.subTag || 'Trưởng Rừng 1' }}
+              {{ panels.rung1.subTag || 'Tiên Phong Trái' }}
             </div>
           </template>
 
           <template v-else>
-            <div class="text-[11px] text-[#475569] italic">
-              + Kéo thành viên thả vào làm Trưởng Rừng 1
+            <div class="text-[11px] text-[#475569] italic font-serif">
+              + Kéo đệ tử thả vào làm Tiên Phong Trái
             </div>
           </template>
         </div>
 
-        <button
-          v-if="isEditMode && panels.rung1?.userId"
-          @click.stop="store.clearRung('rung1')"
-          class="opacity-0 group-hover:opacity-100 w-4 h-4 rounded bg-[#ef5757]/20 border border-[#ef5757]/50 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
-          title="Xóa khỏi Trưởng Rừng 1"
-        >
-          ✕
-        </button>
+        <div v-if="isEditMode && panels.rung1?.userId" class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+          <button
+            @click.stop="store.clearRung('rung1')"
+            class="w-4 h-4 rounded bg-[#334155]/60 border border-[#475569] text-[#cbd5e1] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white hover:border-[#ef5757] transition"
+            title="Gạt khỏi Tiên Phong Trái"
+          >
+            ✕
+          </button>
+          <button
+            v-if="panels.rung1?.isExternal || panels.rung1?.userId?.startsWith('ext_')"
+            @click.stop="store.deleteExternalMember(panels.rung1.userId)"
+            class="w-4 h-4 rounded bg-[#7f1d1d]/40 border border-[#ef5757]/60 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
+            title="Xóa vĩnh viễn Lính Đánh Thuê này"
+          >
+            🗑️
+          </button>
+        </div>
       </div>
     </div>
 
-        <!-- Box 3: RỪNG 2 (PHẢI) -->
+    <!-- Box 3: TIÊN PHONG PHẢI -->
     <div
-      class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-2.5 shadow-lg relative transition-all"
+      class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-2.5 shadow-lg relative transition-all backdrop-blur-md"
       :class="{ 'ring-2 ring-blue-500 bg-[#3b82f6]/10': isEditMode && dragOverRung === 'rung2' }"
       @dragover.prevent="dragOverRung = 'rung2'"
       @dragleave="dragOverRung = null"
       @drop="onDropToRung($event, 'rung2')"
     >
-      <div class="text-[11px] font-bold uppercase tracking-wider text-[#ef5757] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-[#ef5757] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center font-serif">
         <template v-if="!isEditMode">
-          <span>{{ panels.rung2?.title || 'RỪNG 2 (PHẢI)' }}</span>
+          <span>{{ panels.rung2?.title || 'TIÊN PHONG PHẢI' }}</span>
         </template>
         <template v-else>
           <input
             v-model="panels.rung2.title"
-            placeholder="Tiêu đề Rừng 2..."
-            class="bg-[#060a12] text-[11px] font-bold text-[#60a5fa] px-1 py-0.5 rounded border border-[#2a3f63] w-full"
+            placeholder="Tiêu đề Tiên Phong Phải..."
+            class="bg-[#060a12] text-[11px] font-bold text-[#60a5fa] px-1 py-0.5 rounded border border-[#2a3f63] w-full font-serif"
           />
         </template>
       </div>
 
-      <!-- Thẻ Trưởng Rừng 2 -->
+      <!-- Thẻ Tiên Phong Phải -->
       <div
         :draggable="isEditMode && !!panels.rung2?.userId"
         @dragstart="onDragLeaderStart($event, panels.rung2, 'rung2')"
-        class="bg-[#0e1626]/80 border border-[#1e2e4a] rounded p-2 flex items-center gap-2.5 transition relative group"
+        class="bg-[#0e1626]/80 border border-[#1e2e4a] rounded p-2 flex items-center gap-2.5 transition relative group font-serif"
         :class="{
           'cursor-grab active:cursor-grabbing hover:border-[#3b82f6]': isEditMode && !!panels.rung2?.userId,
           'border-dashed border-[#3b82f6]/40': isEditMode && !panels.rung2?.userId
@@ -193,7 +206,7 @@
               :src="getLeaderIcon(panels.rung2?.class)"
               class="w-6 h-6 object-contain"
             />
-            <span v-else>{{ panels.rung2?.leaderName?.charAt(0) || 'T' }}</span>
+            <span v-else>{{ panels.rung2?.leaderName?.charAt(0) || 'P' }}</span>
           </div>
           <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#5865F2] rounded-full flex items-center justify-center text-[8px] text-white">
             💬
@@ -203,45 +216,61 @@
         <div class="flex-1 min-w-0">
           <template v-if="panels.rung2?.leaderName">
             <div class="text-xs font-bold text-[#ef5757] truncate flex items-center gap-1">
-              {{ panels.rung2.leaderName }}
+              <span>{{ panels.rung2.leaderName }}</span>
+              <span
+                v-if="panels.rung2?.isExternal || panels.rung2?.userId?.startsWith('ext_')"
+                class="text-[8px] px-1 py-0.2 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 font-bold uppercase tracking-wider font-serif"
+                title="Lính Đánh Thuê Ngoại Bang"
+              >
+                ĐÁNH THUÊ
+              </span>
             </div>
             <div class="text-[10px] text-[#64748b] truncate mt-0.5">
-              {{ panels.rung2.subTag || 'Trưởng Rừng 2' }}
+              {{ panels.rung2.subTag || 'Tiên Phong Phải' }}
             </div>
           </template>
 
           <template v-else>
-            <div class="text-[11px] text-[#475569] italic">
-              + Kéo thành viên thả vào làm Trưởng Rừng 2
+            <div class="text-[11px] text-[#475569] italic font-serif">
+              + Kéo đệ tử thả vào làm Tiên Phong Phải
             </div>
           </template>
         </div>
 
-        <button
-          v-if="isEditMode && panels.rung2?.userId"
-          @click.stop="store.clearRung('rung2')"
-          class="opacity-0 group-hover:opacity-100 w-4 h-4 rounded bg-[#ef5757]/20 border border-[#ef5757]/50 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
-          title="Xóa khỏi Trưởng Rừng 2"
-        >
-          ✕
-        </button>
+        <div v-if="isEditMode && panels.rung2?.userId" class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+          <button
+            @click.stop="store.clearRung('rung2')"
+            class="w-4 h-4 rounded bg-[#334155]/60 border border-[#475569] text-[#cbd5e1] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white hover:border-[#ef5757] transition"
+            title="Gạt khỏi Tiên Phong Phải"
+          >
+            ✕
+          </button>
+          <button
+            v-if="panels.rung2?.isExternal || panels.rung2?.userId?.startsWith('ext_')"
+            @click.stop="store.deleteExternalMember(panels.rung2.userId)"
+            class="w-4 h-4 rounded bg-[#7f1d1d]/40 border border-[#ef5757]/60 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
+            title="Xóa vĩnh viễn Lính Đánh Thuê này"
+          >
+            🗑️
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Box 4: LƯU Ý & CHIẾN THUẬT -->
-    <div class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-3 shadow-lg">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-[#93c5fd] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center">
-        <span>{{ panels.tactics?.title || 'LƯU Ý & CHIẾN THUẬT' }}</span>
+    <!-- Box 4: THIÊN THƯ CHIẾN THUẬT -->
+    <div class="bg-[#080d17]/90 border border-[#17263c] rounded-lg p-3 shadow-lg backdrop-blur-md">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-[#93c5fd] mb-2 border-b border-[#18263e] pb-1 flex justify-between items-center font-serif">
+        <span>{{ panels.tactics?.title || 'THIÊN THƯ CHIẾN THUẬT' }}</span>
         <button
           v-if="isEditMode"
           @click="addNote"
-          class="text-[10px] bg-[#3b82f6]/20 text-[#60a5fa] px-1.5 py-0.5 rounded hover:bg-[#3b82f6] hover:text-white"
+          class="text-[10px] bg-[#3b82f6]/20 text-[#60a5fa] px-1.5 py-0.5 rounded hover:bg-[#3b82f6] hover:text-white font-serif"
         >
           + Thêm
         </button>
       </div>
 
-      <ul class="space-y-2 text-[11px] text-[#cbd5e1] leading-relaxed">
+      <ul class="space-y-2 text-[11px] text-[#cbd5e1] leading-relaxed font-serif">
         <li v-for="(note, idx) in panels.tactics?.notes" :key="idx" class="flex items-start gap-1.5 group">
           <span class="text-[#3b82f6] shrink-0 font-bold mt-0.5">-</span>
           <template v-if="!isEditMode">
@@ -250,7 +279,7 @@
           <template v-else>
             <input
               v-model="panels.tactics.notes[idx]"
-              class="flex-1 bg-[#060a12] text-[11px] text-[#cbd5e1] px-1 py-0.5 rounded border border-[#2a3f63]"
+              class="flex-1 bg-[#060a12] text-[11px] text-[#cbd5e1] px-1 py-0.5 rounded border border-[#2a3f63] font-serif"
             />
             <button
               @click="store.removeTacticNote(idx)"
@@ -307,14 +336,14 @@ const onDropToRung = (evt, rungKey) => {
       store.assignToRungFromSlot({ rungKey, srcDIdx: data.dIdx, srcTIdx: data.tIdx, srcSIdx: data.sIdx });
     }
   } catch (e) {
-    console.error('Lỗi khi thả vào Trưởng Rừng:', e);
+    console.error('Lỗi khi thả vào Tiên Phong:', e);
   }
 };
 
 const getLeaderIcon = (cName) => getClassIcon(cName);
 
 const addNote = () => {
-  store.addTacticNote('Ghi chú chiến thuật mới...');
+  store.addTacticNote('Bổ sung chiến thuật...');
 };
 
 const classStatsList = computed(() => {

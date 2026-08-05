@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Lora', 'Playfair Display', 'Noto Serif', Georgia, serif;
+  --font-display: 'Playfair Display', 'Lora', serif;
+  --font-cinzel: 'Lora', 'Playfair Display', 'Cinzel', serif;
+}
+
+@layer base {
+  :root {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  body {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .font-sans {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  }
+
+  .font-serif {
+    font-family: 'Lora', 'Playfair Display', 'Noto Serif', Georgia, serif !important;
+  }
+
+  .font-cinzel {
+    font-family: 'Lora', 'Playfair Display', 'Cinzel', serif !important;
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', 'Lora', serif !important;
+  }
+}

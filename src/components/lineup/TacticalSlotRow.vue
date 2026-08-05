@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative group py-1 px-1.5 flex items-center gap-2 border-b border-dashed border-[#1a273b] hover:bg-[#142033]/60 transition cursor-pointer select-none"
+    class="relative group py-1 px-1.5 flex items-center gap-1.5 border-b border-dashed border-[#1a273b] hover:bg-[#142033]/60 transition cursor-pointer select-none"
     @click="onRowClick"
   >
     <!-- Checkbox tích chọn -->
@@ -32,13 +32,22 @@
 
     <!-- Tên & Chú thích (Note viết chay) -->
     <div class="flex-1 min-w-0 flex flex-col justify-center">
-      <div class="flex items-center gap-1 min-w-0">
+      <div class="flex items-center gap-1 min-w-0 flex-wrap">
         <!-- Tên người chơi -->
         <span
           class="text-xs font-medium truncate leading-tight tracking-wide"
           :style="{ color: nameColor }"
         >
           {{ slot.displayName || slot.username || '-- Cần xếp --' }}
+        </span>
+
+        <!-- Tag ĐÁNH THUÊ -->
+        <span
+          v-if="isExternalMember"
+          class="text-[8px] px-1 py-0.2 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 font-bold uppercase tracking-wider shrink-0 font-serif leading-none"
+          title="Lính Đánh Thuê Ngoại Bang"
+        >
+          ĐÁNH THUÊ
         </span>
       </div>
 
@@ -59,15 +68,27 @@
       </div>
     </div>
 
-    <!-- Nút xóa slot khi ở chế độ Edit -->
-    <button
-      v-if="isEditMode && slot.userId"
-      @click.stop="$emit('remove')"
-      class="opacity-0 group-hover:opacity-100 w-4 h-4 rounded bg-[#ef5757]/20 border border-[#ef5757]/50 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition shrink-0"
-      title="Xóa khỏi slot"
-    >
-      ✕
-    </button>
+    <!-- Action buttons khi ở chế độ Edit -->
+    <div v-if="isEditMode && slot.userId" class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition">
+      <!-- Nút Gạt khỏi slot -->
+      <button
+        @click.stop="$emit('remove')"
+        class="w-4 h-4 rounded bg-[#334155]/60 border border-[#475569] text-[#cbd5e1] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white hover:border-[#ef5757] transition"
+        title="Gạt khỏi vị trí (Trả về Pool)"
+      >
+        ✕
+      </button>
+
+      <!-- Nút Xóa Vĩnh Viễn Lính Đánh Thuê -->
+      <button
+        v-if="isExternalMember"
+        @click.stop="$emit('deleteExternal')"
+        class="w-4 h-4 rounded bg-[#7f1d1d]/40 border border-[#ef5757]/60 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
+        title="Xóa vĩnh viễn Lính Đánh Thuê này"
+      >
+        🗑️
+      </button>
+    </div>
   </div>
 </template>
 
@@ -80,7 +101,14 @@ const props = defineProps({
   isEditMode: { type: Boolean, default: false }
 });
 
-const emit = defineEmits(['toggleCheck', 'remove', 'clickSlot']);
+const emit = defineEmits(['toggleCheck', 'remove', 'clickSlot', 'deleteExternal']);
+
+const isExternalMember = computed(() => {
+  return !!(
+    props.slot.isExternal ||
+    (props.slot.userId && props.slot.userId.startsWith('ext_'))
+  );
+});
 
 const classInfo = computed(() => {
   const cName = props.slot.className || props.slot.class || '';

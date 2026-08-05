@@ -14,14 +14,17 @@ export const useLineupStore = defineStore('lineup', {
     
     // Danh sách điểm danh chưa xếp slot
     attendancePool: [],
+
+    // Danh sách đệ tử báo bận (status === 'absent')
+    absentUsers: [],
     
     loading: false,
     events: [],
 
     // Panels bên phải
     rightPanels: {
-      rung1: { title: 'RỪNG 1 (TRÁI)', userId: 'rung1_default', leaderName: 'Kéo thành viên vào', subTag: 'Rừng Trái', class: 'Huyết Hà' },
-      rung2: { title: 'RỪNG 2 (PHẢI)', userId: 'rung2_default', leaderName: 'Kéo thành viên vào', subTag: 'Rừng Phải', class: 'Huyết Hà' },
+      rung1: {},
+      rung2: {},
       rollCall: {
         title: 'CHỐT ĐIỂM DANH',
         totalCheckedIn: 0,
@@ -127,6 +130,11 @@ export const useLineupStore = defineStore('lineup', {
       });
 
       return assigned + state.attendancePool.length;
+    },
+
+    // Dynamic busy count: number of users in event with status === 'absent'
+    totalBusyCount: (state) => {
+      return state.absentUsers ? state.absentUsers.length : (state.rightPanels.rollCall?.totalBusy || 0);
     }
   },
 
@@ -207,6 +215,9 @@ export const useLineupStore = defineStore('lineup', {
         const attRes = await api.getAttendance(eventId);
         const attendances = attRes.data || [];
 
+        // Store absent users (status === 'absent')
+        this.absentUsers = attendances.filter((item) => item.status === 'absent');
+
         const lineupRes = await api.getLineup(eventId);
         if (lineupRes.data && lineupRes.data.divisions && lineupRes.data.divisions.length > 0) {
           this.title = lineupRes.data.title || 'ĐỘI HÌNH BANG CHIẾN';
@@ -229,6 +240,12 @@ export const useLineupStore = defineStore('lineup', {
         } else {
           this.initDefaultLineup();
         }
+
+        // Update totalBusy count with exact number of absent users
+        if (!this.rightPanels.rollCall) {
+          this.rightPanels.rollCall = { title: 'CHỐT ĐIỂM DANH', totalCheckedIn: 0, totalBusy: 0 };
+        }
+        this.rightPanels.rollCall.totalBusy = this.absentUsers.length;
 
         const occupiedUserIds = new Set();
         this.divisions.forEach((div) => {
@@ -259,12 +276,122 @@ export const useLineupStore = defineStore('lineup', {
       }
     },
 
+    // Thêm đệ tử ngoại bang / lính đánh thuê vào danh sách chờ (Pool)
+    addExternalMember({ displayName, className, note }) {
+      if (!displayName || !displayName.trim()) return null;
+      const newMember = {
+        userId: `ext_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+        displayName: displayName.trim(),
+        username: displayName.trim(),
+        className: className || 'Long Ngâm',
+        roleName: note || '',
+        note: note || '',
+        status: 'present',
+        isExternal: true,
+      };
+      this.attendancePool.unshift(newMember);
+      return newMember;
+    },
+
+    // Thêm trực tiếp đệ tử ngoại bang vào Slot chỉ định
+    assignExternalMemberToSlot({ targetDIdx, targetTIdx, targetSIdx, displayName, className, note }) {
+      const targetSlot = this.divisions[targetDIdx]?.teams[targetTIdx]?.slots[targetSIdx];
+      if (!targetSlot || !displayName || !displayName.trim()) return;
+
+      if (targetSlot.userId && !targetSlot.userId.startsWith('leader_') && !targetSlot.userId.startsWith('rung')) {
+        this.attendancePool.push({
+          userId: targetSlot.userId,
+          displayName: targetSlot.displayName,
+          username: targetSlot.displayName,
+          className: targetSlot.className || targetSlot.class,
+          roleName: targetSlot.roleName || targetSlot.role,
+          note: targetSlot.note || '',
+          isExternal: targetSlot.isExternal || targetSlot.userId.startsWith('ext_'),
+        });
+      }
+
+      targetSlot.userId = `ext_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      targetSlot.displayName = displayName.trim();
+      targetSlot.className = className || 'Long Ngâm';
+      targetSlot.roleName = note || '';
+      targetSlot.note = note || '';
+      targetSlot.isExternal = true;
+      targetSlot.isChecked = false;
+    },
+
+    // Thêm trực tiếp đệ tử ngoại bang vào ô Trưởng Rừng
+    assignExternalMemberToRung({ rungKey, displayName, className, note }) {
+      const rung = this.rightPanels[rungKey];
+      if (!rung || !displayName || !displayName.trim()) return;
+
+      if (rung.userId && !rung.userId.startsWith('rung')) {
+        this.attendancePool.push({
+          userId: rung.userId,
+          displayName: rung.leaderName,
+          username: rung.leaderName,
+          className: rung.class,
+          roleName: rung.subTag,
+          note: rung.subTag,
+          isExternal: rung.isExternal || rung.userId.startsWith('ext_'),
+        });
+      }
+
+      rung.userId = `ext_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      rung.leaderName = displayName.trim();
+      rung.class = className || 'Huyết Hà';
+      rung.subTag = note || 'Trưởng Rừng';
+      rung.isExternal = true;
+    },
+
+    // Xóa vĩnh viễn đệ tử ngoại bang / đánh thuê khỏi sơ đồ và danh sách chờ
+    deleteExternalMember(userId) {
+      if (!userId) return;
+
+      // 1. Xóa khỏi attendancePool
+      const poolIdx = this.attendancePool.findIndex((m) => m.userId === userId);
+      if (poolIdx !== -1) {
+        this.attendancePool.splice(poolIdx, 1);
+      }
+
+      // 2. Xóa khỏi các slot trong divisions
+      this.divisions.forEach((div) => {
+        if (div.teams) {
+          div.teams.forEach((team) => {
+            if (team.slots) {
+              team.slots.forEach((slot) => {
+                if (slot.userId === userId) {
+                  slot.userId = null;
+                  slot.displayName = '';
+                  slot.roleName = '';
+                  slot.className = '';
+                  slot.note = '';
+                  slot.isExternal = false;
+                  slot.isChecked = false;
+                }
+              });
+            }
+          });
+        }
+      });
+
+      // 3. Xóa khỏi ô Trưởng Rừng
+      ['rung1', 'rung2'].forEach((key) => {
+        const rung = this.rightPanels[key];
+        if (rung && rung.userId === userId) {
+          rung.userId = null;
+          rung.leaderName = '';
+          rung.class = '';
+          rung.subTag = '';
+          rung.isExternal = false;
+        }
+      });
+    },
+
     // Gán thành viên từ Pool vào ô Trưởng Rừng
     assignToRungFromPool({ rungKey, member }) {
       const rung = this.rightPanels[rungKey];
       if (!rung || !member) return;
 
-      // Nếu ô Rừng đang có người, trả người cũ về Pool
       if (rung.userId && !rung.userId.startsWith('rung')) {
         this.attendancePool.push({
           userId: rung.userId,
@@ -280,14 +407,12 @@ export const useLineupStore = defineStore('lineup', {
       rung.class = member.className || member.class || 'Huyết Hà';
       rung.subTag = member.roleName || member.role || 'Trưởng Rừng';
 
-      // Xóa thành viên khỏi Pool
       const poolIdx = this.attendancePool.findIndex((m) => m.userId === member.userId);
       if (poolIdx !== -1) {
         this.attendancePool.splice(poolIdx, 1);
       }
     },
 
-    // Di chuyển thành viên từ Slot trong ma trận sang ô Trưởng Rừng
     assignToRungFromSlot({ rungKey, srcDIdx, srcTIdx, srcSIdx }) {
       const srcSlot = this.divisions[srcDIdx]?.teams[srcTIdx]?.slots[srcSIdx];
       const rung = this.rightPanels[rungKey];
@@ -298,13 +423,11 @@ export const useLineupStore = defineStore('lineup', {
       const tempRungClass = rung.class;
       const tempRungTag = rung.subTag;
 
-      // Gán Trưởng Rừng = thành viên từ slot
       rung.userId = srcSlot.userId;
       rung.leaderName = srcSlot.displayName;
       rung.class = srcSlot.className || srcSlot.class || 'Huyết Hà';
       rung.subTag = srcSlot.note || srcSlot.roleName || 'Trưởng Rừng';
 
-      // Trả người ở Rừng cũ sang slot (Hoán đổi)
       if (tempRungUser && !tempRungUser.startsWith('rung')) {
         srcSlot.userId = tempRungUser;
         srcSlot.displayName = tempRungName;
@@ -320,7 +443,6 @@ export const useLineupStore = defineStore('lineup', {
       }
     },
 
-    // Xóa người khỏi vị trí Trưởng Rừng
     clearRung(rungKey) {
       const rung = this.rightPanels[rungKey];
       if (rung && rung.userId) {

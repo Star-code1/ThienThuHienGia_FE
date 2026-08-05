@@ -6,24 +6,35 @@
         <span class="text-lg">📜</span>
         <div>
           <h2 class="font-bold text-sm text-[#f5c518] uppercase tracking-wider font-serif">
-            Ma Trận Sơ Đồ Bang Chiến
+            THIÊN THƯ TRẬN PHÁI — CÔNG THÀNH CHIẾN
           </h2>
           <span class="text-[10px] text-[#64748b] font-mono">
-            {{ store.title || 'Thiên Thư Hiền Giả' }}
+            {{ store.title || 'Thiên Thư Môn' }}
           </span>
         </div>
       </div>
 
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2.5 font-serif">
         <!-- Mode Toggle Switch (Ma Trận / Chỉnh Sửa) -->
         <button
           @click="store.toggleViewMode()"
-          class="text-xs px-3 py-1.5 rounded-md font-semibold transition border flex items-center gap-1.5"
+          class="text-xs px-3 py-1.5 rounded-md font-semibold transition border flex items-center gap-1.5 font-serif"
           :class="store.viewMode === 'edit'
             ? 'bg-[#f5c518]/15 border-[#f5c518] text-[#f5c518]'
             : 'bg-[#1e293b] border-[#334155] text-[#94a3b8] hover:text-white'"
         >
-          <span>{{ store.viewMode === 'edit' ? '✏️ Đang Sửa' : '👁️ Xem Chuẩn' }}</span>
+          <span>{{ store.viewMode === 'edit' ? '✏️ Thiết Lập Trận' : '👁️ Thẩm Nguyện Trận' }}</span>
+        </button>
+
+        <!-- Nút Thêm Đệ Tử Ngoại Bang khi ở chế độ Edit -->
+        <button
+          v-if="store.viewMode === 'edit'"
+          @click="openAddMemberModal(null)"
+          class="bg-[#059669] hover:bg-[#10b981] border border-[#34d399]/60 text-white text-xs font-bold px-3 py-1.5 rounded-md transition flex items-center gap-1.5 shadow-md font-serif hover:scale-105"
+          title="Thêm thành viên mới không trong danh sách vào trận đồ"
+        >
+          <span>➕</span>
+          <span>Thêm Đệ Tử</span>
         </button>
 
         <!-- Dropdown Chọn Event -->
@@ -32,9 +43,9 @@
             id="event-select"
             v-model="selectedMessageId"
             @change="handleEventChange"
-            class="bg-[#0f172a] border border-[#1e293b] text-[#f5c518] text-xs rounded-md px-2.5 py-1.5 focus:ring-1 focus:ring-[#f5c518] outline-none cursor-pointer"
+            class="bg-[#0f172a] border border-[#1e293b] text-[#f5c518] text-xs font-bold rounded-md px-2.5 py-1.5 focus:ring-1 focus:ring-[#f5c518] outline-none cursor-pointer font-serif"
           >
-            <option value="" disabled>-- Chọn sự kiện --</option>
+            <option value="" disabled>-- Chọn chiến kỳ --</option>
             <option
               v-for="event in store.events"
               :key="event.messageId"
@@ -49,30 +60,30 @@
         <button
           @click="captureScreenshot"
           :disabled="isCapturing"
-          class="bg-[#1e293b] hover:bg-[#334155] border border-[#475569] text-white text-xs font-semibold px-3 py-1.5 rounded-md transition flex items-center gap-1 disabled:opacity-50"
+          class="bg-[#1e293b] hover:bg-[#334155] border border-[#475569] text-white text-xs font-semibold px-3 py-1.5 rounded-md transition flex items-center gap-1 disabled:opacity-50 font-serif"
         >
           <span>📷</span>
-          <span>{{ isCapturing ? 'Đang Xuất...' : 'Xuất Ảnh' }}</span>
+          <span>{{ isCapturing ? 'Đang Xuất Họa Đồ...' : 'Xuất Họa Đồ' }}</span>
         </button>
 
         <!-- Nút Lưu Đội Hình -->
         <button
           @click="handleSave"
           :disabled="isSaving"
-          class="bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:brightness-110 text-white text-xs font-bold px-4 py-1.5 rounded-md shadow-md shadow-blue-900/40 transition disabled:opacity-60"
+          class="bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:brightness-110 text-white text-xs font-bold px-4 py-1.5 rounded-md shadow-md shadow-blue-900/40 transition disabled:opacity-60 font-serif"
         >
-          {{ isSaving ? 'Đang Lưu...' : '💾 Lưu Sơ Đồ' }}
+          {{ isSaving ? 'Đang Khắc Đồ...' : '💾 Lưu Trận Đồ' }}
         </button>
       </div>
     </div>
 
     <!-- Thanh Legend Phái -->
-    <div class="relative z-10 border-b border-[#111c2e] bg-[#050810] px-4 py-1.5 flex items-center gap-4 overflow-x-auto">
-      <span class="text-[10px] uppercase font-bold tracking-widest text-[#475569] shrink-0">Bát Đại Phái</span>
+    <div class="relative z-10 border-b border-[#111c2e] bg-[#050810] px-4 py-1.5 flex items-center gap-4 overflow-x-auto font-serif">
+      <span class="text-[10px] uppercase font-bold tracking-widest text-[#475569] shrink-0 font-serif">Bát Đại Võ Phái</span>
       <div v-for="c in CLASS_LIST" :key="c.name" class="flex items-center gap-1.5 shrink-0">
         <img v-if="c.icon" :src="c.icon" :alt="c.name" class="w-4 h-4 object-contain shrink-0" />
         <span v-else class="w-2 h-2 rounded-full" :style="{ backgroundColor: c.hex, boxShadow: `0 0 6px ${c.hex}` }"></span>
-        <span class="text-xs text-[#cbd5e1] font-medium">{{ c.name }}</span>
+        <span class="text-xs text-[#cbd5e1] font-medium font-serif">{{ c.name }}</span>
       </div>
     </div>
 
@@ -88,9 +99,9 @@
         ref="lineupCaptureRef"
         class="flex-1 bg-[#060a12] p-3 rounded-lg border border-[#131f33] flex flex-col md:flex-row gap-3 items-start min-w-[1050px]"
       >
-        <!-- Cột Trái & Giữa: Các Division (MID, TRANG 1) + Băng rôn chiến thuật -->
+        <!-- Cột Trái & Giữa: Các Division + Băng rôn chiến thuật -->
         <div class="flex-1 flex flex-col justify-start gap-2.5 w-full">
-          <!-- Top Row Division: NHÓM 6 - 7 - 8 - 9 - 10 MID (TRANG 2) -->
+          <!-- Top Row Division -->
           <TacticalDivisionBox
             v-if="divMid"
             :divisionIndex="0"
@@ -98,9 +109,10 @@
             :isEditMode="store.viewMode === 'edit'"
             @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(0, tIdx, sIdx)"
             @removeSlot="({ tIdx, sIdx }) => store.clearSlot(0, tIdx, sIdx)"
+            @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 0, tIdx, sIdx })"
           />
 
-          <!-- Bottom Row Divisions: NHÓM 4 - 5 & NHÓM 1 - 2 - 3 -->
+          <!-- Bottom Row Divisions -->
           <div class="flex flex-col xl:flex-row gap-2.5 items-stretch">
             <div class="flex-1">
               <TacticalDivisionBox
@@ -110,6 +122,7 @@
                 :isEditMode="store.viewMode === 'edit'"
                 @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(1, tIdx, sIdx)"
                 @removeSlot="({ tIdx, sIdx }) => store.clearSlot(1, tIdx, sIdx)"
+                @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 1, tIdx, sIdx })"
               />
             </div>
 
@@ -121,24 +134,33 @@
                 :isEditMode="store.viewMode === 'edit'"
                 @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(2, tIdx, sIdx)"
                 @removeSlot="({ tIdx, sIdx }) => store.clearSlot(2, tIdx, sIdx)"
+                @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 2, tIdx, sIdx })"
               />
             </div>
           </div>
 
-          <!-- Dual Strategy Banners tại đáy khu vực giữa -->
+          <!-- Dual Strategy Banners -->
           <TacticalBanners
             :banners="store.bannerNotes"
             :isEditMode="store.viewMode === 'edit'"
           />
         </div>
 
-        <!-- Cột Phải: Panel Rừng 1, Rừng 2, Chốt Điểm Danh, Lưu Ý & Chiến Thuật -->
+        <!-- Cột Phải: Panel Tiên Phong & Uy Danh -->
         <RightTacticalPanels
           :panels="store.rightPanels"
           :isEditMode="store.viewMode === 'edit'"
         />
       </div>
     </div>
+
+    <!-- Modal thêm đệ tử mới / ngoại bang -->
+    <AddMemberModal
+      :visible="showAddMemberModal"
+      :targetSlotInfo="targetSlotInfo"
+      @close="showAddMemberModal = false"
+      @add="handleAddMemberSubmit"
+    />
 
     <!-- Modal confirm chụp ảnh -->
     <SaveConfirmModal
@@ -157,8 +179,9 @@ import { useLineupStore } from '../stores/lineupStore';
 import AttendancePool from '../components/lineup/AttendancePool.vue';
 import TacticalDivisionBox from '../components/lineup/TacticalDivisionBox.vue';
 import TacticalBanners from '../components/lineup/TacticalBanners.vue';
-import RightTacticalPanels from '../components/lineup/RightTacticalPanels.vue';
+import RightTacticalPanels from '../components/RightTacticalPanels.vue';
 import SaveConfirmModal from '../components/lineup/SaveConfirmModal.vue';
+import AddMemberModal from '../components/lineup/AddMemberModal.vue';
 import { CLASS_LIST } from '../theme/classColors';
 
 const store = useLineupStore();
@@ -169,10 +192,49 @@ const lineupCaptureRef = ref(null);
 const isSaving = ref(false);
 const isCapturing = ref(false);
 const showScreenshotPrompt = ref(false);
+const showAddMemberModal = ref(false);
+const targetSlotInfo = ref(null);
 
 const divMid = computed(() => store.divisions[0]);
 const divBotLeft = computed(() => store.divisions[1]);
 const divBotMid = computed(() => store.divisions[2]);
+
+const openAddMemberModal = (slotInfo = null) => {
+  targetSlotInfo.value = slotInfo;
+  showAddMemberModal.value = true;
+};
+
+const handleSlotClick = ({ dIdx, tIdx, sIdx }) => {
+  if (store.viewMode !== 'edit') return;
+
+  const div = store.divisions[dIdx];
+  const team = div?.teams[tIdx];
+  const slot = team?.slots[sIdx];
+
+  const label = `${div?.divisionName || 'Đoàn'} — ${team?.teamName || 'Nhóm'} (Vị trí ${sIdx + 1})`;
+
+  openAddMemberModal({
+    dIdx,
+    tIdx,
+    sIdx,
+    label
+  });
+};
+
+const handleAddMemberSubmit = (memberData) => {
+  if (targetSlotInfo.value) {
+    store.assignExternalMemberToSlot({
+      targetDIdx: targetSlotInfo.value.dIdx,
+      targetTIdx: targetSlotInfo.value.tIdx,
+      targetSIdx: targetSlotInfo.value.sIdx,
+      displayName: memberData.displayName,
+      className: memberData.className,
+      note: memberData.note
+    });
+  } else {
+    store.addExternalMember(memberData);
+  }
+};
 
 const handleEventChange = () => {
   if (selectedMessageId.value) {
@@ -206,11 +268,11 @@ const captureScreenshot = async () => {
 
     const link = document.createElement('a');
     const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-    link.download = `so-do-bang-chien-${timestamp}.png`;
+    link.download = `tran-do-thien-thu-${timestamp}.png`;
     link.href = dataUrl;
     link.click();
   } catch (err) {
-    console.error('Lỗi khi xuất ảnh PNG:', err);
+    console.error('Lỗi khi xuất ảnh họa đồ:', err);
   } finally {
     isCapturing.value = false;
     showScreenshotPrompt.value = false;

@@ -7,6 +7,15 @@ const api = axios.create({
   },
 });
 
+// Interceptor to attach Bearer token automatically
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('ttm_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => Promise.reject(error));
+
 export default {
   // Lấy danh sách events đang active
   getActiveEvents() {
@@ -24,4 +33,21 @@ export default {
   saveLineup(eventId, lineupData) {
     return api.post(`/lineup/${eventId}`, lineupData);
   },
+
+  // ===== DỮ LIỆU TRẬN ĐẤU & RÚT KINH NGHIỆM =====
+  getMatchAnalysis() {
+    return api.get('/match-analysis');
+  },
+  createMatchAnalysis(data) {
+    return api.post('/match-analysis', data);
+  },
+  updateMatchAnalysis(id, data) {
+    return api.put(`/match-analysis/${id}`, data);
+  },
+  deleteMatchAnalysis(id) {
+    return api.delete(`/match-analysis/${id}`);
+  },
+  uploadMatchImage(image) {
+    return api.post('/match-analysis/upload-image', { image });
+  }
 };

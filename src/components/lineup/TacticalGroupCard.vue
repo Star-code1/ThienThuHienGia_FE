@@ -57,6 +57,8 @@
             :isEditMode="isEditMode"
             @toggleCheck="$emit('toggleCheck', sIdx)"
             @remove="$emit('removeSlot', sIdx)"
+            @clickSlot="$emit('clickSlot', sIdx)"
+            @deleteExternal="store.deleteExternalMember(slot.userId)"
           />
         </div>
       </div>
@@ -97,7 +99,7 @@ const props = defineProps({
   isEditMode: { type: Boolean, default: false }
 });
 
-defineEmits(['toggleCheck', 'removeSlot']);
+defineEmits(['toggleCheck', 'removeSlot', 'clickSlot']);
 
 const store = useLineupStore();
 const dragOverIndex = ref(null);
