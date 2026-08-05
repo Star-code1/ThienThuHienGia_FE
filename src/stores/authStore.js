@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { apiClient } from '../services/api';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -19,11 +19,22 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     /**
+     * Helper to get active Frontend redirect URI dynamically
+     */
+    getRedirectUri() {
+      const envUri = import.meta.env.VITE_DISCORD_REDIRECT_URI;
+      if (!envUri || (envUri.includes('localhost') && window.location.hostname !== 'localhost')) {
+        return `${window.location.origin}/auth/callback`;
+      }
+      return envUri;
+    },
+
+    /**
      * Redirect user to Discord OAuth2 Authorize Page
      */
     loginWithDiscord() {
       const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID || '1518269619079610482';
-      const redirectUri = import.meta.env.VITE_DISCORD_REDIRECT_URI || `${window.location.origin}/auth/callback`;
+      const redirectUri = this.getRedirectUri();
       const scope = encodeURIComponent('identify guilds');
 
       const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
@@ -39,10 +50,10 @@ export const useAuthStore = defineStore('auth', {
     async handleCallback(code) {
       this.loading = true;
       this.error = null;
-      const redirectUri = import.meta.env.VITE_DISCORD_REDIRECT_URI || `${window.location.origin}/auth/callback`;
+      const redirectUri = this.getRedirectUri();
 
       try {
-        const response = await axios.post('/api/auth/discord', { code, redirectUri });
+        const response = await apiClient.post('/auth/discord', { code, redirectUri });
 
         if (response.data && response.data.success) {
           this.token = response.data.token;
@@ -74,9 +85,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.token) return;
 
       try {
-        const response = await axios.get('/api/auth/me', {
-          headers: { Authorization: `Bearer ${this.token}` }
-        });
+        const response = await apiClient.get('/auth/me');
 
         if (response.data && response.data.user) {
           this.user = response.data.user;
@@ -94,7 +103,7 @@ export const useAuthStore = defineStore('auth', {
      */
     async fetchGuildStats() {
       try {
-        const res = await axios.get('/api/guild/members');
+        const res = await apiClient.get('/guild/members');
         if (res.data && res.data.success) {
           this.guildMemberCount = res.data.totalBangChungMembers || res.data.members?.length || 120;
           if (res.data.members && res.data.members.length > 0) {

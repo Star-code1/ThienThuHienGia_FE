@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 // Interceptor to attach Bearer token automatically
-api.interceptors.request.use((config) => {
+apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('ttm_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -19,35 +19,35 @@ api.interceptors.request.use((config) => {
 export default {
   // Lấy danh sách events đang active
   getActiveEvents() {
-    return api.get('/events/active');
+    return apiClient.get('/events/active');
   },
   // Lấy danh sách member đã điểm danh từ Bot Discord
   getAttendance(eventId) {
-    return api.get(`/attendance/${eventId}`);
+    return apiClient.get(`/attendance/${eventId}`);
   },
   // Lấy sơ đồ đội hình đã lưu
   getLineup(eventId) {
-    return api.get(`/lineup/${eventId}`);
+    return apiClient.get(`/lineup/${eventId}`);
   },
   // Lưu sơ đồ đội hình mới
   saveLineup(eventId, lineupData) {
-    return api.post(`/lineup/${eventId}`, lineupData);
+    return apiClient.post(`/lineup/${eventId}`, lineupData);
   },
 
   // ===== DỮ LIỆU TRẬN ĐẤU & RÚT KINH NGHIỆM =====
   getMatchAnalysis() {
-    return api.get('/match-analysis');
+    return apiClient.get('/match-analysis');
   },
   createMatchAnalysis(data) {
-    return api.post('/match-analysis', data);
+    return apiClient.post('/match-analysis', data);
   },
   updateMatchAnalysis(id, data) {
-    return api.put(`/match-analysis/${id}`, data);
+    return apiClient.put(`/match-analysis/${id}`, data);
   },
   deleteMatchAnalysis(id) {
-    return api.delete(`/match-analysis/${id}`);
+    return apiClient.delete(`/match-analysis/${id}`);
   },
   uploadMatchImage(image) {
-    return api.post('/match-analysis/upload-image', { image });
+    return apiClient.post('/match-analysis/upload-image', { image });
   }
 };
