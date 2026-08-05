@@ -25,12 +25,20 @@
       <!-- Create Match Log Button -->
       <div>
         <button
+          v-if="authStore.canEdit"
           @click="openCreateModal"
           class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-extrabold text-xs text-slate-950 bg-gradient-to-r from-[#d97706] via-[#f5c518] to-[#b45309] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(245,197,24,0.3)] hover:scale-105 font-serif flex items-center justify-center gap-2"
         >
           <span>➕</span>
           <span>THÊM DỮ LIỆU TRẬN ĐẤU</span>
         </button>
+        <span
+          v-else
+          class="px-3 py-1.5 rounded-xl bg-[#0f172a] border border-[#1e293b] text-xs text-[#94a3b8] font-serif flex items-center gap-1.5"
+        >
+          <span>🔒</span>
+          <span>Đương Gia & Đường Chủ có quyền đăng</span>
+        </span>
       </div>
     </div>
 
@@ -85,9 +93,10 @@
         Chưa có dữ liệu trận đấu nào được lưu trữ
       </h3>
       <p class="text-xs text-[#94a3b8] max-w-md mx-auto">
-        Hãy bắt đầu ghi chép dữ liệu trận đấu, hình ảnh và note lại các việc sai sót để môn phái cùng rút kinh nghiệm!
+        Chưa có ghi chép dữ liệu trận đấu nào từ Đương Gia / Đường Chủ.
       </p>
       <button
+        v-if="authStore.canEdit"
         @click="openCreateModal"
         class="mt-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#d97706] via-[#f5c518] to-[#b45309] text-slate-950 text-xs font-bold transition shadow font-serif"
       >
@@ -437,10 +446,7 @@ const totalImagesCount = computed(() => {
 
 const canManage = (record) => {
   if (!record || !authStore.isAuthenticated) return false;
-  const currentUserId = authStore.user?.discordId || authStore.user?.id;
-  const isAuthor = record.author?.discordId === currentUserId;
-  const isLeader = !!authStore.canEdit;
-  return isAuthor || isLeader;
+  return Boolean(authStore.canEdit);
 };
 
 const fetchRecords = async () => {
@@ -460,6 +466,16 @@ const fetchRecords = async () => {
 const openCreateModal = () => {
   if (!authStore.isAuthenticated) {
     authStore.openLoginPrompt();
+    return;
+  }
+  if (!authStore.canEdit) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Bị từ chối quyền',
+      text: 'Chỉ thành viên có vai trò Đương Gia hoặc Đường Chủ mới có quyền đăng dữ liệu trận đấu.',
+      background: '#0d1526',
+      color: '#ffffff'
+    });
     return;
   }
   isEditing.value = false;
@@ -493,6 +509,37 @@ const removeImageInput = (idx) => {
   form.images.splice(idx, 1);
 };
 
+const compressImage = (file, maxWidth = 1920, quality = 0.85) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+};
+
 const handleFileChange = async (event, idx) => {
   const file = event.target.files?.[0];
   if (!file) return;
@@ -502,38 +549,29 @@ const handleFileChange = async (event, idx) => {
 
   targetItem.uploading = true;
   try {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const base64 = e.target.result;
-        const res = await api.uploadMatchImage(base64);
-        if (res.data && res.data.success && res.data.url) {
-          targetItem.url = res.data.url;
-          Swal.fire({
-            icon: 'success',
-            title: 'Đã đẩy ảnh lên Cloudinary!',
-            timer: 1200,
-            showConfirmButton: false,
-            background: '#0d1526',
-            color: '#f5c518'
-          });
-        }
-      } catch (uploadErr) {
-        console.error('Lỗi khi đẩy ảnh lên Cloudinary:', uploadErr);
-        Swal.fire({
-          icon: 'error',
-          title: 'Lỗi Upload',
-          text: 'Không thể upload ảnh lên Cloudinary.',
-          background: '#0d1526',
-          color: '#ffffff'
-        });
-      } finally {
-        targetItem.uploading = false;
-      }
-    };
-    reader.readAsDataURL(file);
-  } catch (err) {
-    console.error('Lỗi đọc file:', err);
+    const compressedBase64 = await compressImage(file);
+    const res = await api.uploadMatchImage(compressedBase64);
+    if (res.data && res.data.success && res.data.url) {
+      targetItem.url = res.data.url;
+      Swal.fire({
+        icon: 'success',
+        title: 'Đã đẩy ảnh lên Cloudinary!',
+        timer: 1200,
+        showConfirmButton: false,
+        background: '#0d1526',
+        color: '#f5c518'
+      });
+    }
+  } catch (uploadErr) {
+    console.error('Lỗi khi đẩy ảnh lên Cloudinary:', uploadErr);
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi Upload',
+      text: uploadErr.response?.data?.message || 'Không thể upload ảnh lên Cloudinary.',
+      background: '#0d1526',
+      color: '#ffffff'
+    });
+  } finally {
     targetItem.uploading = false;
   }
 };
