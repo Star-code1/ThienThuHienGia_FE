@@ -87,6 +87,23 @@
         <span class="text-xs font-mono font-bold text-[#f5c518]">{{ currentTime }}</span>
       </div>
 
+      <!-- Theme Switcher Toggle Button -->
+      <button
+        @click="themeStore.toggleTheme()"
+        class="px-2.5 py-1.5 rounded-xl border text-xs font-bold font-serif transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-105"
+        :class="themeStore.theme === 'dark'
+          ? 'bg-[#0c1424] hover:bg-[#16233b] border-[#1e304d] text-[#f5c518] hover:border-[#f5c518]/60'
+          : 'bg-amber-50/90 hover:bg-amber-100 border-amber-300 text-amber-800 hover:border-amber-500'"
+        :title="themeStore.theme === 'dark' ? 'Chuyển sang Giao diện Sáng (Thanh Vân)' : 'Chuyển sang Giao diện Tối (Huyền Dạ)'"
+      >
+        <span class="text-sm">
+          {{ themeStore.theme === 'dark' ? '☀️' : '🌙' }}
+        </span>
+        <span class="hidden sm:inline text-[11px] font-bold">
+          {{ themeStore.theme === 'dark' ? 'Dạ Cảnh' : 'Bạch Nhật' }}
+        </span>
+      </button>
+
       <!-- Auth State: User Profile or Login Button -->
       <div v-if="authStore.isAuthenticated" ref="userMenuRef" class="relative">
         <button
@@ -181,6 +198,20 @@
             </RouterLink>
 
             <button
+              @click="themeStore.toggleTheme()"
+              class="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold text-[#e2e8f0] hover:bg-[#1e293b] hover:text-[#f5c518] transition flex items-center justify-between mb-1 cursor-pointer font-serif"
+            >
+              <div class="flex items-center gap-2">
+                <span>{{ themeStore.theme === 'dark' ? '☀️' : '🌙' }}</span>
+                <span>Chế Độ: {{ themeStore.theme === 'dark' ? 'Sáng (Thanh Vân)' : 'Tối (Huyền Dạ)' }}</span>
+              </div>
+              <span class="text-[9px] px-1.5 py-0.5 rounded font-bold"
+                    :class="themeStore.theme === 'dark' ? 'bg-[#f5c518]/20 text-[#f5c518]' : 'bg-amber-500 text-white'">
+                {{ themeStore.theme === 'dark' ? 'Tối' : 'Sáng' }}
+              </span>
+            </button>
+
+            <button
               @click="authStore.logout(); isUserMenuOpen = false;"
               class="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold text-[#f87171] hover:bg-[#7f1d1d]/30 hover:text-white transition flex items-center justify-between cursor-pointer"
             >
@@ -209,11 +240,13 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '../../stores/authStore';
+import { useThemeStore } from '../../stores/themeStore';
 import { getClassInfo } from '../../theme/classColors';
 
 defineEmits(['toggleMenu']);
 const route = useRoute();
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 
 const userClassInfo = computed(() => getClassInfo(authStore.user?.className || ''));
 

@@ -43,24 +43,46 @@
           </button>
         </div>
 
-        <!-- Position Toggle -->
-        <div class="px-5 py-2.5 bg-[#050810] border-b border-[#131f33] flex items-center justify-between text-xs text-[#94a3b8] font-serif">
-          <span class="text-[11px] font-medium text-[#64748b]">Vị trí Bảng:</span>
-          <div class="flex bg-[#0f172a] p-0.5 rounded-lg border border-[#1e293b]">
-            <button
-              @click="setDrawerPosition('left')"
-              class="px-2 py-0.5 text-[10px] rounded font-semibold transition"
-              :class="drawerPosition === 'left' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
-            >
-              ⬅️ Góc Trái
-            </button>
-            <button
-              @click="setDrawerPosition('right')"
-              class="px-2 py-0.5 text-[10px] rounded font-semibold transition"
-              :class="drawerPosition === 'right' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
-            >
-              Góc Phải ➡️
-            </button>
+        <!-- Position & Theme Settings Bar -->
+        <div class="px-5 py-2.5 bg-[#050810] border-b border-[#131f33] flex flex-col gap-2 text-xs text-[#94a3b8] font-serif">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-medium text-[#64748b]">Vị trí Bảng:</span>
+            <div class="flex bg-[#0f172a] p-0.5 rounded-lg border border-[#1e293b]">
+              <button
+                @click="setDrawerPosition('left')"
+                class="px-2 py-0.5 text-[10px] rounded font-semibold transition cursor-pointer"
+                :class="drawerPosition === 'left' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
+              >
+                ⬅️ Trái
+              </button>
+              <button
+                @click="setDrawerPosition('right')"
+                class="px-2 py-0.5 text-[10px] rounded font-semibold transition cursor-pointer"
+                :class="drawerPosition === 'right' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
+              >
+                Phải ➡️
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-1.5 border-t border-[#131f33]/60">
+            <span class="text-[11px] font-medium text-[#64748b]">Giao Diện:</span>
+            <div class="flex bg-[#0f172a] p-0.5 rounded-lg border border-[#1e293b]">
+              <button
+                @click="themeStore.setTheme('dark')"
+                class="px-2 py-0.5 text-[10px] rounded font-semibold transition flex items-center gap-1 cursor-pointer"
+                :class="themeStore.theme === 'dark' ? 'bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 shadow' : 'text-[#64748b] hover:text-white'"
+              >
+                🌙 Tối (Dạ)
+              </button>
+              <button
+                @click="themeStore.setTheme('light')"
+                class="px-2 py-0.5 text-[10px] rounded font-semibold transition flex items-center gap-1 cursor-pointer"
+                :class="themeStore.theme === 'light' ? 'bg-amber-500 text-white shadow' : 'text-[#64748b] hover:text-white'"
+              >
+                ☀️ Sáng (Nhật)
+              </button>
+            </div>
           </div>
         </div>
 
@@ -162,6 +184,7 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '../../stores/authStore';
+import { useThemeStore } from '../../stores/themeStore';
 
 const props = defineProps({
   isOpen: { type: Boolean, default: false }
@@ -171,6 +194,7 @@ defineEmits(['close']);
 
 const route = useRoute();
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 const drawerPosition = ref(localStorage.getItem('ttm_drawer_pos') || 'left');
 
 const setDrawerPosition = (pos) => {
