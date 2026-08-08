@@ -1,374 +1,229 @@
-<template>
-  <div class="relative min-h-[calc(100vh-57px)] text-[#e2e8f0] p-4 sm:p-6 max-w-7xl mx-auto font-sans select-none space-y-6 pb-16">
-    <!-- Ambient Background Glows -->
-    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#f5c518]/10 rounded-full blur-[130px]"></div>
-      <div class="absolute bottom-1/3 left-1/4 w-[450px] h-[450px] bg-[#ef4444]/10 rounded-full blur-[110px]"></div>
-    </div>
+<template lang="pug">
+.schedule-container(
+  :class="themeStore.theme === 'light' ? 'sched-light' : 'sched-dark'"
+)
+  //- Header Banner
+  .header-banner
+    .banner-title-group
+      span.banner-icon ⚔️
+      .banner-titles
+        h1.banner-main-title LỊCH TRÌNH BANG HỘI & CHIẾN KỲ
+        p.banner-sub-desc
+          | Lịch đánh ấn định 
+          span.highlight-gold 20h00 Thứ 7 hàng tuần
+          |  — Chu kỳ luân phiên 2 trận & 1 trận Bang Chiến
 
-    <!-- Header Banner -->
-    <div class="relative z-10 bg-[#080d19]/90 border border-[#1e304d] rounded-2xl p-5 md:p-6 shadow-2xl backdrop-blur-md font-serif flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl">⚔️</span>
-        <div>
-          <h1 class="text-2xl md:text-3xl font-extrabold uppercase bg-gradient-to-r from-[#fffbeb] via-[#f5c518] to-[#b45309] bg-clip-text text-transparent tracking-wide">
-            LỊCH TRÌNH BANG HỘI & CHIẾN KỲ
-          </h1>
-          <p class="text-xs text-[#94a3b8] mt-0.5">
-            Lịch đánh ấn định <span class="text-[#f5c518] font-bold">20h00 Thứ 7 hàng tuần</span> — Chu kỳ luân phiên 2 trận & 1 trận Bang Chiến
-          </p>
-        </div>
-      </div>
+    RouterLink.btn-lineup-nav(to="/lineup")
+      span 📜
+      span XEM TRẬN PHÁI TÁC CHIẾN
 
-      <RouterLink
-        to="/lineup"
-        class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-extrabold text-xs text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:scale-105 font-serif flex items-center justify-center gap-2"
-      >
-        <span>📜</span>
-        <span>XEM TRẬN PHÁI TÁC CHIẾN</span>
-      </RouterLink>
-    </div>
+  //- Hero Countdown Section
+  .hero-countdown-box
+    .countdown-header-row
+      .countdown-tag-left
+        span.ping-dot
+        span.tag-title ĐẾM NGƯỢC ĐẾN TRẬN KẾ TIẾP (20:00 THỨ BẢY)
 
-    <!-- Hero Countdown Section -->
-    <div class="relative z-10 bg-gradient-to-r from-[#0c1424]/95 via-[#09101f]/95 to-[#150f29]/95 border border-[#f5c518]/50 rounded-2xl p-6 md:p-8 shadow-[0_0_50px_rgba(245,197,24,0.15)] backdrop-blur-md font-serif overflow-hidden">
-      <!-- Top Tag Badge -->
-      <div class="flex items-center justify-between flex-wrap gap-2 mb-4 border-b border-[#1c2e4a] pb-3">
-        <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-[#ef4444] animate-ping"></span>
-          <span class="text-xs font-bold text-[#ef4444] uppercase tracking-wider">
-            ĐẾM NGƯỢC ĐẾN TRẬN KẾ TIẾP (20:00 THỨ BẢY)
-          </span>
-        </div>
+      .countdown-tag-right
+        span.date-formatted 📅 {{ nextBattleDateFormatted }}
+        span.cycle-pill(
+          :class="isCurrentWeekTwoMatch ? 'pill-gold' : 'pill-blue'"
+        ) {{ isCurrentWeekTwoMatch ? '⚔️⚔️ TUẦN 2 TRẬN BANG CHIẾN' : '⚔️ TUẦN 1 TRẬN BANG CHIẾN' }}
 
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-mono text-[#94a3b8]">
-            📅 {{ nextBattleDateFormatted }}
-          </span>
-          <span
-            class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider border shadow"
-            :class="isCurrentWeekTwoMatch ? 'bg-[#d97706]/20 text-[#f5c518] border-[#f5c518]/40' : 'bg-[#3b82f6]/20 text-[#60a5fa] border-[#3b82f6]/40'"
-          >
-            {{ isCurrentWeekTwoMatch ? '⚔️⚔️ TUẦN 2 TRẬN BANG CHIẾN' : '⚔️ TUẦN 1 TRẬN BANG CHIẾN' }}
-          </span>
-        </div>
-      </div>
+    .countdown-body-row
+      .timer-desc-group
+        h2.timer-main-title Thời Gian Còn Lại Cho Trận Chiến Tiếp Theo
+        p.timer-sub-text
+          | Tất cả đệ tử Thiên Thư Môn yêu cầu có mặt trước 15 phút tại Voice Discord để xếp đội hình và điểm danh an vị vị trí tác chiến!
 
-      <!-- Main Timer Display -->
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="space-y-2 text-center md:text-left">
-          <h2 class="text-xl md:text-2xl font-bold text-white uppercase tracking-tight">
-            Thời Gian Còn Lại Cho Trận Chiến Tiếp Theo
-          </h2>
-          <p class="text-xs text-[#94a3b8] max-w-xl leading-relaxed">
-            Tất cả đệ tử Thiên Thư Môn yêu cầu có mặt trước 15 phút tại Voice Discord để xếp đội hình và điểm danh an vị vị trí tác chiến!
-          </p>
-        </div>
+      .digital-timer-grid
+        .timer-box
+          span.timer-val.val-gold {{ String(countdown.days).padStart(2, '0') }}
+          span.timer-label Ngày
+        .timer-box
+          span.timer-val.val-gold {{ String(countdown.hours).padStart(2, '0') }}
+          span.timer-label Giờ
+        .timer-box
+          span.timer-val.val-gold {{ String(countdown.minutes).padStart(2, '0') }}
+          span.timer-label Phút
+        .timer-box
+          span.timer-val.val-red {{ String(countdown.seconds).padStart(2, '0') }}
+          span.timer-label Giây
 
-        <!-- Digital Timer Boxes -->
-        <div class="grid grid-cols-4 gap-2.5 sm:gap-3 text-center shrink-0">
-          <div class="bg-[#050912] border border-[#1e304d] rounded-xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] shadow-inner">
-            <span class="text-2xl sm:text-3xl font-extrabold text-[#f5c518] font-mono block">
-              {{ String(countdown.days).padStart(2, '0') }}
-            </span>
-            <span class="text-[10px] text-[#64748b] font-bold uppercase block mt-1">Ngày</span>
-          </div>
+  //- Week Cycle Selector Tabs
+  .tabs-section
+    .tabs-header-row
+      h3.tabs-section-title 🔄 CHU KỲ & LỊCH TRÌNH BANG HỘI
+      .cycle-flow-badges
+        span.flow-label Chu kỳ luân phiên:
+        span.flow-pill.pill-gold 2 Trận
+        span.flow-arrow ➔
+        span.flow-pill.pill-blue 1 Trận
+        span.flow-arrow ➔
+        span.flow-pill.pill-gold 2 Trận
 
-          <div class="bg-[#050912] border border-[#1e304d] rounded-xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] shadow-inner">
-            <span class="text-2xl sm:text-3xl font-extrabold text-[#f5c518] font-mono block">
-              {{ String(countdown.hours).padStart(2, '0') }}
-            </span>
-            <span class="text-[10px] text-[#64748b] font-bold uppercase block mt-1">Giờ</span>
-          </div>
+    .tabs-grid
+      button.tab-btn(
+        @click="selectedWeekTab = 0"
+        :class="{ 'active': selectedWeekTab === 0 }"
+      )
+        span.tab-btn-title 📌 Tuần Này
+        span.tab-btn-badge(
+          :class="isTabTwoMatch(0) ? 'badge-gold' : 'badge-blue'"
+        ) {{ isTabTwoMatch(0) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
 
-          <div class="bg-[#050912] border border-[#1e304d] rounded-xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] shadow-inner">
-            <span class="text-2xl sm:text-3xl font-extrabold text-[#f5c518] font-mono block">
-              {{ String(countdown.minutes).padStart(2, '0') }}
-            </span>
-            <span class="text-[10px] text-[#64748b] font-bold uppercase block mt-1">Phút</span>
-          </div>
+      button.tab-btn(
+        @click="selectedWeekTab = 1"
+        :class="{ 'active': selectedWeekTab === 1 }"
+      )
+        span.tab-btn-title ⏩ Tuần Kế Tiếp
+        span.tab-btn-badge(
+          :class="isTabTwoMatch(1) ? 'badge-gold' : 'badge-blue'"
+        ) {{ isTabTwoMatch(1) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
 
-          <div class="bg-[#050912] border border-[#1e304d] rounded-xl p-3 sm:p-4 min-w-[70px] sm:min-w-[85px] shadow-inner">
-            <span class="text-2xl sm:text-3xl font-extrabold text-[#ef4444] font-mono block animate-pulse">
-              {{ String(countdown.seconds).padStart(2, '0') }}
-            </span>
-            <span class="text-[10px] text-[#64748b] font-bold uppercase block mt-1">Giây</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      button.tab-btn(
+        @click="selectedWeekTab = 2"
+        :class="{ 'active': selectedWeekTab === 2 }"
+      )
+        span.tab-btn-title ⏭️ Tuần Kế Nữa
+        span.tab-btn-badge(
+          :class="isTabTwoMatch(2) ? 'badge-gold' : 'badge-blue'"
+        ) {{ isTabTwoMatch(2) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
 
-    <!-- Week Cycle Selector Tabs -->
-    <div class="relative z-10 space-y-4 font-serif">
-      <div class="flex items-center justify-between flex-wrap gap-3">
-        <h3 class="text-base font-extrabold uppercase tracking-wider text-[#93c5fd] flex items-center gap-2">
-          <span>🔄 CHU KỲ & LỊCH TRÌNH BANG HỘI</span>
-        </h3>
+  //- Active Selected Week Details
+  .week-details-section
+    //- Section 1: Weekday Activities (Thứ 2 - Thứ 6)
+    .schedule-card
+      .card-header-row
+        span.card-icon 📅
+        h4.card-sec-title LỊCH HOẠT ĐỘNG TRONG TUẦN (THỨ 2 — THỨ 6)
 
-        <!-- Cycle Indicator Badges -->
-        <div class="flex items-center gap-1.5 text-xs">
-          <span class="text-[#64748b] font-bold">Chu kỳ luân phiên:</span>
-          <span class="px-2 py-0.5 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 text-[10px] font-bold">
-            2 Trận
-          </span>
-          <span class="text-[#64748b]">➔</span>
-          <span class="px-2 py-0.5 rounded bg-[#3b82f6]/20 text-[#60a5fa] border border-[#3b82f6]/40 text-[10px] font-bold">
-            1 Trận
-          </span>
-          <span class="text-[#64748b]">➔</span>
-          <span class="px-2 py-0.5 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 text-[10px] font-bold">
-            2 Trận
-          </span>
-        </div>
-      </div>
+      .activities-grid
+        .activity-item.item-blue
+          .badge-box.box-cyan
+            span.day-tag T2 - T3
+            span.time-sub Cả ngày
+          .act-content
+            .act-header
+              h5.act-title Đi Phó Bản Tuần
+              span.act-tag.tag-cyan Phó Bản
+            p.act-desc
+              | Tập trung lực lượng các toán đi phó bản tuần cùng môn phái để thu thập nguyên liệu và nâng cấp trang bị.
 
-      <!-- Tab Buttons -->
-      <div class="grid grid-cols-3 gap-2 sm:gap-4">
-        <button
-          @click="selectedWeekTab = 0"
-          class="p-3.5 sm:p-4 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1"
-          :class="selectedWeekTab === 0 ? 'bg-[#0f1d36] border-[#f5c518] text-white shadow-lg shadow-[#f5c518]/10 ring-1 ring-[#f5c518]/50' : 'bg-[#080d19]/80 border-[#1c2e4a] text-[#94a3b8] hover:text-white hover:border-[#334b73]'"
-        >
-          <span class="text-xs sm:text-sm font-extrabold uppercase">📌 Tuần Này</span>
-          <span class="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full" :class="isTabTwoMatch(0) ? 'bg-[#d97706]/20 text-[#f5c518]' : 'bg-[#3b82f6]/20 text-[#60a5fa]'">
-            {{ isTabTwoMatch(0) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
-          </span>
-        </button>
+        .activity-item.item-purple
+          .badge-box.box-purple
+            span.day-tag T5 - T6
+            span.time-sub Buổi Tối
+          .act-content
+            .act-header
+              h5.act-title Scrim Luyện Tập
+              span.act-tag.tag-purple Giao Lưu
+            p.act-desc
+              | Scrim luyện tập cùng môn phái hàng xóm, rèn luyện kỹ năng combat và thử nghiệm đội hình tác chiến.
 
-        <button
-          @click="selectedWeekTab = 1"
-          class="p-3.5 sm:p-4 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1"
-          :class="selectedWeekTab === 1 ? 'bg-[#0f1d36] border-[#f5c518] text-white shadow-lg shadow-[#f5c518]/10 ring-1 ring-[#f5c518]/50' : 'bg-[#080d19]/80 border-[#1c2e4a] text-[#94a3b8] hover:text-white hover:border-[#334b73]'"
-        >
-          <span class="text-xs sm:text-sm font-extrabold uppercase">⏩ Tuần Kế Tiếp</span>
-          <span class="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full" :class="isTabTwoMatch(1) ? 'bg-[#d97706]/20 text-[#f5c518]' : 'bg-[#3b82f6]/20 text-[#60a5fa]'">
-            {{ isTabTwoMatch(1) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
-          </span>
-        </button>
+    //- Section 2: Saturday Main Event Detailed Schedule (Thứ 7 - 20:00)
+    .schedule-card.saturday-card
+      .saturday-header-row
+        .saturday-title-group
+          span.card-icon 🏆
+          .saturday-titles
+            h4.card-sec-title LỊCH THỨ 7 — ĐẠI CHIẾN BANG HỘI
+            p.card-sub-info
+              | Bắt đầu từ 
+              span.highlight-gold 20h00
+              |  tối Thứ 7
 
-        <button
-          @click="selectedWeekTab = 2"
-          class="p-3.5 sm:p-4 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1"
-          :class="selectedWeekTab === 2 ? 'bg-[#0f1d36] border-[#f5c518] text-white shadow-lg shadow-[#f5c518]/10 ring-1 ring-[#f5c518]/50' : 'bg-[#080d19]/80 border-[#1c2e4a] text-[#94a3b8] hover:text-white hover:border-[#334b73]'"
-        >
-          <span class="text-xs sm:text-sm font-extrabold uppercase">⏭️ Tuần Kế Nữa</span>
-          <span class="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full" :class="isTabTwoMatch(2) ? 'bg-[#d97706]/20 text-[#f5c518]' : 'bg-[#3b82f6]/20 text-[#60a5fa]'">
-            {{ isTabTwoMatch(2) ? '2 TRẬN BANG CHIẾN' : '1 TRẬN BANG CHIẾN' }}
-          </span>
-        </button>
-      </div>
-    </div>
+        span.week-mode-badge(
+          :class="selectedWeekInfo.isTwoMatch ? 'badge-gold' : 'badge-blue'"
+        ) {{ selectedWeekInfo.isTwoMatch ? '🔥 LỊCH TUẦN 2 TRẬN BANG CHIẾN' : '⚔️ LỊCH TUẦN 1 TRẬN BANG CHIẾN' }}
 
-    <!-- Active Selected Week Details -->
-    <div class="relative z-10 space-y-6 font-serif">
-      <!-- Section 1: Weekday Activities (Thứ 2 - Thứ 6) -->
-      <div class="bg-[#080d19]/90 border border-[#1e304d] rounded-2xl p-5 md:p-6 backdrop-blur-md space-y-4 shadow-xl">
-        <div class="flex items-center gap-2 border-b border-[#17253b] pb-3">
-          <span class="text-xl">📅</span>
-          <h4 class="text-sm font-extrabold text-white uppercase tracking-wider">
-            LỊCH HOẠT ĐỘNG TRONG TUẦN (THỨ 2 — THỨ 6)
-          </h4>
-        </div>
+      //- 2-MATCH WEEK SCHEDULE
+      .match-timeline(v-if="selectedWeekInfo.isTwoMatch")
+        .event-row.event-red
+          .event-left
+            .time-box.box-red
+              span.time-main 20:00
+              span.time-label 8h00 Tối
+            .event-info
+              .event-title-row
+                h5.event-title ⚔️ BANG CHIẾN TRẬN 1
+                span.event-tag.tag-red Trận 1
+              p.event-desc Mở màn trận Bang chiến lượt 1. Bắt buộc tập trung Voice Discord trước 15 phút.
+          span.event-time-start.time-red Bắt đầu 20:00
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Dungeon Card -->
-          <div class="bg-[#050912] border border-[#1c2e4a] hover:border-[#38bdf8]/60 rounded-xl p-4 flex items-start gap-3.5 transition">
-            <div class="w-12 h-12 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/30 flex flex-col items-center justify-center shrink-0 text-[#38bdf8]">
-              <span class="text-xs font-bold font-serif uppercase">T2 - T3</span>
-              <span class="text-[9px] font-mono">Cả ngày</span>
-            </div>
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <h5 class="font-extrabold text-sm text-white">Đi Phó Bản Tuần</h5>
-                <span class="px-2 py-0.2 text-[9px] font-bold bg-[#38bdf8]/20 text-[#38bdf8] rounded">Phó Bản</span>
-              </div>
-              <p class="text-xs text-[#94a3b8] leading-relaxed">
-                Tập trung lực lượng các toán đi phó bản tuần cùng môn phái để thu thập nguyên liệu và nâng cấp trang bị.
-              </p>
-            </div>
-          </div>
+        .event-row.event-gold
+          .event-left
+            .time-box.box-gold
+              span.time-main 20:30
+              span.time-label 8h30 Tối
+            .event-info
+              .event-title-row
+                h5.event-title ⚔️ BANG CHIẾN TRẬN 2
+                span.event-tag.tag-gold Trận 2
+              p.event-desc Trận Bang chiến lượt 2 quyết định điểm số và thứ hạng môn phái.
+          span.event-time-start.time-gold Bắt đầu 20:30
 
-          <!-- Scrim Card -->
-          <div class="bg-[#050912] border border-[#1c2e4a] hover:border-[#a855f7]/60 rounded-xl p-4 flex items-start gap-3.5 transition">
-            <div class="w-12 h-12 rounded-xl bg-[#a855f7]/10 border border-[#a855f7]/30 flex flex-col items-center justify-center shrink-0 text-[#c084fc]">
-              <span class="text-xs font-bold font-serif uppercase">T5 - T6</span>
-              <span class="text-[9px] font-mono">Buổi Tối</span>
-            </div>
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <h5 class="font-extrabold text-sm text-white">Scrim Luyện Tập</h5>
-                <span class="px-2 py-0.2 text-[9px] font-bold bg-[#a855f7]/20 text-[#c084fc] rounded">Giao Lưu</span>
-              </div>
-              <p class="text-xs text-[#94a3b8] leading-relaxed">
-                Scrim luyện tập cùng môn phái hàng xóm, rèn luyện kỹ năng combat và thử nghiệm đội hình tác chiến.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+        .event-row.event-pink
+          .event-left
+            .time-box.box-pink
+              span.time-main 21:00
+              span.time-label 9h00 Tối
+            .event-info
+              .event-title-row
+                h5.event-title 🌸 BANG HOA GIẢI CỨU MỸ NHÂN
+                span.event-tag.tag-pink Hoạt Động Bang
+              p.event-desc Giải cứu mỹ nhân khỏi Sơn Trại Vương Đỗ Tử Đằng, giải cứu môn phái.
+          span.event-time-start.time-pink Bắt đầu 21:00
 
-      <!-- Section 2: Saturday Main Event Detailed Schedule (Thứ 7 - 20:00) -->
-      <div class="bg-[#080d19]/90 border border-[#f5c518]/40 rounded-2xl p-5 md:p-6 backdrop-blur-md space-y-4 shadow-2xl">
-        <div class="flex items-center justify-between border-b border-[#1c2e4a] pb-3 flex-wrap gap-2">
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">🏆</span>
-            <div>
-              <h4 class="text-base font-extrabold text-white uppercase tracking-wider">
-                LỊCH THỨ 7 — ĐẠI CHIẾN BANG HỘI
-              </h4>
-              <p class="text-xs text-[#94a3b8]">
-                Bắt đầu từ <span class="text-[#f5c518] font-bold">20h00</span> tối Thứ 7
-              </p>
-            </div>
-          </div>
+        .event-row.event-emerald
+          .event-left
+            .time-box.box-emerald
+              span.time-main 21:15
+              span.time-label 9h15 Tối
+            .event-info
+              .event-title-row
+                h5.event-title 🎁 ĐỊNH THƯỞNG PHẠT & GIVE AWAY THẺ THÁNG
+                span.event-tag.tag-emerald Phát Quà
+              p.event-desc Tổng kết công trạng, định thưởng phạt kỷ luật và quay thưởng Give Away thẻ tháng cho đệ tử xuất sắc.
+          span.event-time-start.time-emerald Bắt đầu 21:15
 
-          <span
-            class="px-3 py-1 rounded-xl text-xs font-extrabold uppercase tracking-wider border shadow"
-            :class="selectedWeekInfo.isTwoMatch ? 'bg-[#d97706]/20 text-[#f5c518] border-[#f5c518]/50' : 'bg-[#3b82f6]/20 text-[#60a5fa] border-[#3b82f6]/50'"
-          >
-            {{ selectedWeekInfo.isTwoMatch ? '🔥 LỊCH TUẦN 2 TRẬN BANG CHIẾN' : '⚔️ LỊCH TUẦN 1 TRẬN BANG CHIẾN' }}
-          </span>
-        </div>
+      //- 1-MATCH WEEK SCHEDULE
+      .match-timeline(v-else)
+        .event-row.event-blue
+          .event-left
+            .time-box.box-blue
+              span.time-main 20:00
+              span.time-label 8h00 Tối
+            .event-info
+              .event-title-row
+                h5.event-title ⚔️ TRẬN BANG CHIẾN ĐỊNH BẢNG
+                span.event-tag.tag-blue Định Bảng
+              p.event-desc Trận Bang chiến duy nhất trong tuần, quyết định vị trí bảng xếp hạng. Tập trung Voice trước 15 phút.
+          span.event-time-start.time-blue Bắt đầu 20:00
 
-        <!-- 2-MATCH WEEK SCHEDULE -->
-        <div v-if="selectedWeekInfo.isTwoMatch" class="space-y-3">
-          <!-- Event 1: 20:00 -->
-          <div class="bg-[#050912] border border-[#ef4444]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#ef4444] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#ef4444]/15 border border-[#ef4444]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#ef4444] font-mono">20:00</span>
-                <span class="text-[9px] text-[#fca5a5] font-bold">8h00 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">⚔️ BANG CHIẾN TRẬN 1</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#ef4444]/20 text-[#ef4444] rounded uppercase">Trận 1</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Mở màn trận Bang chiến lượt 1. Bắt buộc tập trung Voice Discord trước 15 phút.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#ef4444] font-bold shrink-0">Bắt đầu 20:00</span>
-          </div>
-
-          <!-- Event 2: 20:30 -->
-          <div class="bg-[#050912] border border-[#f5c518]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#f5c518] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#f5c518]/15 border border-[#f5c518]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#f5c518] font-mono">20:30</span>
-                <span class="text-[9px] text-[#fef08a] font-bold">8h30 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">⚔️ BANG CHIẾN TRẬN 2</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#f5c518]/20 text-[#f5c518] rounded uppercase">Trận 2</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Trận Bang chiến lượt 2 quyết định điểm số và thứ hạng môn phái.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#f5c518] font-bold shrink-0">Bắt đầu 20:30</span>
-          </div>
-
-          <!-- Event 3: 21:00 -->
-          <div class="bg-[#050912] border border-[#ec4899]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#ec4899] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#ec4899]/15 border border-[#ec4899]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#ec4899] font-mono">21:00</span>
-                <span class="text-[9px] text-[#fbcfe8] font-bold">9h00 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">🌸 BANG HOA GIẢI CỨU MỸ NHÂN</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#ec4899]/20 text-[#f472b6] rounded uppercase">Hoạt Động Bang</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Giải cứu mỹ nhân khỏi Sơn Trại Vương Đỗ Tử Đằng, giải cứu môn phái.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#f472b6] font-bold shrink-0">Bắt đầu 21:00</span>
-          </div>
-
-          <!-- Event 4: 21:15 -->
-          <div class="bg-[#050912] border border-[#10b981]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#10b981] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#10b981]/15 border border-[#10b981]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#10b981] font-mono">21:15</span>
-                <span class="text-[9px] text-[#a7f3d0] font-bold">9h15 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">🎁 ĐỊNH THƯỞNG PHẠT & GIVE AWAY THẺ THÁNG</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#10b981]/20 text-[#34d399] rounded uppercase">Phát Quà</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Tổng kết công trạng, định thưởng phạt kỷ luật và quay thưởng Give Away thẻ tháng cho đệ tử xuất sắc.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#34d399] font-bold shrink-0">Bắt đầu 21:15</span>
-          </div>
-        </div>
-
-        <!-- 1-MATCH WEEK SCHEDULE -->
-        <div v-else class="space-y-3">
-          <!-- Event 1: 20:00 -->
-          <div class="bg-[#050912] border border-[#3b82f6]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#3b82f6] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#3b82f6]/15 border border-[#3b82f6]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#60a5fa] font-mono">20:00</span>
-                <span class="text-[9px] text-[#93c5fd] font-bold">8h00 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">⚔️ TRẬN BANG CHIẾN ĐỊNH BẢNG</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#3b82f6]/20 text-[#60a5fa] rounded uppercase">Định Bảng</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Trận Bang chiến duy nhất trong tuần, quyết định vị trí bảng xếp hạng. Tập trung Voice trước 15 phút.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#60a5fa] font-bold shrink-0">Bắt đầu 20:00</span>
-          </div>
-
-          <!-- Event 2: 20:30 -->
-          <div class="bg-[#050912] border border-[#10b981]/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#10b981] transition">
-            <div class="flex items-center gap-3.5">
-              <div class="w-16 h-12 rounded-xl bg-[#10b981]/15 border border-[#10b981]/40 flex flex-col items-center justify-center shrink-0">
-                <span class="text-sm font-extrabold text-[#10b981] font-mono">20:30</span>
-                <span class="text-[9px] text-[#a7f3d0] font-bold">8h30 Tối</span>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h5 class="font-extrabold text-sm text-white uppercase">🎁 ĐỊNH THƯỞNG PHẠT & GIVE AWAY THẺ THÁNG</h5>
-                  <span class="px-2 py-0.2 text-[9px] font-bold bg-[#10b981]/20 text-[#34d399] rounded uppercase">Phát Quà</span>
-                </div>
-                <p class="text-xs text-[#94a3b8] mt-0.5">
-                  Tổng kết trận đấu, định thưởng phạt và quay thưởng Give Away thẻ tháng cho đệ tử môn phái.
-                </p>
-              </div>
-            </div>
-            <span class="text-xs font-mono text-[#34d399] font-bold shrink-0">Bắt đầu 20:30</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        .event-row.event-emerald
+          .event-left
+            .time-box.box-emerald
+              span.time-main 20:30
+              span.time-label 8h30 Tối
+            .event-info
+              .event-title-row
+                h5.event-title 🎁 ĐỊNH THƯỞNG PHẠT & GIVE AWAY THẺ THÁNG
+                span.event-tag.tag-emerald Phát Quà
+              p.event-desc Tổng kết trận đấu, định thưởng phạt và quay thưởng Give Away thẻ tháng cho đệ tử môn phái.
+          span.event-time-start.time-emerald Bắt đầu 20:30
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useThemeStore } from '../stores/themeStore';
 
+const themeStore = useThemeStore();
 const selectedWeekTab = ref(0);
 const countdown = ref({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 const nextBattleDateFormatted = ref('');
 let timerInterval = null;
 
-// Anchor Date for Week Cycle Calculation
-// Monday Aug 3, 2026 is Week 0 (2-match week)
 const ANCHOR_DATE = new Date('2026-08-03T00:00:00+07:00');
 
 const getWeekOffsetFromAnchor = (d = new Date()) => {
@@ -402,7 +257,6 @@ const selectedWeekInfo = computed(() => {
 const updateCountdown = () => {
   const now = new Date();
 
-  // Find next Saturday 20:00:00
   const day = now.getDay();
   let daysUntilSaturday = (6 - day + 7) % 7;
 
@@ -446,3 +300,892 @@ onUnmounted(() => {
   if (timerInterval) clearInterval(timerInterval);
 });
 </script>
+
+<style lang="stylus" scoped>
+.schedule-container
+  position relative
+  min-height calc(100vh - 57px)
+  padding 1.5rem
+  max-width 80rem
+  margin 0 auto
+  font-family 'Lora', serif
+  user-select none
+  display flex
+  flex-direction column
+  gap 1.5rem
+  padding-bottom 4rem
+
+.header-banner
+  position relative
+  z-index 10
+  padding 1.25rem 1.5rem
+  border-radius 1rem
+  border 1px solid
+  backdrop-filter blur(12px)
+  display flex
+  flex-direction column
+  gap 1rem
+
+  .sched-light &
+    background rgba(255, 255, 255, 0.95)
+    border-color #cbd5e1
+    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
+
+  .sched-dark &
+    background rgba(8, 13, 25, 0.9)
+    border-color #1e304d
+    box-shadow 0 10px 30px rgba(0, 0, 0, 0.4)
+
+@media (min-width: 768px)
+  .header-banner
+    flex-direction row
+    align-items center
+    justify-content space-between
+
+.banner-title-group
+  display flex
+  align-items center
+  gap 0.75rem
+
+.banner-icon
+  font-size 1.75rem
+
+.banner-main-title
+  font-size 1.25rem
+  font-weight 900
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .sched-light &
+    background linear-gradient(to right, #78350f, #b45309, #d97706)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+  .sched-dark &
+    background linear-gradient(to right, #fffbeb, #f5c518, #b45309)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+.banner-sub-desc
+  font-size 0.75rem
+  margin-top 0.15rem
+
+  .sched-light &
+    color #475569
+
+  .sched-dark &
+    color #94a3b8
+
+.highlight-gold
+  font-weight 700
+
+  .sched-light &
+    color #b45309
+
+  .sched-dark &
+    color #f5c518
+
+.btn-lineup-nav
+  padding 0.65rem 1.25rem
+  border-radius 0.75rem
+  font-size 0.75rem
+  font-weight 800
+  color #ffffff
+  background linear-gradient(to right, #2563eb, #1d4ed8)
+  text-decoration none
+  display flex
+  align-items center
+  justify-content center
+  gap 0.5rem
+  transition all 0.2s ease
+  box-shadow 0 0 20px rgba(37, 99, 235, 0.3)
+
+  &:hover
+    filter brightness(1.15)
+    transform scale(1.03)
+
+.hero-countdown-box
+  position relative
+  z-index 10
+  padding 1.5rem
+  border-radius 1rem
+  border 1px solid
+  backdrop-filter blur(12px)
+  display flex
+  flex-direction column
+  gap 1rem
+
+  .sched-light &
+    background linear-gradient(to right, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95))
+    border-color #b45309
+    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
+
+  .sched-dark &
+    background linear-gradient(to right, rgba(12, 20, 36, 0.95), rgba(9, 16, 31, 0.95), rgba(21, 15, 41, 0.95))
+    border-color rgba(245, 197, 24, 0.5)
+    box-shadow 0 0 50px rgba(245, 197, 24, 0.15)
+
+.countdown-header-row
+  display flex
+  align-items center
+  justify-content space-between
+  flex-wrap wrap
+  gap 0.5rem
+  padding-bottom 0.75rem
+  border-bottom 1px solid
+
+  .sched-light &
+    border-color #e2e8f0
+
+  .sched-dark &
+    border-color #1c2e4a
+
+.countdown-tag-left
+  display flex
+  align-items center
+  gap 0.5rem
+
+.ping-dot
+  width 0.75rem
+  height 0.75rem
+  border-radius 9999px
+  background #ef4444
+  animation ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite
+
+.tag-title
+  font-size 0.75rem
+  font-weight 700
+  color #ef4444
+  text-transform uppercase
+  letter-spacing 0.05em
+
+.countdown-tag-right
+  display flex
+  align-items center
+  gap 0.5rem
+
+.date-formatted
+  font-size 0.75rem
+  font-family monospace
+
+  .sched-light &
+    color #475569
+
+  .sched-dark &
+    color #94a3b8
+
+.cycle-pill
+  padding 0.15rem 0.65rem
+  border-radius 9999px
+  font-size 0.65rem
+  font-weight 800
+  text-transform uppercase
+
+  &.pill-gold
+    .sched-light &
+      background #fef3c7
+      color #b45309
+      border 1px solid #fde68a
+    .sched-dark &
+      background rgba(217, 119, 6, 0.2)
+      color #f5c518
+      border 1px solid rgba(245, 197, 24, 0.4)
+
+  &.pill-blue
+    .sched-light &
+      background #e0f2fe
+      color #0284c7
+      border 1px solid #bae6fd
+    .sched-dark &
+      background rgba(59, 130, 246, 0.2)
+      color #60a5fa
+      border 1px solid rgba(59, 130, 246, 0.4)
+
+.countdown-body-row
+  display flex
+  flex-direction column
+  gap 1.5rem
+
+@media (min-width: 768px)
+  .countdown-body-row
+    flex-direction row
+    align-items center
+    justify-content space-between
+
+.timer-desc-group
+  display flex
+  flex-direction column
+  gap 0.5rem
+
+.timer-main-title
+  font-size 1.25rem
+  font-weight 700
+  text-transform uppercase
+  margin 0
+
+  .sched-light &
+    color #0f172a
+
+  .sched-dark &
+    color #ffffff
+
+.timer-sub-text
+  font-size 0.75rem
+  line-height 1.6
+  max-width 36rem
+
+  .sched-light &
+    color #475569
+
+  .sched-dark &
+    color #94a3b8
+
+.digital-timer-grid
+  display grid
+  grid-template-columns repeat(4, minmax(0, 1fr))
+  gap 0.5rem
+  flex-shrink 0
+
+.timer-box
+  padding 0.75rem
+  border-radius 0.75rem
+  border 1px solid
+  text-align center
+  min-width 70px
+
+  .sched-light &
+    background #f8fafc
+    border-color #cbd5e1
+
+  .sched-dark &
+    background #050912
+    border-color #1e304d
+
+.timer-val
+  font-size 1.5rem
+  font-weight 800
+  font-family monospace
+  display block
+
+  &.val-gold
+    .sched-light &
+      color #b45309
+    .sched-dark &
+      color #f5c518
+
+  &.val-red
+    color #ef4444
+
+.timer-label
+  font-size 0.6rem
+  font-weight 700
+  text-transform uppercase
+  display block
+  margin-top 0.25rem
+
+  .sched-light &
+    color #64748b
+
+  .sched-dark &
+    color #64748b
+
+.tabs-section
+  display flex
+  flex-direction column
+  gap 1rem
+
+.tabs-header-row
+  display flex
+  align-items center
+  justify-content space-between
+  flex-wrap wrap
+  gap 0.75rem
+
+.tabs-section-title
+  font-size 1rem
+  font-weight 800
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .sched-light &
+    color #1d4ed8
+
+  .sched-dark &
+    color #93c5fd
+
+.cycle-flow-badges
+  display flex
+  align-items center
+  gap 0.375rem
+  font-size 0.75rem
+
+.flow-label
+  font-weight 700
+
+  .sched-light &
+    color #64748b
+
+  .sched-dark &
+    color #64748b
+
+.flow-pill
+  padding 0.15rem 0.5rem
+  border-radius 0.25rem
+  font-size 0.625rem
+  font-weight 700
+
+  &.pill-gold
+    .sched-light &
+      background #fef3c7
+      color #b45309
+      border 1px solid #fde68a
+    .sched-dark &
+      background rgba(245, 197, 24, 0.2)
+      color #f5c518
+      border 1px solid rgba(245, 197, 24, 0.4)
+
+  &.pill-blue
+    .sched-light &
+      background #e0f2fe
+      color #0284c7
+      border 1px solid #bae6fd
+    .sched-dark &
+      background rgba(59, 130, 246, 0.2)
+      color #60a5fa
+      border 1px solid rgba(59, 130, 246, 0.4)
+
+.flow-arrow
+  .sched-light &
+    color #94a3b8
+
+  .sched-dark &
+    color #64748b
+
+.tabs-grid
+  display grid
+  grid-template-columns repeat(3, minmax(0, 1fr))
+  gap 0.75rem
+
+.tab-btn
+  padding 1rem
+  border-radius 0.75rem
+  border 1px solid
+  text-align center
+  cursor pointer
+  transition all 0.2s ease
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  gap 0.25rem
+
+  .sched-light &
+    background #ffffff
+    border-color #cbd5e1
+    color #475569
+    &:hover
+      border-color #b45309
+      color #0f172a
+
+  .sched-dark &
+    background rgba(8, 13, 25, 0.8)
+    border-color #1c2e4a
+    color #94a3b8
+    &:hover
+      border-color #334b73
+      color #ffffff
+
+  &.active
+    .sched-light &
+      background #fef3c7
+      border-color #b45309
+      color #b45309
+      box-shadow 0 4px 15px rgba(180, 83, 9, 0.15)
+
+    .sched-dark &
+      background #0f1d36
+      border-color #f5c518
+      color #ffffff
+      box-shadow 0 10px 25px rgba(245, 197, 24, 0.15)
+
+.tab-btn-title
+  font-size 0.75rem
+  font-weight 800
+  text-transform uppercase
+
+.tab-btn-badge
+  font-size 0.6rem
+  font-weight 700
+  font-family monospace
+  padding 0.1rem 0.5rem
+  border-radius 9999px
+
+  &.badge-gold
+    .sched-light &
+      background #fde68a
+      color #78350f
+    .sched-dark &
+      background rgba(217, 119, 6, 0.2)
+      color #f5c518
+
+  &.badge-blue
+    .sched-light &
+      background #bae6fd
+      color #0369a1
+    .sched-dark &
+      background rgba(59, 130, 246, 0.2)
+      color #60a5fa
+
+.week-details-section
+  display flex
+  flex-direction column
+  gap 1.5rem
+
+.schedule-card
+  padding 1.25rem
+  border-radius 1rem
+  border 1px solid
+  backdrop-filter blur(12px)
+  display flex
+  flex-direction column
+  gap 1rem
+
+  .sched-light &
+    background #ffffff
+    border-color #cbd5e1
+    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
+
+  .sched-dark &
+    background rgba(8, 13, 25, 0.9)
+    border-color #1e304d
+    box-shadow 0 10px 25px rgba(0, 0, 0, 0.3)
+
+  &.saturday-card
+    .sched-dark &
+      border-color rgba(245, 197, 24, 0.4)
+
+.card-header-row
+  display flex
+  align-items center
+  gap 0.5rem
+  padding-bottom 0.75rem
+  border-bottom 1px solid
+
+  .sched-light &
+    border-color #e2e8f0
+
+  .sched-dark &
+    border-color #17253b
+
+.card-icon
+  font-size 1.25rem
+
+.card-sec-title
+  font-size 0.875rem
+  font-weight 800
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .sched-light &
+    color #0f172a
+
+  .sched-dark &
+    color #ffffff
+
+.activities-grid
+  display grid
+  grid-template-columns 1fr
+  gap 1rem
+
+@media (min-width: 768px)
+  .activities-grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+
+.activity-item
+  padding 1rem
+  border-radius 0.75rem
+  border 1px solid
+  display flex
+  align-items flex-start
+  gap 0.85rem
+  transition all 0.2s ease
+
+  .sched-light &
+    background #f8fafc
+    border-color #cbd5e1
+    &:hover
+      border-color #2563eb
+
+  .sched-dark &
+    background #050912
+    border-color #1c2e4a
+    &:hover
+      border-color rgba(56, 189, 248, 0.6)
+
+.badge-box
+  width 3rem
+  height 3rem
+  border-radius 0.75rem
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  flex-shrink 0
+
+  &.box-cyan
+    .sched-light &
+      background #e0f2fe
+      border 1px solid #bae6fd
+      color #0284c7
+    .sched-dark &
+      background rgba(56, 189, 248, 0.1)
+      border 1px solid rgba(56, 189, 248, 0.3)
+      color #38bdf8
+
+  &.box-purple
+    .sched-light &
+      background #f3e8ff
+      border 1px solid #e9d5ff
+      color #7c3aed
+    .sched-dark &
+      background rgba(168, 85, 247, 0.1)
+      border 1px solid rgba(168, 85, 247, 0.3)
+      color #c084fc
+
+.day-tag
+  font-size 0.75rem
+  font-weight 800
+
+.time-sub
+  font-size 0.55rem
+  font-family monospace
+
+.act-content
+  display flex
+  flex-direction column
+  gap 0.25rem
+
+.act-header
+  display flex
+  align-items center
+  gap 0.5rem
+
+.act-title
+  font-size 0.875rem
+  font-weight 800
+  margin 0
+
+  .sched-light &
+    color #0f172a
+
+  .sched-dark &
+    color #ffffff
+
+.act-tag
+  font-size 0.55rem
+  font-weight 700
+  padding 0.1rem 0.4rem
+  border-radius 0.25rem
+
+  &.tag-cyan
+    .sched-light &
+      background #e0f2fe
+      color #0284c7
+    .sched-dark &
+      background rgba(56, 189, 248, 0.2)
+      color #38bdf8
+
+  &.tag-purple
+    .sched-light &
+      background #f3e8ff
+      color #7c3aed
+    .sched-dark &
+      background rgba(168, 85, 247, 0.2)
+      color #c084fc
+
+.act-desc
+  font-size 0.75rem
+  line-height 1.6
+  margin 0
+
+  .sched-light &
+    color #475569
+
+  .sched-dark &
+    color #94a3b8
+
+.saturday-header-row
+  display flex
+  align-items center
+  justify-content space-between
+  flex-wrap wrap
+  gap 0.75rem
+  padding-bottom 0.75rem
+  border-bottom 1px solid
+
+  .sched-light &
+    border-color #e2e8f0
+
+  .sched-dark &
+    border-color #1c2e4a
+
+.saturday-title-group
+  display flex
+  align-items center
+  gap 0.5rem
+
+.card-sub-info
+  font-size 0.75rem
+  margin-top 0.1rem
+
+  .sched-light &
+    color #64748b
+
+  .sched-dark &
+    color #94a3b8
+
+.week-mode-badge
+  padding 0.35rem 0.85rem
+  border-radius 0.75rem
+  font-size 0.75rem
+  font-weight 800
+  text-transform uppercase
+
+  &.badge-gold
+    .sched-light &
+      background #fef3c7
+      color #b45309
+      border 1px solid #fde68a
+    .sched-dark &
+      background rgba(217, 119, 6, 0.2)
+      color #f5c518
+      border 1px solid rgba(245, 197, 24, 0.5)
+
+  &.badge-blue
+    .sched-light &
+      background #e0f2fe
+      color #0284c7
+      border 1px solid #bae6fd
+    .sched-dark &
+      background rgba(59, 130, 246, 0.2)
+      color #60a5fa
+      border 1px solid rgba(59, 130, 246, 0.5)
+
+.match-timeline
+  display flex
+  flex-direction column
+  gap 0.75rem
+
+.event-row
+  padding 1rem
+  border-radius 0.75rem
+  border 1px solid
+  display flex
+  flex-direction column
+  gap 0.75rem
+  transition all 0.2s ease
+
+  .sched-light &
+    background #f8fafc
+    border-color #cbd5e1
+
+  .sched-dark &
+    background #050912
+
+@media (min-width: 640px)
+  .event-row
+    flex-direction row
+    align-items center
+    justify-content space-between
+
+.event-left
+  display flex
+  align-items center
+  gap 0.85rem
+
+.time-box
+  width 4rem
+  height 3rem
+  border-radius 0.75rem
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  flex-shrink 0
+  border 1px solid
+
+  &.box-red
+    .sched-light &
+      background #fee2e2
+      border-color #fca5a5
+      color #dc2626
+    .sched-dark &
+      background rgba(239, 68, 68, 0.15)
+      border-color rgba(239, 68, 68, 0.4)
+      color #ef4444
+
+  &.box-gold
+    .sched-light &
+      background #fef3c7
+      border-color #fde68a
+      color #b45309
+    .sched-dark &
+      background rgba(245, 197, 24, 0.15)
+      border-color rgba(245, 197, 24, 0.4)
+      color #f5c518
+
+  &.box-pink
+    .sched-light &
+      background #fce7f3
+      border-color #fbcfe8
+      color #db2777
+    .sched-dark &
+      background rgba(236, 72, 153, 0.15)
+      border-color rgba(236, 72, 153, 0.4)
+      color #ec4899
+
+  &.box-emerald
+    .sched-light &
+      background #d1fae5
+      border-color #a7f3d0
+      color #059669
+    .sched-dark &
+      background rgba(16, 185, 129, 0.15)
+      border-color rgba(16, 185, 129, 0.4)
+      color #10b981
+
+  &.box-blue
+    .sched-light &
+      background #e0f2fe
+      border-color #bae6fd
+      color #0284c7
+    .sched-dark &
+      background rgba(59, 130, 246, 0.15)
+      border-color rgba(59, 130, 246, 0.4)
+      color #60a5fa
+
+.time-main
+  font-size 0.875rem
+  font-weight 800
+  font-family monospace
+
+.time-label
+  font-size 0.55rem
+  font-weight 700
+
+.event-info
+  display flex
+  flex-direction column
+  gap 0.15rem
+
+.event-title-row
+  display flex
+  align-items center
+  gap 0.5rem
+
+.event-title
+  font-size 0.875rem
+  font-weight 800
+  margin 0
+
+  .sched-light &
+    color #0f172a
+
+  .sched-dark &
+    color #ffffff
+
+.event-tag
+  font-size 0.55rem
+  font-weight 700
+  padding 0.1rem 0.4rem
+  border-radius 0.25rem
+  text-transform uppercase
+
+  &.tag-red
+    .sched-light &
+      background #fee2e2
+      color #dc2626
+    .sched-dark &
+      background rgba(239, 68, 68, 0.2)
+      color #ef4444
+
+  &.tag-gold
+    .sched-light &
+      background #fef3c7
+      color #b45309
+    .sched-dark &
+      background rgba(245, 197, 24, 0.2)
+      color #f5c518
+
+  &.tag-pink
+    .sched-light &
+      background #fce7f3
+      color #db2777
+    .sched-dark &
+      background rgba(236, 72, 153, 0.2)
+      color #f472b6
+
+  &.tag-emerald
+    .sched-light &
+      background #d1fae5
+      color #059669
+    .sched-dark &
+      background rgba(16, 185, 129, 0.2)
+      color #34d399
+
+  &.tag-blue
+    .sched-light &
+      background #e0f2fe
+      color #0284c7
+    .sched-dark &
+      background rgba(59, 130, 246, 0.2)
+      color #60a5fa
+
+.event-desc
+  font-size 0.75rem
+  margin 0
+
+  .sched-light &
+    color #475569
+
+  .sched-dark &
+    color #94a3b8
+
+.event-time-start
+  font-size 0.75rem
+  font-family monospace
+  font-weight 700
+  flex-shrink 0
+
+  &.time-red
+    color #ef4444
+
+  &.time-gold
+    .sched-light &
+      color #b45309
+    .sched-dark &
+      color #f5c518
+
+  &.time-pink
+    color #f472b6
+
+  &.time-emerald
+    .sched-light &
+      color #059669
+    .sched-dark &
+      color #34d399
+
+  &.time-blue
+    .sched-light &
+      color #0284c7
+    .sched-dark &
+      color #60a5fa
+
+@keyframes ping
+  75%, 100%
+    transform scale(2)
+    opacity 0
+</style>

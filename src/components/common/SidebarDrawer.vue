@@ -1,187 +1,109 @@
-<template>
-  <Teleport to="body">
-    <!-- Backdrop Overlay -->
-    <Transition name="fade">
-      <div
-        v-if="isOpen"
-        class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm transition-opacity"
-        @click="$emit('close')"
-      ></div>
-    </Transition>
+<template lang="pug">
+Teleport(to="body")
+  //- Backdrop Overlay
+  Transition(name="fade")
+    .backdrop-overlay(
+      v-if="isOpen"
+      @click="$emit('close')"
+    )
 
-    <!-- Slide-out Drawer Box -->
-    <Transition :name="drawerPosition === 'left' ? 'slide-left' : 'slide-right'">
-      <div
-        v-if="isOpen"
-        class="fixed top-0 bottom-0 z-50 w-80 bg-[#080d19]/95 border-[#1b2b46] shadow-2xl flex flex-col justify-between select-none font-sans"
-        :class="[
-          drawerPosition === 'left' ? 'left-0 border-r' : 'right-0 border-l'
-        ]"
-      >
-        <!-- Header Menu -->
-        <div class="p-5 border-b border-[#18263e] flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#f5c518]/20 to-[#b45309]/30 border border-[#f5c518]/40 flex items-center justify-center text-xl shadow-[0_0_12px_rgba(245,197,24,0.2)]">
-              📜
-            </div>
-            <div>
-              <h2 class="font-bold text-base bg-gradient-to-r from-[#fef08a] via-[#f5c518] to-[#b45309] bg-clip-text text-transparent uppercase tracking-wider font-serif">
-                THIÊN THƯ MÔN
-              </h2>
-              <span class="text-[10px] uppercase tracking-widest text-[#64748b] block font-mono">
-                THIÊN THƯ QUYẾT BẢNG
-              </span>
-            </div>
-          </div>
+  //- Slide-out Drawer Box
+  Transition(:name="drawerPosition === 'left' ? 'slide-left' : 'slide-right'")
+    .drawer-box(
+      v-if="isOpen"
+      :class="[drawerPosition === 'left' ? 'pos-left' : 'pos-right', themeStore.theme === 'light' ? 'drawer-light' : 'drawer-dark']"
+    )
+      //- Header Menu
+      .drawer-header
+        .brand-group
+          .brand-logo 📜
+          .brand-info
+            h2.brand-title THIÊN THƯ MÔN
+            span.brand-subtitle THIÊN THƯ QUYẾT BẢNG
 
-          <button
-            @click="$emit('close')"
-            class="w-8 h-8 rounded-lg bg-[#0f172a] border border-[#1e293b] text-[#94a3b8] hover:text-white hover:border-[#3b82f6] flex items-center justify-center transition"
-            title="Đóng Menu"
-          >
-            ✕
-          </button>
-        </div>
+        button.close-btn(
+          @click="$emit('close')"
+          title="Đóng Menu"
+        ) ✕
 
-        <!-- Position & Theme Settings Bar -->
-        <div class="px-5 py-2.5 bg-[#050810] border-b border-[#131f33] flex flex-col gap-2 text-xs text-[#94a3b8] font-serif">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-medium text-[#64748b]">Vị trí Bảng:</span>
-            <div class="flex bg-[#0f172a] p-0.5 rounded-lg border border-[#1e293b]">
-              <button
-                @click="setDrawerPosition('left')"
-                class="px-2 py-0.5 text-[10px] rounded font-semibold transition cursor-pointer"
-                :class="drawerPosition === 'left' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
-              >
-                ⬅️ Trái
-              </button>
-              <button
-                @click="setDrawerPosition('right')"
-                class="px-2 py-0.5 text-[10px] rounded font-semibold transition cursor-pointer"
-                :class="drawerPosition === 'right' ? 'bg-[#3b82f6] text-white shadow' : 'text-[#64748b] hover:text-white'"
-              >
-                Phải ➡️
-              </button>
-            </div>
-          </div>
+      //- Position & Theme Settings Bar
+      .settings-bar
+        .setting-row
+          span.setting-label Vị trí Bảng:
+          .btn-group-sm
+            button.setting-btn(
+              @click="setDrawerPosition('left')"
+              :class="drawerPosition === 'left' ? 'btn-active' : 'btn-inactive'"
+            ) ⬅️ Trái
+            button.setting-btn(
+              @click="setDrawerPosition('right')"
+              :class="drawerPosition === 'right' ? 'btn-active' : 'btn-inactive'"
+            ) Phải ➡️
 
-          <div class="flex items-center justify-between pt-1.5 border-t border-[#131f33]/60">
-            <span class="text-[11px] font-medium text-[#64748b]">Giao Diện:</span>
-            <div class="flex bg-[#0f172a] p-0.5 rounded-lg border border-[#1e293b]">
-              <button
-                @click="themeStore.setTheme('dark')"
-                class="px-2 py-0.5 text-[10px] rounded font-semibold transition flex items-center gap-1 cursor-pointer"
-                :class="themeStore.theme === 'dark' ? 'bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 shadow' : 'text-[#64748b] hover:text-white'"
-              >
-                🌙 Tối (Dạ)
-              </button>
-              <button
-                @click="themeStore.setTheme('light')"
-                class="px-2 py-0.5 text-[10px] rounded font-semibold transition flex items-center gap-1 cursor-pointer"
-                :class="themeStore.theme === 'light' ? 'bg-amber-500 text-white shadow' : 'text-[#64748b] hover:text-white'"
-              >
-                ☀️ Sáng (Nhật)
-              </button>
-            </div>
-          </div>
-        </div>
+        .setting-row.setting-border-top
+          span.setting-label Giao Diện:
+          .btn-group-sm
+            button.setting-btn(
+              @click="themeStore.setTheme('dark')"
+              :class="themeStore.theme === 'dark' ? 'btn-dark-active' : 'btn-inactive'"
+            ) 🌙 Tối (Dạ)
+            button.setting-btn(
+              @click="themeStore.setTheme('light')"
+              :class="themeStore.theme === 'light' ? 'btn-light-active' : 'btn-inactive'"
+            ) ☀️ Sáng (Nhật)
 
-        <!-- Menu Links -->
-        <nav class="p-4 space-y-2 overflow-y-auto flex-1 font-serif">
-          <RouterLink
-            v-for="item in menuItems"
-            :key="item.path"
-            :to="item.path"
-            @click="$emit('close')"
-            class="group relative flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all border font-medium text-sm overflow-hidden"
-            :class="[
-              isActive(item.path)
-                ? 'bg-gradient-to-r from-[#1d4ed8]/30 to-[#3b82f6]/10 border-[#3b82f6] text-white shadow-[0_0_15px_rgba(59,130,246,0.2)]'
-                : 'bg-[#0a101d]/60 border-[#142033] text-[#94a3b8] hover:text-white hover:border-[#2b4166] hover:bg-[#101a2d]'
-            ]"
-          >
-            <!-- Highlight indicator line -->
-            <span
-              v-if="isActive(item.path)"
-              class="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#3b82f6] shadow-[0_0_8px_#3b82f6]"
-            ></span>
+      //- Menu Links
+      nav.drawer-nav
+        RouterLink.nav-link-card(
+          v-for="item in menuItems"
+          :key="item.path"
+          :to="item.path"
+          @click="$emit('close')"
+          :class="[isActive(item.path) ? 'link-active' : 'link-inactive']"
+        )
+          span.active-indicator(v-if="isActive(item.path)")
+          span.link-icon {{ item.icon }}
 
-            <span class="text-xl shrink-0 transition-transform group-hover:scale-110">
-              {{ item.icon }}
-            </span>
+          .link-content
+            .link-title-row
+              span.link-title {{ item.name }}
+              span.item-badge(v-if="item.badge") {{ item.badge }}
+            span.link-desc {{ item.desc }}
 
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-sm tracking-wide" :class="isActive(item.path) ? 'text-white' : 'text-[#e2e8f0]'">
-                  {{ item.name }}
-                </span>
-                <span v-if="item.badge" class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/30">
-                  {{ item.badge }}
-                </span>
-              </div>
-              <span class="text-[11px] text-[#64748b] truncate block mt-0.5 group-hover:text-[#94a3b8] transition">
-                {{ item.desc }}
-              </span>
-            </div>
-          </RouterLink>
-        </nav>
+      //- Footer Drawer Auth / User Profile
+      .drawer-footer
+        .user-card(v-if="authStore.isAuthenticated")
+          .user-main-row
+            .user-avatar-group
+              img.avatar-img(
+                :src="authStore.user?.avatar"
+                :alt="authStore.user?.username"
+              )
+              .user-details
+                span.user-name {{ authStore.user?.nickname || authStore.user?.username }}
+                span.user-class {{ authStore.user?.className || 'Bang Chúng' }}
 
-        <!-- Footer Drawer Auth / User Profile -->
-        <div class="p-4 border-t border-[#18263e] bg-[#050912] space-y-3 font-serif">
-          <div v-if="authStore.isAuthenticated" class="bg-[#0b1220] border border-[#1a2942] rounded-xl p-3 space-y-2">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <img :src="authStore.user?.avatar" :alt="authStore.user?.username" class="w-9 h-9 rounded-lg object-cover border border-[#f5c518]/50" />
-                <div>
-                  <span class="text-xs font-bold text-white block max-w-[120px] truncate">
-                    {{ authStore.user?.nickname || authStore.user?.username }}
-                  </span>
-                  <span class="text-[10px] text-[#34d399] font-medium block">
-                    {{ authStore.user?.className || 'Bang Chúng' }}
-                  </span>
-                </div>
-              </div>
+            RouterLink.profile-btn(
+              to="/profile"
+              @click="$emit('close')"
+            ) Hồ Sơ
 
-              <RouterLink
-                to="/profile"
-                @click="$emit('close')"
-                class="px-2.5 py-1 bg-[#16233b] hover:bg-[#253956] text-[#38bdf8] border border-[#233859] rounded-lg text-[10px] font-bold transition"
-              >
-                Hồ Sơ
-              </RouterLink>
-            </div>
+          .user-sub-row
+            span.sub-label Chức Vị Thẩm Quyền:
+            span.role-value(
+              :class="{ 'role-duong-gia': userRole === 'Đương Gia', 'role-duong-chu': userRole === 'Đường Chủ' }"
+            ) {{ userRole }}
 
-            <div class="flex items-center justify-between text-[11px] pt-1 border-t border-[#142033]">
-              <span class="text-[#64748b]">Chức Vị Thẩm Quyền:</span>
-              <span
-                class="font-bold"
-                :class="{
-                  'text-[#f5c518]': authStore.user?.primaryRole === 'Đương Gia',
-                  'text-[#38bdf8]': authStore.user?.primaryRole === 'Đường Chủ',
-                  'text-[#94a3b8]': authStore.user?.primaryRole === 'Bang Chúng'
-                }"
-              >
-                {{ authStore.user?.primaryRole || (authStore.canEdit ? 'Đương Gia' : 'Bang Chúng') }}
-              </span>
-            </div>
-          </div>
-
-          <button
-            v-else
-            @click="authStore.loginWithDiscord()"
-            class="w-full py-2.5 bg-gradient-to-r from-[#5865F2] to-[#404EED] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(88,101,242,0.3)] hover:brightness-110"
-          >
-            <span>👾</span>
-            <span>Quy Nhập Discord</span>
-          </button>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
+        button.discord-login-btn(
+          v-else
+          @click="authStore.loginWithDiscord()"
+        )
+          span 👾
+          span Quy Nhập Discord
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '../../stores/authStore';
 import { useThemeStore } from '../../stores/themeStore';
@@ -201,6 +123,10 @@ const setDrawerPosition = (pos) => {
   drawerPosition.value = pos;
   localStorage.setItem('ttm_drawer_pos', pos);
 };
+
+const userRole = computed(() => {
+  return authStore.user?.primaryRole || (authStore.canEdit ? 'Đương Gia' : 'Bang Chúng');
+});
 
 const menuItems = [
   {
@@ -260,13 +186,490 @@ const isActive = (path) => {
 };
 </script>
 
-<style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+<style lang="stylus" scoped>
+.backdrop-overlay
+  position fixed
+  inset 0
+  z-index 50
+  background rgba(0, 0, 0, 0.7)
+  backdrop-filter blur(4px)
 
-.slide-left-enter-active, .slide-left-leave-active { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.slide-left-enter-from, .slide-left-leave-to { transform: translateX(-100%); }
+.drawer-box
+  position fixed
+  top 0
+  bottom 0
+  z-index 50
+  width 20rem
+  display flex
+  flex-direction column
+  justify-content space-between
+  user-select none
+  font-family 'Lora', serif
+  box-shadow 0 25px 50px -12px rgba(0, 0, 0, 0.5)
 
-.slide-right-enter-active, .slide-right-leave-active { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.slide-right-enter-from, .slide-right-leave-to { transform: translateX(100%); }
+  &.pos-left
+    left 0
+    border-right 1px solid
+
+  &.pos-right
+    right 0
+    border-left 1px solid
+
+  &.drawer-light
+    background rgba(255, 255, 255, 0.98)
+    border-color #cbd5e1
+    color #0f172a
+
+  &.drawer-dark
+    background rgba(8, 13, 25, 0.96)
+    border-color #1b2b46
+    color #e2e8f0
+
+.drawer-header
+  padding 1.25rem
+  border-bottom 1px solid
+  display flex
+  align-items center
+  justify-content space-between
+
+  .drawer-light &
+    border-color #e2e8f0
+
+  .drawer-dark &
+    border-color #18263e
+
+.brand-group
+  display flex
+  align-items center
+  gap 0.75rem
+
+.brand-logo
+  width 2.5rem
+  height 2.5rem
+  border-radius 0.75rem
+  display flex
+  align-items center
+  justify-content center
+  font-size 1.25rem
+
+  .drawer-light &
+    background linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(180, 83, 9, 0.25))
+    border 1px solid rgba(217, 119, 6, 0.4)
+
+  .drawer-dark &
+    background linear-gradient(135deg, rgba(245, 197, 24, 0.2), rgba(180, 83, 9, 0.3))
+    border 1px solid rgba(245, 197, 24, 0.4)
+
+.brand-title
+  font-size 1rem
+  font-weight 800
+  letter-spacing 0.05em
+  text-transform uppercase
+  margin 0
+
+  .drawer-light &
+    background linear-gradient(to right, #b45309, #d97706)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+  .drawer-dark &
+    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+.brand-subtitle
+  font-size 0.6rem
+  letter-spacing 0.15em
+  text-transform uppercase
+  font-family monospace
+  display block
+
+  .drawer-light &
+    color #64748b
+
+  .drawer-dark &
+    color #94a3b8
+
+.close-btn
+  width 2rem
+  height 2rem
+  border-radius 0.5rem
+  display flex
+  align-items center
+  justify-content center
+  cursor pointer
+  transition all 0.2s ease
+
+  .drawer-light &
+    background #f1f5f9
+    border 1px solid #cbd5e1
+    color #64748b
+    &:hover
+      background #e2e8f0
+      color #0f172a
+
+  .drawer-dark &
+    background #0f172a
+    border 1px solid #1e293b
+    color #94a3b8
+    &:hover
+      color #ffffff
+      border-color #3b82f6
+
+.settings-bar
+  padding 0.65rem 1.25rem
+  border-bottom 1px solid
+  display flex
+  flex-direction column
+  gap 0.5rem
+  font-size 0.75rem
+
+  .drawer-light &
+    background #f8fafc
+    border-color #e2e8f0
+
+  .drawer-dark &
+    background #050810
+    border-color #131f33
+
+.setting-row
+  display flex
+  align-items center
+  justify-content space-between
+
+  &.setting-border-top
+    padding-top 0.4rem
+    border-top 1px solid
+    .drawer-light &
+      border-color #e2e8f0
+    .drawer-dark &
+      border-color rgba(19, 31, 51, 0.6)
+
+.setting-label
+  font-size 0.7rem
+  font-weight 600
+
+  .drawer-light &
+    color #64748b
+
+  .drawer-dark &
+    color #94a3b8
+
+.btn-group-sm
+  display flex
+  padding 0.15rem
+  border-radius 0.5rem
+  border 1px solid
+
+  .drawer-light &
+    background #ffffff
+    border-color #cbd5e1
+
+  .drawer-dark &
+    background #0f172a
+    border-color #1e293b
+
+.setting-btn
+  padding 0.15rem 0.5rem
+  font-size 0.65rem
+  font-weight 600
+  border-radius 0.25rem
+  border none
+  cursor pointer
+  transition all 0.15s ease
+
+  &.btn-active
+    background #2563eb
+    color #ffffff
+
+  &.btn-dark-active
+    background rgba(245, 197, 24, 0.2)
+    color #f5c518
+    border 1px solid rgba(245, 197, 24, 0.4)
+
+  &.btn-light-active
+    background #f59e0b
+    color #ffffff
+
+  &.btn-inactive
+    background transparent
+
+    .drawer-light &
+      color #64748b
+      &:hover
+        color #0f172a
+
+    .drawer-dark &
+      color #94a3b8
+      &:hover
+        color #ffffff
+
+.drawer-nav
+  padding 1rem
+  display flex
+  flex-direction column
+  gap 0.5rem
+  overflow-y auto
+  flex 1
+
+.nav-link-card
+  position relative
+  display flex
+  align-items center
+  gap 0.85rem
+  padding 0.75rem 1rem
+  border-radius 0.75rem
+  border 1px solid
+  text-decoration none
+  transition all 0.2s ease
+  overflow hidden
+
+  &.link-active
+    .drawer-light &
+      background linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.05))
+      border-color #2563eb
+      color #1d4ed8
+
+    .drawer-dark &
+      background linear-gradient(to right, rgba(29, 78, 216, 0.3), rgba(59, 130, 246, 0.1))
+      border-color #3b82f6
+      color #ffffff
+      box-shadow 0 0 15px rgba(59, 130, 246, 0.2)
+
+  &.link-inactive
+    .drawer-light &
+      background #ffffff
+      border-color #e2e8f0
+      color #475569
+      &:hover
+        background #f8fafc
+        border-color #cbd5e1
+        color #0f172a
+
+    .drawer-dark &
+      background rgba(10, 16, 29, 0.6)
+      border-color #142033
+      color #94a3b8
+      &:hover
+        background #101a2d
+        border-color #2b4166
+        color #ffffff
+
+.active-indicator
+  position absolute
+  left 0
+  top 0.5rem
+  bottom 0.5rem
+  width 4px
+  border-top-right-radius 4px
+  border-bottom-right-radius 4px
+  background #3b82f6
+
+.link-icon
+  font-size 1.25rem
+  flex-shrink 0
+
+.link-content
+  flex 1
+  min-width 0
+
+.link-title-row
+  display flex
+  align-items center
+  justify-content space-between
+
+.link-title
+  font-weight 700
+  font-size 0.85rem
+
+.item-badge
+  font-size 0.55rem
+  padding 0.1rem 0.4rem
+  border-radius 9999px
+  font-weight 800
+  text-transform uppercase
+
+  .drawer-light &
+    background #fef3c7
+    color #b45309
+    border 1px solid #fde68a
+
+  .drawer-dark &
+    background rgba(245, 197, 24, 0.2)
+    color #f5c518
+    border 1px solid rgba(245, 197, 24, 0.3)
+
+.link-desc
+  font-size 0.65rem
+  display block
+  margin-top 0.15rem
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+
+  .drawer-light &
+    color #64748b
+
+  .drawer-dark &
+    color #64748b
+
+.drawer-footer
+  padding 1rem
+  border-top 1px solid
+
+  .drawer-light &
+    background #f8fafc
+    border-color #e2e8f0
+
+  .drawer-dark &
+    background #050912
+    border-color #18263e
+
+.user-card
+  padding 0.75rem
+  border-radius 0.75rem
+  border 1px solid
+
+  .drawer-light &
+    background #ffffff
+    border-color #cbd5e1
+
+  .drawer-dark &
+    background #0b1220
+    border-color #1a2942
+
+.user-main-row
+  display flex
+  align-items center
+  justify-content space-between
+
+.user-avatar-group
+  display flex
+  align-items center
+  gap 0.65rem
+
+.avatar-img
+  width 2.25rem
+  height 2.25rem
+  border-radius 0.5rem
+  object-fit cover
+
+  .drawer-light &
+    border 1px solid rgba(180, 83, 9, 0.5)
+
+  .drawer-dark &
+    border 1px solid rgba(245, 197, 24, 0.5)
+
+.user-name
+  font-size 0.75rem
+  font-weight 700
+  display block
+  max-width 120px
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+
+  .drawer-light &
+    color #0f172a
+
+  .drawer-dark &
+    color #ffffff
+
+.user-class
+  font-size 0.65rem
+  font-weight 600
+  display block
+  color #10b981
+
+.profile-btn
+  padding 0.25rem 0.65rem
+  border-radius 0.5rem
+  font-size 0.65rem
+  font-weight 700
+  text-decoration none
+  transition all 0.15s ease
+
+  .drawer-light &
+    background #e0f2fe
+    color #0284c7
+    border 1px solid #bae6fd
+    &:hover
+      background #bae6fd
+
+  .drawer-dark &
+    background #16233b
+    color #38bdf8
+    border 1px solid #233859
+    &:hover
+      background #253956
+
+.user-sub-row
+  display flex
+  align-items center
+  justify-content space-between
+  font-size 0.65rem
+  padding-top 0.4rem
+  margin-top 0.4rem
+  border-top 1px solid
+
+  .drawer-light &
+    border-color #e2e8f0
+
+  .drawer-dark &
+    border-color #142033
+
+.sub-label
+  .drawer-light &
+    color #64748b
+
+  .drawer-dark &
+    color #94a3b8
+
+.role-value
+  font-weight 700
+
+  &.role-duong-gia
+    color #b45309
+    .drawer-dark &
+      color #f5c518
+
+  &.role-duong-chu
+    color #0284c7
+    .drawer-dark &
+      color #38bdf8
+
+.discord-login-btn
+  width 100%
+  padding 0.65rem
+  background linear-gradient(to right, #5865F2, #404EED)
+  color #ffffff
+  font-weight 700
+  font-size 0.75rem
+  border-radius 0.75rem
+  border none
+  cursor pointer
+  display flex
+  align-items center
+  justify-content center
+  gap 0.5rem
+  transition all 0.2s ease
+  box-shadow 0 0 15px rgba(88, 101, 242, 0.3)
+
+  &:hover
+    filter brightness(1.1)
+
+.fade-enter-active, .fade-leave-active
+  transition opacity 0.2s ease
+.fade-enter-from, .fade-leave-to
+  opacity 0
+
+.slide-left-enter-active, .slide-left-leave-active
+  transition transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+.slide-left-enter-from, .slide-left-leave-to
+  transform translateX(-100%)
+
+.slide-right-enter-active, .slide-right-leave-active
+  transition transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+.slide-right-enter-from, .slide-right-leave-to
+  transform translateX(100%)
 </style>

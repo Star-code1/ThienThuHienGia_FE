@@ -1,100 +1,61 @@
-<template>
-  <div
-    class="relative group py-1 px-1.5 flex items-center gap-1.5 border-b border-dashed border-[#1a273b] hover:bg-[#142033]/60 transition cursor-pointer select-none"
-    @click="onRowClick"
-  >
-    <!-- Checkbox tích chọn -->
-    <div
-      class="w-3.5 h-3.5 rounded-sm border border-[#2e405e] bg-[#0c1322] flex items-center justify-center shrink-0 transition"
-      :class="{ 'border-[#3b82f6] bg-[#1d4ed8]/30 text-[#60a5fa]': slot.isChecked }"
-    >
-      <svg v-if="slot.isChecked" class="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20">
-        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-      </svg>
-    </div>
+<template lang="pug">
+.slot-row(
+  :class="themeStore.theme === 'light' ? 'row-light' : 'row-dark'"
+  @click="onRowClick"
+)
+  //- Checkbox tích chọn
+  .checkbox-box(
+    :class="{ 'checked': slot.isChecked }"
+  )
+    svg.check-svg(v-if="slot.isChecked" viewBox="0 0 20 20")
+      path(d="M0 11l2-2 5 5L18 3l2 2L7 18z")
 
-    <!-- Icon Phái từ thư mục assets -->
-    <div class="relative shrink-0 flex items-center justify-center">
-      <img
-        v-if="classInfo.icon"
-        :src="classInfo.icon"
-        :alt="classInfo.name"
-        class="w-5 h-5 object-contain shrink-0 drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]"
-      />
-      <div
-        v-else
-        class="w-5 h-5 rounded-full bg-[#18263a] border flex items-center justify-center text-[9px] font-bold"
-        :style="{ borderColor: classInfo.hex, color: classInfo.hex, backgroundColor: `${classInfo.hex}15` }"
-      >
-        {{ classInfo.short || '?' }}
-      </div>
-    </div>
+  //- Icon Phái
+  .class-icon-box
+    img.class-img(
+      v-if="classInfo.icon"
+      :src="classInfo.icon"
+      :alt="classInfo.name"
+    )
+    .class-short-badge(
+      v-else
+      :style="{ borderColor: classInfo.hex, color: classInfo.hex, backgroundColor: `${classInfo.hex}15` }"
+    ) {{ classInfo.short || '?' }}
 
-    <!-- Tên & Chú thích (Note viết chay) -->
-    <div class="flex-1 min-w-0 flex flex-col justify-center">
-      <div class="flex items-center gap-1 min-w-0 flex-wrap">
-        <!-- Tên người chơi -->
-        <span
-          class="text-xs font-medium truncate leading-tight tracking-wide"
-          :style="{ color: nameColor }"
-        >
-          {{ slot.displayName || slot.username || '-- Cần xếp --' }}
-        </span>
+  //- Tên & Chú thích
+  .slot-info
+    .slot-name-row
+      span.slot-name(:style="{ color: nameColor }")
+        | {{ slot.displayName || slot.username || '-- Cần xếp --' }}
 
-        <!-- Tag ĐÁNH THUÊ -->
-        <span
-          v-if="isExternalMember"
-          class="text-[8px] px-1 py-0.2 rounded bg-[#f5c518]/20 text-[#f5c518] border border-[#f5c518]/40 font-bold uppercase tracking-wider shrink-0 font-serif leading-none"
-          title="Lính Đánh Thuê Ngoại Bang"
-        >
-          ĐÁNH THUÊ
-        </span>
-      </div>
+      span.mercenary-tag(v-if="isExternalMember" title="Lính Đánh Thuê Ngoại Bang") ĐÁNH THUÊ
 
-      <!-- Note viết chay dưới tên: Cho phép sửa khi bật chế độ Edit -->
-      <div class="mt-0.5" @click.stop>
-        <input
-          v-if="isEditMode && slot.userId"
-          v-model="slot.note"
-          placeholder="Viết note..."
-          class="w-full bg-[#090d16] text-[#cbd5e1] placeholder-[#475569] text-[10px] px-1 py-0.5 rounded border border-[#1e293b] focus:outline-none focus:border-[#3b82f6]"
-        />
-        <span
-          v-else-if="slot.note"
-          class="text-[10px] text-[#94a3b8] leading-tight truncate font-sans block"
-        >
-          {{ slot.note }}
-        </span>
-      </div>
-    </div>
+    .slot-note-wrapper(@click.stop)
+      input.slot-note-input(
+        v-if="isEditMode && slot.userId"
+        v-model="slot.note"
+        placeholder="Viết note..."
+      )
+      span.slot-note-text(v-else-if="slot.note") {{ slot.note }}
 
-    <!-- Action buttons khi ở chế độ Edit -->
-    <div v-if="isEditMode && slot.userId" class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition">
-      <!-- Nút Gạt khỏi slot -->
-      <button
-        @click.stop="$emit('remove')"
-        class="w-4 h-4 rounded bg-[#334155]/60 border border-[#475569] text-[#cbd5e1] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white hover:border-[#ef5757] transition"
-        title="Gạt khỏi vị trí (Trả về Pool)"
-      >
-        ✕
-      </button>
+  //- Action buttons khi ở chế độ Edit
+  .slot-actions(v-if="isEditMode && slot.userId")
+    button.action-btn.btn-remove(
+      @click.stop="$emit('remove')"
+      title="Gạt khỏi vị trí (Trả về Pool)"
+    ) ✕
 
-      <!-- Nút Xóa Vĩnh Viễn Lính Đánh Thuê -->
-      <button
-        v-if="isExternalMember"
-        @click.stop="$emit('deleteExternal')"
-        class="w-4 h-4 rounded bg-[#7f1d1d]/40 border border-[#ef5757]/60 text-[#ef5757] text-[10px] flex items-center justify-center hover:bg-[#ef5757] hover:text-white transition"
-        title="Xóa vĩnh viễn Lính Đánh Thuê này"
-      >
-        🗑️
-      </button>
-    </div>
-  </div>
+    button.action-btn.btn-delete(
+      v-if="isExternalMember"
+      @click.stop="$emit('deleteExternal')"
+      title="Xóa vĩnh viễn Lính Đánh Thuê này"
+    ) 🗑️
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { getClassInfo } from '../../theme/classColors';
+import { useThemeStore } from '../../stores/themeStore';
 
 const props = defineProps({
   slot: { type: Object, required: true },
@@ -102,6 +63,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['toggleCheck', 'remove', 'clickSlot', 'deleteExternal']);
+const themeStore = useThemeStore();
 
 const isExternalMember = computed(() => {
   return !!(
@@ -116,8 +78,8 @@ const classInfo = computed(() => {
 });
 
 const nameColor = computed(() => {
-  if (!props.slot.displayName && !props.slot.username) return '#475569';
-  return classInfo.value.hex || '#e2e8f0';
+  if (!props.slot.displayName && !props.slot.username) return '#64748b';
+  return classInfo.value.hex || (themeStore.theme === 'light' ? '#0f172a' : '#e2e8f0');
 });
 
 const onRowClick = () => {
@@ -128,3 +90,205 @@ const onRowClick = () => {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.slot-row
+  position relative
+  padding 0.25rem 0.375rem
+  display flex
+  align-items center
+  gap 0.375rem
+  border-bottom 1px dashed
+  transition background 0.15s ease
+  cursor pointer
+  user-select none
+
+  &.row-light
+    border-color #e2e8f0
+    &:hover
+      background #f1f5f9
+
+  &.row-dark
+    border-color #1a273b
+    &:hover
+      background rgba(20, 32, 51, 0.6)
+
+.checkbox-box
+  width 0.875rem
+  height 0.875rem
+  border-radius 0.125rem
+  border 1px solid
+  display flex
+  align-items center
+  justify-content center
+  flex-shrink 0
+  transition all 0.15s ease
+
+  .row-light &
+    border-color #cbd5e1
+    background #ffffff
+
+  .row-dark &
+    border-color #2e405e
+    background #0c1322
+
+  &.checked
+    background #2563eb
+    border-color #2563eb
+    color #ffffff
+
+.check-svg
+  width 0.65rem
+  height 0.65rem
+  fill currentColor
+
+.class-icon-box
+  position relative
+  flex-shrink 0
+  display flex
+  align-items center
+  justify-content center
+
+.class-img
+  width 1.25rem
+  height 1.25rem
+  object-fit contain
+  flex-shrink 0
+
+.class-short-badge
+  width 1.25rem
+  height 1.25rem
+  border-radius 9999px
+  border 1px solid
+  display flex
+  align-items center
+  justify-content center
+  font-size 0.55rem
+  font-weight 700
+
+.slot-info
+  flex 1
+  min-width 0
+  display flex
+  flex-direction column
+  justify-content center
+
+.slot-name-row
+  display flex
+  align-items center
+  gap 0.25rem
+  min-width 0
+  flex-wrap wrap
+
+.slot-name
+  font-size 0.75rem
+  font-weight 600
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+  line-height 1.2
+
+.mercenary-tag
+  font-size 0.5rem
+  padding 0.05rem 0.25rem
+  border-radius 0.125rem
+  font-weight 700
+  text-transform uppercase
+  flex-shrink 0
+  font-family 'Lora', serif
+
+  .row-light &
+    background #fef3c7
+    color #b45309
+    border 1px solid #fde68a
+
+  .row-dark &
+    background rgba(245, 197, 24, 0.2)
+    color #f5c518
+    border 1px solid rgba(245, 197, 24, 0.4)
+
+.slot-note-wrapper
+  margin-top 0.1rem
+
+.slot-note-input
+  width 100%
+  font-size 0.625rem
+  padding 0.1rem 0.25rem
+  border-radius 0.25rem
+  border 1px solid
+  outline none
+  box-sizing border-box
+
+  .row-light &
+    background #ffffff
+    border-color #cbd5e1
+    color #0f172a
+    &::placeholder
+      color #94a3b8
+
+  .row-dark &
+    background #090d16
+    border-color #1e293b
+    color #cbd5e1
+    &::placeholder
+      color #475569
+
+.slot-note-text
+  font-size 0.625rem
+  display block
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+
+  .row-light &
+    color #64748b
+
+  .row-dark &
+    color #94a3b8
+
+.slot-actions
+  display flex
+  align-items center
+  gap 0.25rem
+  flex-shrink 0
+  opacity 0
+  transition opacity 0.15s ease
+
+  .slot-row:hover &
+    opacity 1
+
+.action-btn
+  width 1rem
+  height 1rem
+  border-radius 0.25rem
+  font-size 0.625rem
+  display flex
+  align-items center
+  justify-content center
+  cursor pointer
+  border 1px solid
+  transition all 0.15s ease
+
+  &.btn-remove
+    .row-light &
+      background #f1f5f9
+      border-color #cbd5e1
+      color #475569
+    .row-dark &
+      background rgba(51, 65, 85, 0.6)
+      border-color #475569
+      color #cbd5e1
+
+    &:hover
+      background #ef5757 !important
+      color #ffffff !important
+      border-color #ef5757 !important
+
+  &.btn-delete
+    background rgba(127, 29, 29, 0.4)
+    border-color rgba(239, 68, 68, 0.6)
+    color #ef5757
+    &:hover
+      background #ef5757
+      color #ffffff
+</style>

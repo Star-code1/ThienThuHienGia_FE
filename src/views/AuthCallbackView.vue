@@ -1,85 +1,52 @@
-<template>
-  <div class="relative min-h-[calc(100vh-57px)] flex items-center justify-center p-6 text-[#e2e8f0] select-none font-sans overflow-hidden">
-    <!-- Xianxia Ambient Glow & Background -->
-    <div class="fixed inset-0 pointer-events-none z-0 bg-[#060a12]">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#f5c518]/10 rounded-full blur-[130px]"></div>
-    </div>
+<template lang="pug">
+.callback-container(
+  :class="themeStore.theme === 'light' ? 'auth-light' : 'auth-dark'"
+)
+  .auth-card
+    //- Loading State
+    .state-box(v-if="loading")
+      .spinner-wrapper
+        .spinner-ring
+        span.spinner-icon 📜
+      .state-text-group
+        h2.state-title ĐANG TRA ẤN ĐỊNH DANH TÍNH
+        p.state-desc Đang tra cứu tiên sổ đệ tử trực thuộc Thiên Thư Môn...
 
-    <div class="relative z-10 w-full max-w-md bg-[#080d19]/90 border border-[#1e304d] rounded-2xl p-8 shadow-2xl backdrop-blur-md text-center">
-      <!-- Loading State -->
-      <div v-if="loading" class="space-y-6 py-4 font-serif">
-        <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
-          <div class="absolute inset-0 rounded-full border-2 border-t-[#f5c518] border-r-transparent border-b-[#38bdf8] border-l-transparent animate-spin"></div>
-          <span class="text-3xl">📜</span>
-        </div>
-        <div>
-          <h2 class="text-xl font-bold font-serif bg-gradient-to-r from-[#fffbeb] via-[#f5c518] to-[#b45309] bg-clip-text text-transparent uppercase tracking-wider">
-            ĐANG TRA ẤN ĐỊNH DANH TÍNH
-          </h2>
-          <p class="text-xs text-[#94a3b8] mt-2 font-serif">
-            Đang tra cứu tiên sổ đệ tử trực thuộc Thiên Thư Môn...
-          </p>
-        </div>
-      </div>
+    //- Success State
+    .state-box(v-else-if="success")
+      .success-icon-box ✨
+      .state-text-group
+        h2.state-title.title-emerald QUY NHẬP THÀNH CÔNG!
+        p.success-msg
+          | Chào mừng đệ tử 
+          span.highlight-name {{ user?.nickname || user?.globalName || user?.username }}
+          |  an vị!
+        p.state-desc Đang chuyển về Trang Chủ...
 
-      <!-- Success State -->
-      <div v-else-if="success" class="space-y-6 py-4 font-serif">
-        <div class="w-16 h-16 rounded-full bg-[#34d399]/20 border border-[#34d399]/50 flex items-center justify-center text-3xl mx-auto shadow-[0_0_20px_rgba(52,211,153,0.3)]">
-          ✨
-        </div>
-        <div>
-          <h2 class="text-xl font-bold text-[#34d399] font-serif uppercase tracking-wide">
-            QUY NHẬP THÀNH CÔNG!
-          </h2>
-          <p class="text-sm font-semibold text-white mt-3 font-serif">
-            Chào mừng đệ tử <span class="text-[#f5c518]">{{ user?.nickname || user?.globalName || user?.username }}</span> an vị!
-          </p>
-          <p class="text-xs text-[#64748b] mt-1 font-serif">Đang chuyển về Trang Chủ...</p>
-        </div>
-      </div>
+    //- Error / Rejected State
+    .state-box(v-else)
+      .error-icon-box 🛑
+      .state-text-group
+        h2.state-title.title-red TỪ CHỐI QUY NẬP
+        .error-reason-box
+          span.error-reason-label ⚠️ Nguyên do:
+          span.error-reason-msg {{ errorMessage || 'Tài khoản của bạn chưa có Role Bang Chúng trong Thiên Thư Môn.' }}
 
-      <!-- Error / Rejected State (Not in Guild or Error) -->
-      <div v-else class="space-y-6 py-4 font-serif">
-        <div class="w-16 h-16 rounded-full bg-[#ef4444]/20 border border-[#ef4444]/50 flex items-center justify-center text-3xl mx-auto shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-bounce">
-          🛑
-        </div>
-        <div>
-          <h2 class="text-lg font-bold text-[#ef4444] font-serif uppercase tracking-wider">
-            TỪ CHỐI QUY NẬP
-          </h2>
-          <div class="mt-3 p-3.5 bg-[#180d12] border border-[#7f1d1d]/60 rounded-xl text-xs text-[#fca5a5] leading-relaxed text-left font-serif">
-            <span class="font-bold block text-[#f87171] mb-1">⚠️ Nguyên do:</span>
-            {{ errorMessage || 'Tài khoản của bạn chưa có Role Bang Chúng trong Thiên Thư Môn.' }}
-          </div>
-        </div>
-
-        <div class="flex flex-col gap-3 pt-2 font-serif">
-          <button
-            @click="authStore.loginWithDiscord()"
-            class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-[#d97706] to-[#f5c518] text-slate-950 hover:brightness-110 transition shadow-lg"
-          >
-            🔄 Thử Quy Nhập Lại
-          </button>
-          <RouterLink
-            to="/"
-            class="w-full py-2.5 rounded-xl font-semibold text-xs bg-[#111c2e] hover:bg-[#1b2b45] text-[#94a3b8] hover:text-white border border-[#1e304d] transition"
-          >
-            🏠 Trở Về Trang Chủ
-          </RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
+      .actions-group
+        button.btn-retry(@click="authStore.loginWithDiscord()") 🔄 Thử Quy Nhập Lại
+        RouterLink.btn-home-link(to="/") 🏠 Trở Về Trang Chủ
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/authStore';
+import { useThemeStore } from '../stores/themeStore';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 
 const loading = ref(true);
 const success = ref(false);
@@ -117,3 +84,250 @@ onMounted(async () => {
   }
 });
 </script>
+
+<style lang="stylus" scoped>
+.callback-container
+  position relative
+  min-height calc(100vh - 57px)
+  display flex
+  align-items center
+  justify-content center
+  padding 1.5rem
+  user-select none
+  font-family 'Lora', serif
+
+.auth-card
+  position relative
+  z-index 10
+  width 100%
+  max-width 28rem
+  border-radius 1rem
+  padding 2rem
+  text-align center
+  backdrop-filter blur(12px)
+
+  .auth-light &
+    background #ffffff
+    border 1px solid #cbd5e1
+    box-shadow 0 20px 40px rgba(0, 0, 0, 0.1)
+
+  .auth-dark &
+    background rgba(8, 13, 25, 0.9)
+    border 1px solid #1e304d
+    box-shadow 0 20px 40px rgba(0, 0, 0, 0.5)
+
+.state-box
+  display flex
+  flex-direction column
+  gap 1.5rem
+  padding 1rem 0
+
+.spinner-wrapper
+  position relative
+  width 5rem
+  height 5rem
+  margin 0 auto
+  display flex
+  align-items center
+  justify-content center
+
+.spinner-ring
+  position absolute
+  inset 0
+  border-radius 9999px
+  border 2px solid
+  border-top-color #f5c518
+  border-bottom-color #38bdf8
+  border-left-color transparent
+  border-right-color transparent
+  animation spin 1s linear infinite
+
+.spinner-icon
+  font-size 1.75rem
+
+.state-text-group
+  display flex
+  flex-direction column
+  gap 0.35rem
+
+.state-title
+  font-size 1.25rem
+  font-weight 800
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .auth-light &
+    background linear-gradient(to right, #b45309, #d97706)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+  .auth-dark &
+    background linear-gradient(to right, #fffbeb, #f5c518, #b45309)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+  &.title-emerald
+    color #059669
+    -webkit-text-fill-color #059669
+    .auth-dark &
+      color #34d399
+      -webkit-text-fill-color #34d399
+
+  &.title-red
+    color #dc2626
+    -webkit-text-fill-color #dc2626
+    .auth-dark &
+      color #ef4444
+      -webkit-text-fill-color #ef4444
+
+.state-desc
+  font-size 0.75rem
+
+  .auth-light &
+    color #64748b
+
+  .auth-dark &
+    color #94a3b8
+
+.success-icon-box
+  width 4rem
+  height 4rem
+  border-radius 9999px
+  display flex
+  align-items center
+  justify-content center
+  font-size 2rem
+  margin 0 auto
+
+  .auth-light &
+    background #d1fae5
+    border 1px solid #a7f3d0
+    color #059669
+
+  .auth-dark &
+    background rgba(52, 211, 153, 0.2)
+    border 1px solid rgba(52, 211, 153, 0.5)
+    color #34d399
+    box-shadow 0 0 20px rgba(52, 211, 153, 0.3)
+
+.success-msg
+  font-size 0.875rem
+  font-weight 700
+
+  .auth-light &
+    color #0f172a
+
+  .auth-dark &
+    color #ffffff
+
+.highlight-name
+  .auth-light &
+    color #b45309
+
+  .auth-dark &
+    color #f5c518
+
+.error-icon-box
+  width 4rem
+  height 4rem
+  border-radius 9999px
+  display flex
+  align-items center
+  justify-content center
+  font-size 2rem
+  margin 0 auto
+  animation bounce 1s infinite
+
+  .auth-light &
+    background #fee2e2
+    border 1px solid #fca5a5
+
+  .auth-dark &
+    background rgba(239, 68, 68, 0.2)
+    border 1px solid rgba(239, 68, 68, 0.5)
+
+.error-reason-box
+  padding 0.85rem
+  border-radius 0.75rem
+  border 1px solid
+  font-size 0.75rem
+  text-align left
+  line-height 1.6
+  margin-top 0.5rem
+
+  .auth-light &
+    background #fef2f2
+    border-color #fca5a5
+    color #991b1b
+
+  .auth-dark &
+    background #180d12
+    border-color rgba(127, 29, 29, 0.6)
+    color #fca5a5
+
+.error-reason-label
+  font-weight 700
+  display block
+  margin-bottom 0.25rem
+
+  .auth-light &
+    color #dc2626
+
+  .auth-dark &
+    color #f87171
+
+.actions-group
+  display flex
+  flex-direction column
+  gap 0.75rem
+  margin-top 0.5rem
+
+.btn-retry
+  padding 0.75rem
+  border-radius 0.75rem
+  font-size 0.75rem
+  font-weight 800
+  border none
+  cursor pointer
+  transition all 0.2s ease
+
+  .auth-light &
+    background linear-gradient(to right, #b45309, #d97706)
+    color #ffffff
+
+  .auth-dark &
+    background linear-gradient(to right, #d97706, #f5c518)
+    color #020617
+
+.btn-home-link
+  padding 0.65rem
+  border-radius 0.75rem
+  font-size 0.75rem
+  font-weight 600
+  text-decoration none
+  border 1px solid
+  transition all 0.15s ease
+
+  .auth-light &
+    background #f1f5f9
+    border-color #cbd5e1
+    color #475569
+
+  .auth-dark &
+    background #111c2e
+    border-color #1e304d
+    color #94a3b8
+
+@keyframes spin
+  to
+    transform rotate(360deg)
+
+@keyframes bounce
+  0%, 100%
+    transform translateY(-10%)
+    animation-timing-function cubic-bezier(0.8, 0, 1, 1)
+  50%
+    transform translateY(0)
+    animation-timing-function cubic-bezier(0, 0, 0.2, 1)
+</style>

@@ -1,154 +1,96 @@
-<template>
-  <div class="relative min-h-[calc(100vh-57px)] text-[#e2e8f0] p-6 max-w-4xl mx-auto font-sans select-none space-y-6">
-    <!-- Header Page Banner -->
-    <div class="border-b border-[#172439] pb-4 flex items-center justify-between">
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="text-2xl">👤</span>
-          <h1 class="text-2xl font-extrabold uppercase font-serif tracking-wide bg-gradient-to-r from-[#fef08a] via-[#f5c518] to-[#b45309] bg-clip-text text-transparent">
-            TIÊN MÔN HỒ SƠ — THIÊN THƯ MÔN
-          </h1>
-        </div>
-        <p class="text-xs text-[#94a3b8] mt-1 font-serif">Thông tin ấn định võ phái đệ tử và thẩm quyền tác chiến</p>
-      </div>
+<template lang="pug">
+.profile-container(
+  :class="themeStore.theme === 'light' ? 'prof-light' : 'prof-dark'"
+)
+  //- Header Page Banner
+  .profile-header
+    .header-titles
+      .title-row
+        span.header-icon 👤
+        h1.header-title TIÊN MÔN HỒ SƠ — THIÊN THƯ MÔN
+      p.header-subtitle Thông tin ấn định võ phái đệ tử và thẩm quyền tác chiến
 
-      <RouterLink
-        to="/"
-        class="px-4 py-2 rounded-xl bg-[#121c2e] hover:bg-[#1b2b45] text-[#94a3b8] hover:text-white border border-[#1e304d] text-xs font-bold transition font-serif"
-      >
-        🏠 Trang Chủ
-      </RouterLink>
-    </div>
+    RouterLink.btn-home(to="/") 🏠 Trang Chủ
 
-    <!-- Main Profile Card -->
-    <div class="bg-[#080d19]/90 border border-[#1e304d] rounded-2xl p-6 md:p-8 shadow-2xl backdrop-blur-md space-y-6 relative overflow-hidden">
-      <div class="absolute -right-10 -bottom-10 text-9xl opacity-5 pointer-events-none">
-        📜
-      </div>
+  //- Main Profile Card
+  .profile-main-card
+    .bg-watermark 📜
 
-      <!-- Top Profile Overview -->
-      <div class="flex flex-col md:flex-row items-center md:items-start gap-6 border-b border-[#142033] pb-6">
-        <!-- Avatar -->
-        <div class="relative group">
-          <img
-            :src="user?.avatar"
-            :alt="user?.username"
-            class="w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover border-2 border-[#f5c518]/60 shadow-[0_0_25px_rgba(245,197,24,0.25)]"
-          />
-          <span class="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-[#34d399] border-2 border-[#080d19] flex items-center justify-center text-[10px] text-black font-bold" title="Trạng thái quy phục">
-            ✓
-          </span>
-        </div>
+    //- Top Profile Overview
+    .profile-top-row
+      .avatar-wrapper
+        img.avatar-img(
+          :src="user?.avatar"
+          :alt="user?.username"
+        )
+        span.status-check-badge(title="Trạng thái quy phục") ✓
 
-        <!-- Details -->
-        <div class="text-center md:text-left space-y-2 flex-1 font-serif">
-          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-            <h2 class="text-2xl font-bold text-white tracking-wide">
-              {{ user?.nickname || user?.globalName || user?.username }}
-            </h2>
+      .profile-info
+        .name-class-row
+          h2.user-display-name {{ user?.nickname || user?.globalName || user?.username }}
 
-            <!-- Class Badge (Strictly Read-Only from Discord Server) -->
-            <span
-              class="px-3.5 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 border shadow"
-              :style="{ backgroundColor: `${classHex}20`, borderColor: `${classHex}60`, color: classHex }"
-              title="Môn Phái được đồng bộ tự động từ Discord Server"
-            >
-              <img v-if="classIcon" :src="classIcon" class="w-4 h-4 object-contain" />
-              <span>{{ user?.className || 'Bang Chúng' }}</span>
-            </span>
-          </div>
+          span.class-pill-badge(
+            :style="{ backgroundColor: `${classHex}20`, borderColor: `${classHex}60`, color: classHex }"
+            title="Môn Phái được đồng bộ tự động từ Discord Server"
+          )
+            img.class-icon(v-if="classIcon" :src="classIcon")
+            span {{ user?.className || 'Bang Chúng' }}
 
-          <span class="text-xs text-[#64748b] block font-mono">
-            Discord Handle: @{{ user?.username }}
-          </span>
+        span.discord-handle Discord Handle: @{{ user?.username }}
 
-          <!-- Role Badges -->
-          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1">
-            <span
-              v-if="userPrimaryRole === 'Đương Gia'"
-              class="px-3 py-1 rounded-md bg-[#f5c518]/20 border border-[#f5c518]/50 text-[#f5c518] text-xs font-extrabold shadow-[0_0_10px_rgba(245,197,24,0.3)] flex items-center gap-1.5"
-            >
-              <span>⭐</span>
-              <span>ĐƯƠNG GIA (Chưởng Quản Môn Phái)</span>
-            </span>
+        .roles-list
+          span.role-pill.role-duong-gia(v-if="userPrimaryRole === 'Đương Gia'")
+            span ⭐
+            span ĐƯƠNG GIA (Chưởng Quản Môn Phái)
 
-            <span
-              v-else-if="userPrimaryRole === 'Đường Chủ'"
-              class="px-3 py-1 rounded-md bg-[#38bdf8]/20 border border-[#38bdf8]/50 text-[#38bdf8] text-xs font-extrabold shadow-[0_0_10px_rgba(56,189,248,0.3)] flex items-center gap-1.5"
-            >
-              <span>👑</span>
-              <span>ĐƯỜNG CHỦ (Chưởng Quản Trận Đồ)</span>
-            </span>
+          span.role-pill.role-duong-chu(v-else-if="userPrimaryRole === 'Đường Chủ'")
+            span 👑
+            span ĐƯỜNG CHỦ (Chưởng Quản Trận Đồ)
 
-            <span
-              v-else
-              class="px-3 py-1 rounded-md bg-[#1e293b] border border-[#334155] text-[#94a3b8] text-xs font-bold flex items-center gap-1.5"
-            >
-              <span>📜</span>
-              <span>BANG CHÚNG (Xuất Trận Chiêm Ngưỡng)</span>
-            </span>
-          </div>
-        </div>
-      </div>
+          span.role-pill.role-bang-chung(v-else)
+            span 📜
+            span BANG CHÚNG (Xuất Trận Chiêm Ngưỡng)
 
-      <!-- Information Details Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-serif">
-        <!-- Card 1: Guild Status -->
-        <div class="bg-[#0c1424] border border-[#182840] rounded-xl p-5 space-y-3">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-[#f5c518] flex items-center gap-2">
-            <span>🛡️ TIÊN MÔN THÂN PHẬN</span>
-          </h3>
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between py-1 border-b border-[#142033]">
-              <span class="text-[#64748b]">Tông Môn:</span>
-              <span class="text-[#34d399] font-bold">Thiên Thư Môn</span>
-            </div>
-            <div class="flex justify-between py-1 border-b border-[#142033]">
-              <span class="text-[#64748b]">Biệt Danh Xuất Trận:</span>
-              <span class="text-white font-semibold">{{ user?.nickname || 'Chưa đặt' }}</span>
-            </div>
-            <div class="flex justify-between py-1">
-              <span class="text-[#64748b]">Võ Phái Thể Hiện:</span>
-              <span class="font-bold flex items-center gap-1" :style="{ color: classHex }">
-                <img v-if="classIcon" :src="classIcon" class="w-3.5 h-3.5 object-contain" />
-                <span>{{ user?.className || 'Bang Chúng' }}</span>
-              </span>
-            </div>
-          </div>
-        </div>
+    //- Information Details Grid
+    .info-details-grid
+      .info-card
+        h3.info-card-title 🛡️ TIÊN MÔN THÂN PHẬN
+        .info-rows-list
+          .info-row
+            span.info-label Tông Môn:
+            span.info-val.val-emerald Thiên Thư Môn
+          .info-row
+            span.info-label Biệt Danh Xuất Trận:
+            span.info-val {{ user?.nickname || 'Chưa đặt' }}
+          .info-row.no-border
+            span.info-label Võ Phái Thể Hiện:
+            span.info-val.val-class(:style="{ color: classHex }")
+              img.class-mini-icon(v-if="classIcon" :src="classIcon")
+              span {{ user?.className || 'Bang Chúng' }}
 
-        <!-- Card 2: Permissions Overview -->
-        <div class="bg-[#0c1424] border border-[#182840] rounded-xl p-5 space-y-3">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-[#38bdf8] flex items-center gap-2">
-            <span>⚔️ CHƯƠNG QUẢN & THẨM QUYỀN</span>
-          </h3>
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between py-1 border-b border-[#142033]">
-              <span class="text-[#64748b]">Quyền Tác Động Ma Trận:</span>
-              <span v-if="user?.canEdit" class="text-[#34d399] font-bold">Toàn Quyền Định Đoạt</span>
-              <span v-else class="text-[#94a3b8] font-bold">Quan Sát Trận Đồ</span>
-            </div>
-            <div class="flex justify-between py-1 border-b border-[#142033]">
-              <span class="text-[#64748b]">Chức Vị Thẩm Quyền:</span>
-              <span class="text-[#f5c518] font-mono font-bold">{{ userPrimaryRole }}</span>
-            </div>
-            <div class="flex justify-between py-1">
-              <span class="text-[#64748b]">Đồng Bộ Võ Phái:</span>
-              <span class="text-[#34d399] font-medium">✅ Tự Động Từ Discord Server</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+      .info-card.card-blue
+        h3.info-card-title.title-blue ⚔️ CHƯƠNG QUẢN & THẨM QUYỀN
+        .info-rows-list
+          .info-row
+            span.info-label Quyền Tác Động Ma Trận:
+            span.info-val.val-emerald(v-if="user?.canEdit") Toàn Quyền Định Đoạt
+            span.info-val(v-else) Quan Sát Trận Đồ
+          .info-row
+            span.info-label Chức Vị Thẩm Quyền:
+            span.info-val.val-gold {{ userPrimaryRole }}
+          .info-row.no-border
+            span.info-label Đồng Bộ Võ Phái:
+            span.info-val.val-emerald ✅ Tự Động Từ Discord Server
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { useAuthStore } from '../stores/authStore';
+import { useThemeStore } from '../stores/themeStore';
 import { getClassInfo } from '../theme/classColors';
 
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 const user = computed(() => authStore.user);
 
 const classInfo = computed(() => getClassInfo(user.value?.className || ''));
@@ -163,3 +105,398 @@ const userPrimaryRole = computed(() => {
   return 'Bang Chúng';
 });
 </script>
+
+<style lang="stylus" scoped>
+.profile-container
+  position relative
+  min-height calc(100vh - 57px)
+  padding 1.5rem
+  max-width 56rem
+  margin 0 auto
+  font-family 'Lora', serif
+  user-select none
+  display flex
+  flex-direction column
+  gap 1.5rem
+
+.profile-header
+  padding-bottom 1rem
+  border-bottom 1px solid
+  display flex
+  align-items center
+  justify-content space-between
+
+  .prof-light &
+    border-color #cbd5e1
+
+  .prof-dark &
+    border-color #172439
+
+.title-row
+  display flex
+  align-items center
+  gap 0.5rem
+
+.header-icon
+  font-size 1.5rem
+
+.header-title
+  font-size 1.25rem
+  font-weight 900
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .prof-light &
+    background linear-gradient(to right, #b45309, #d97706)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+  .prof-dark &
+    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+
+.header-subtitle
+  font-size 0.75rem
+  margin-top 0.25rem
+
+  .prof-light &
+    color #64748b
+
+  .prof-dark &
+    color #94a3b8
+
+.btn-home
+  padding 0.5rem 1rem
+  border-radius 0.75rem
+  font-size 0.75rem
+  font-weight 700
+  text-decoration none
+  border 1px solid
+  transition all 0.15s ease
+
+  .prof-light &
+    background #ffffff
+    border-color #cbd5e1
+    color #475569
+    &:hover
+      background #f1f5f9
+      color #0f172a
+
+  .prof-dark &
+    background #121c2e
+    border-color #1e304d
+    color #94a3b8
+    &:hover
+      background #1b2b45
+      color #ffffff
+
+.profile-main-card
+  position relative
+  padding 1.5rem
+  border-radius 1rem
+  border 1px solid
+  backdrop-filter blur(12px)
+  display flex
+  flex-direction column
+  gap 1.5rem
+  overflow hidden
+
+  .prof-light &
+    background #ffffff
+    border-color #cbd5e1
+    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
+
+  .prof-dark &
+    background rgba(8, 13, 25, 0.9)
+    border-color #1e304d
+    box-shadow 0 20px 40px rgba(0, 0, 0, 0.4)
+
+@media (min-width: 768px)
+  .profile-main-card
+    padding 2rem
+
+.bg-watermark
+  position absolute
+  right -2.5rem
+  bottom -2.5rem
+  font-size 8rem
+  opacity 0.05
+  pointer-events none
+
+.profile-top-row
+  display flex
+  flex-direction column
+  align-items center
+  gap 1.5rem
+  padding-bottom 1.5rem
+  border-bottom 1px solid
+
+  .prof-light &
+    border-color #e2e8f0
+
+  .prof-dark &
+    border-color #142033
+
+@media (min-width: 768px)
+  .profile-top-row
+    flex-direction row
+    align-items flex-start
+
+.avatar-wrapper
+  position relative
+
+.avatar-img
+  width 6rem
+  height 6rem
+  border-radius 1rem
+  object-fit cover
+  border 2px solid
+
+  .prof-light &
+    border-color #b45309
+    box-shadow 0 0 20px rgba(180, 83, 9, 0.2)
+
+  .prof-dark &
+    border-color rgba(245, 197, 24, 0.6)
+    box-shadow 0 0 25px rgba(245, 197, 24, 0.25)
+
+@media (min-width: 768px)
+  .avatar-img
+    width 7rem
+    height 7rem
+
+.status-check-badge
+  position absolute
+  right -0.5rem
+  bottom -0.5rem
+  width 1.5rem
+  height 1.5rem
+  border-radius 9999px
+  background #34d399
+  color #000000
+  display flex
+  align-items center
+  justify-content center
+  font-size 0.625rem
+  font-weight 800
+  border 2px solid
+
+  .prof-light &
+    border-color #ffffff
+
+  .prof-dark &
+    border-color #080d19
+
+.profile-info
+  display flex
+  flex-direction column
+  align-items center
+  gap 0.5rem
+  flex 1
+
+@media (min-width: 768px)
+  .profile-info
+    align-items flex-start
+
+.name-class-row
+  display flex
+  align-items center
+  justify-content center
+  flex-wrap wrap
+  gap 0.65rem
+
+@media (min-width: 768px)
+  .name-class-row
+    justify-content flex-start
+
+.user-display-name
+  font-size 1.5rem
+  font-weight 800
+  margin 0
+
+  .prof-light &
+    color #0f172a
+
+  .prof-dark &
+    color #ffffff
+
+.class-pill-badge
+  padding 0.25rem 0.85rem
+  border-radius 9999px
+  font-size 0.75rem
+  font-weight 700
+  border 1px solid
+  display flex
+  align-items center
+  gap 0.375rem
+
+.class-icon
+  width 1rem
+  height 1rem
+  object-fit contain
+
+.discord-handle
+  font-size 0.75rem
+  font-family monospace
+
+  .prof-light &
+    color #64748b
+
+  .prof-dark &
+    color #64748b
+
+.roles-list
+  display flex
+  flex-wrap wrap
+  gap 0.5rem
+  padding-top 0.25rem
+
+.role-pill
+  padding 0.25rem 0.75rem
+  border-radius 0.375rem
+  font-size 0.75rem
+  font-weight 800
+  display flex
+  align-items center
+  gap 0.375rem
+  border 1px solid
+
+  &.role-duong-gia
+    .prof-light &
+      background #fef3c7
+      border-color #b45309
+      color #b45309
+    .prof-dark &
+      background rgba(245, 197, 24, 0.2)
+      border-color rgba(245, 197, 24, 0.5)
+      color #f5c518
+      box-shadow 0 0 10px rgba(245, 197, 24, 0.3)
+
+  &.role-duong-chu
+    .prof-light &
+      background #e0f2fe
+      border-color #0284c7
+      color #0284c7
+    .prof-dark &
+      background rgba(56, 189, 248, 0.2)
+      border-color rgba(56, 189, 248, 0.5)
+      color #38bdf8
+      box-shadow 0 0 10px rgba(56, 189, 248, 0.3)
+
+  &.role-bang-chung
+    .prof-light &
+      background #f1f5f9
+      border-color #cbd5e1
+      color #475569
+    .prof-dark &
+      background #1e293b
+      border-color #334155
+      color #94a3b8
+
+.info-details-grid
+  display grid
+  grid-template-columns 1fr
+  gap 1.5rem
+
+@media (min-width: 768px)
+  .info-details-grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+
+.info-card
+  padding 1.25rem
+  border-radius 0.75rem
+  border 1px solid
+  display flex
+  flex-direction column
+  gap 0.75rem
+
+  .prof-light &
+    background #f8fafc
+    border-color #cbd5e1
+
+  .prof-dark &
+    background #0c1424
+    border-color #182840
+
+.info-card-title
+  font-size 0.75rem
+  font-weight 800
+  text-transform uppercase
+  letter-spacing 0.05em
+  margin 0
+
+  .prof-light &
+    color #b45309
+
+  .prof-dark &
+    color #f5c518
+
+  &.title-blue
+    .prof-light &
+      color #0284c7
+    .prof-dark &
+      color #38bdf8
+
+.info-rows-list
+  display flex
+  flex-direction column
+  font-size 0.75rem
+
+.info-row
+  display flex
+  justify-content space-between
+  padding 0.4rem 0
+  border-bottom 1px solid
+
+  .prof-light &
+    border-color #e2e8f0
+
+  .prof-dark &
+    border-color #142033
+
+  &.no-border
+    border-bottom none
+
+.info-label
+  .prof-light &
+    color #64748b
+
+  .prof-dark &
+    color #64748b
+
+.info-val
+  font-weight 600
+
+  .prof-light &
+    color #0f172a
+
+  .prof-dark &
+    color #ffffff
+
+  &.val-emerald
+    .prof-light &
+      color #059669
+    .prof-dark &
+      color #34d399
+
+  &.val-gold
+    font-family monospace
+    font-weight 700
+    .prof-light &
+      color #b45309
+    .prof-dark &
+      color #f5c518
+
+.val-class
+  display flex
+  align-items center
+  gap 0.25rem
+  font-weight 700
+
+.class-mini-icon
+  width 0.875rem
+  height 0.875rem
+  object-fit contain
+</style>
