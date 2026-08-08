@@ -141,7 +141,7 @@
                   option(value="thang") 🏆 Thắng Lợi
 
             .form-group
-              label.form-label Điểm Hạn Chế & Lỗi Sai Cần Rút Kinh Nghiệm <span class="required-star">*</span>
+              label.form-label Điểm Hạn Chế & Lỗi Sai CẦN Rút Kinh Nghiệm <span class="required-star">*</span>
               textarea.form-textarea(
                 v-model="form.mistakes"
                 rows="4"
@@ -159,26 +159,61 @@
 
             .images-upload-group
               .images-group-header
-                label.form-label 🖼️ Hình Ảnh Minh Họa / Thống Kê
-                button.btn-add-img(type="button" @click="addImageInput") + Thêm Ảnh
+                label.form-label 🖼️ Hình Ảnh Minh Họa / Thống Kê (3 Cách Thêm Ảnh)
+                button.btn-add-img(type="button" @click="addImageInput") + Thêm Ô Link
 
-              .images-list
+              //- Multi-method Upload Dropzone Box (1. Select File, 2. Drag & Drop, 3. Paste Clipboard)
+              .dropzone-container(
+                :class="{ 'is-dragging': isDragging }"
+                @dragenter.prevent="handleDragEnter"
+                @dragover.prevent="handleDragOver"
+                @dragleave.prevent="handleDragLeave"
+                @drop.prevent="handleDrop"
+                @click="triggerDropzoneFile"
+              )
+                input.hidden-dropzone-input(
+                  ref="dropzoneFileInputRef"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  @change="handleDropzoneFileSelect"
+                )
+                .dropzone-content
+                  .dropzone-badge-group
+                    span.dz-badge 📁 1. Chọn File (Multiple)
+                    span.dz-badge 🖱️ 2. Kéo & Thả Ảnh
+                    span.dz-badge 📋 3. Dán Ctrl+V (Clipboard)
+                  p.dropzone-main-text
+                    span(v-if="isDragging") 📥 Thả ảnh vào đây ngay để tải lên...
+                    span(v-else) 📂 Kéo thả ảnh vào đây, dán từ Clipboard (Ctrl+V) hoặc nhấp để chọn file
+                  p.dropzone-sub-text Cho phép chọn / thả / dán nhiều hình ảnh cùng lúc (PNG, JPG, WebP, GIF)
+
+              //- List of uploading / uploaded images with preview thumbnail
+              .images-list(v-if="form.images && form.images.length > 0")
                 .image-input-item(v-for="(imgItem, idx) in form.images" :key="idx")
-                  .img-input-row
-                    input.form-input(
-                      v-model="imgItem.url"
-                      type="text"
-                      placeholder="Dán Link ảnh hoặc bấm Đẩy ảnh bên phải ->"
-                    )
-                    label.btn-upload-file
-                      span {{ imgItem.uploading ? '⏳ Đang tải...' : '📁 Đẩy ảnh' }}
-                      input.hidden-file-input(
-                        type="file"
-                        accept="image/*"
-                        @change="handleFileChange($event, idx)"
-                        :disabled="imgItem.uploading"
+                  .img-item-header
+                    .img-preview-box(v-if="imgItem.url")
+                      img.img-thumb(:src="imgItem.url" alt="Preview")
+                    .img-preview-box.box-loading(v-else-if="imgItem.uploading")
+                      span.spinner-mini
+                    .img-preview-box.box-empty(v-else)
+                      span 🖼️
+
+                    .img-input-row
+                      input.form-input(
+                        v-model="imgItem.url"
+                        type="text"
+                        placeholder="Dán Link ảnh (https://...) hoặc chọn file bên phải ->"
                       )
-                    button.btn-remove-img(type="button" @click="removeImageInput(idx)") ✕
+                      label.btn-upload-file
+                        span {{ imgItem.uploading ? '⏳ Đang tải...' : '📁 Chọn File' }}
+                        input.hidden-file-input(
+                          type="file"
+                          accept="image/*"
+                          @change="handleFileChange($event, idx)"
+                          :disabled="imgItem.uploading"
+                        )
+                      button.btn-remove-img(type="button" @click="removeImageInput(idx)" title="Xóa ảnh") ✕
 
                   input.form-input.caption-input(
                     v-model="imgItem.caption"
@@ -193,7 +228,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue';
 import Swal from 'sweetalert2';
 import { useAuthStore } from '../stores/authStore';
 import { useThemeStore } from '../stores/themeStore';
@@ -208,6 +243,11 @@ const showModal = ref(false);
 const isEditing = ref(false);
 const editingId = ref(null);
 const isSubmitting = ref(false);
+
+// Dropzone & Drag/Paste state
+const dropzoneFileInputRef = ref(null);
+const isDragging = ref(false);
+let dragCounter = 0;
 
 const form = reactive({
   matchTitle: '',
@@ -227,7 +267,7 @@ const totalImagesCount = computed(() => {
 const fetchRecords = async () => {
   loading.value = true;
   try {
-    const res = await api.getMatchAnalysisList();
+    const res = await api.getMatchAnalysis();
     records.value = res.data?.data || res.data || [];
   } catch (err) {
     console.error('Lỗi khi tải dữ liệu trận đấu:', err);
@@ -268,6 +308,48 @@ const removeImageInput = (idx) => {
   form.images.splice(idx, 1);
 };
 
+const triggerDropzoneFile = () => {
+  if (dropzoneFileInputRef.value) {
+    dropzoneFileInputRef.value.click();
+  }
+};
+
+const handleDragEnter = (e) => {
+  dragCounter++;
+  if (e.dataTransfer?.types && Array.from(e.dataTransfer.types).includes('Files')) {
+    isDragging.value = true;
+  }
+};
+
+const handleDragOver = (e) => {
+  isDragging.value = true;
+};
+
+const handleDragLeave = (e) => {
+  dragCounter--;
+  if (dragCounter <= 0) {
+    dragCounter = 0;
+    isDragging.value = false;
+  }
+};
+
+const handleDrop = async (e) => {
+  dragCounter = 0;
+  isDragging.value = false;
+  const files = e.dataTransfer?.files;
+  if (files && files.length > 0) {
+    await processFiles(files);
+  }
+};
+
+const handleDropzoneFileSelect = async (e) => {
+  const files = e.target.files;
+  if (files && files.length > 0) {
+    await processFiles(files);
+    e.target.value = '';
+  }
+};
+
 const compressImage = (file, maxWidth = 1920, quality = 0.85) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -299,6 +381,118 @@ const compressImage = (file, maxWidth = 1920, quality = 0.85) => {
   });
 };
 
+const processFiles = async (files) => {
+  const fileArray = Array.from(files).filter((f) => f.type && f.type.startsWith('image/'));
+  if (fileArray.length === 0) return;
+
+  for (const file of fileArray) {
+    const newItem = reactive({ url: '', caption: '', uploading: true });
+    form.images.push(newItem);
+
+    try {
+      const compressedBase64 = await compressImage(file);
+      const res = await api.uploadMatchImage(compressedBase64);
+      if (res.data && res.data.success && res.data.url) {
+        newItem.url = res.data.url;
+      } else if (res.data && res.data.url) {
+        newItem.url = res.data.url;
+      } else {
+        newItem.url = compressedBase64;
+      }
+    } catch (uploadErr) {
+      console.error('Lỗi khi đẩy ảnh:', uploadErr);
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi Upload Ảnh',
+        text: uploadErr.response?.data?.message || 'Không thể upload ảnh.',
+        background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
+        color: themeStore.theme === 'light' ? '#0f172a' : '#ffffff'
+      });
+      const idx = form.images.indexOf(newItem);
+      if (idx !== -1) form.images.splice(idx, 1);
+    } finally {
+      newItem.uploading = false;
+    }
+  }
+
+  Swal.fire({
+    icon: 'success',
+    title: `Đã dán / tải lên ${fileArray.length} ảnh!`,
+    timer: 1500,
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
+    color: themeStore.theme === 'light' ? '#b45309' : '#f5c518'
+  });
+};
+
+const isImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return false;
+  const clean = url.trim().toLowerCase();
+  return (
+    (clean.startsWith('http://') || clean.startsWith('https://')) &&
+    (clean.match(/\.(jpeg|jpg|gif|png|webp|svg)/i) !== null ||
+      clean.includes('cloudinary.com') ||
+      clean.includes('imgur.com') ||
+      clean.includes('discordapp.net') ||
+      clean.includes('discordapp.com'))
+  );
+};
+
+const handlePaste = async (event) => {
+  if (!showModal.value) return;
+
+  const items = event.clipboardData?.items;
+  if (!items) return;
+
+  const imageFiles = [];
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (item.type && item.type.startsWith('image/')) {
+      const file = item.getAsFile();
+      if (file) imageFiles.push(file);
+    }
+  }
+
+  if (imageFiles.length > 0) {
+    event.preventDefault();
+    await processFiles(imageFiles);
+    return;
+  }
+
+  const pastedText = event.clipboardData.getData('text');
+  if (pastedText && isImageUrl(pastedText)) {
+    const activeEl = document.activeElement;
+    if (!activeEl || (activeEl.tagName !== 'INPUT' && activeEl.tagName !== 'TEXTAREA')) {
+      event.preventDefault();
+      form.images.push({ url: pastedText.trim(), caption: '', uploading: false });
+      Swal.fire({
+        icon: 'success',
+        title: 'Đã dán Link ảnh!',
+        timer: 1200,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+        background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
+        color: themeStore.theme === 'light' ? '#b45309' : '#f5c518'
+      });
+    }
+  }
+};
+
+watch(showModal, (newVal) => {
+  if (newVal) {
+    window.addEventListener('paste', handlePaste);
+  } else {
+    window.removeEventListener('paste', handlePaste);
+  }
+});
+
+onUnmounted(() => {
+  window.removeEventListener('paste', handlePaste);
+});
+
 const handleFileChange = async (event, idx) => {
   const file = event.target.files?.[0];
   if (!file) return;
@@ -312,21 +506,25 @@ const handleFileChange = async (event, idx) => {
     const res = await api.uploadMatchImage(compressedBase64);
     if (res.data && res.data.success && res.data.url) {
       targetItem.url = res.data.url;
-      Swal.fire({
-        icon: 'success',
-        title: 'Đã đẩy ảnh lên Cloudinary!',
-        timer: 1200,
-        showConfirmButton: false,
-        background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
-        color: themeStore.theme === 'light' ? '#b45309' : '#f5c518'
-      });
+    } else if (res.data && res.data.url) {
+      targetItem.url = res.data.url;
     }
+    Swal.fire({
+      icon: 'success',
+      title: 'Đã tải ảnh lên!',
+      timer: 1200,
+      showConfirmButton: false,
+      toast: true,
+      position: 'top-end',
+      background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
+      color: themeStore.theme === 'light' ? '#b45309' : '#f5c518'
+    });
   } catch (uploadErr) {
     console.error('Lỗi khi đẩy ảnh lên Cloudinary:', uploadErr);
     Swal.fire({
       icon: 'error',
       title: 'Lỗi Upload',
-      text: uploadErr.response?.data?.message || 'Không thể upload ảnh lên Cloudinary.',
+      text: uploadErr.response?.data?.message || 'Không thể upload ảnh.',
       background: themeStore.theme === 'light' ? '#ffffff' : '#0d1526',
       color: themeStore.theme === 'light' ? '#0f172a' : '#ffffff'
     });
@@ -1203,6 +1401,144 @@ onMounted(() => {
   border none
   cursor pointer
   padding 0 0.25rem
+
+.dropzone-container
+  position relative
+  padding 1.25rem 1rem
+  border 2px dashed
+  border-radius 0.85rem
+  text-align center
+  cursor pointer
+  transition all 0.25s ease
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  margin-bottom 0.5rem
+
+  .modal-light &
+    background #f8fafc
+    border-color #cbd5e1
+    &:hover
+      background #f1f5f9
+      border-color #b45309
+
+  .modal-dark &
+    background rgba(15, 23, 42, 0.6)
+    border-color #1e304d
+    &:hover
+      background rgba(15, 23, 42, 0.9)
+      border-color #f5c518
+
+  &.is-dragging
+    transform scale(1.01)
+    .modal-light &
+      background #fef3c7
+      border-color #d97706
+      box-shadow 0 0 15px rgba(217, 119, 6, 0.3)
+    .modal-dark &
+      background rgba(245, 197, 24, 0.12)
+      border-color #f5c518
+      box-shadow 0 0 20px rgba(245, 197, 24, 0.35)
+
+.hidden-dropzone-input
+  display none
+
+.dropzone-content
+  display flex
+  flex-direction column
+  align-items center
+  gap 0.5rem
+  pointer-events none
+
+.dropzone-badge-group
+  display flex
+  align-items center
+  justify-content center
+  gap 0.5rem
+  flex-wrap wrap
+
+.dz-badge
+  font-size 0.65rem
+  font-weight 700
+  padding 0.2rem 0.5rem
+  border-radius 0.375rem
+  border 1px solid
+
+  .modal-light &
+    background #ffffff
+    border-color #cbd5e1
+    color #b45309
+
+  .modal-dark &
+    background #080d19
+    border-color #1e293b
+    color #f5c518
+
+.dropzone-main-text
+  font-size 0.8rem
+  font-weight 700
+  margin 0
+
+  .modal-light &
+    color #0f172a
+
+  .modal-dark &
+    color #ffffff
+
+.dropzone-sub-text
+  font-size 0.68rem
+  margin 0
+
+  .modal-light &
+    color #64748b
+
+  .modal-dark &
+    color #94a3b8
+
+.img-item-header
+  display flex
+  align-items center
+  gap 0.75rem
+
+.img-preview-box
+  width 3rem
+  height 3rem
+  border-radius 0.5rem
+  overflow hidden
+  border 1px solid
+  flex-shrink 0
+  display flex
+  align-items center
+  justify-content center
+  font-size 1.25rem
+
+  .modal-light &
+    background #e2e8f0
+    border-color #cbd5e1
+
+  .modal-dark &
+    background #0f172a
+    border-color #1e293b
+
+  &.box-loading
+    .modal-light &
+      background #fef3c7
+    .modal-dark &
+      background rgba(245, 197, 24, 0.1)
+
+.img-thumb
+  width 100%
+  height 100%
+  object-fit cover
+
+.spinner-mini
+  width 1.25rem
+  height 1.25rem
+  border 2px solid #f5c518
+  border-top-color transparent
+  border-radius 9999px
+  animation spin 0.8s linear infinite
 
 .modal-actions
   padding-top 0.75rem
