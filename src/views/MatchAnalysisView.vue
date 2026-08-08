@@ -66,12 +66,12 @@
     .record-card(
       v-for="item in records"
       :key="item._id"
-      :class="item.result === 'thang' ? 'border-win' : 'border-loss'"
+      :class="(item.result === 'thang' || item.result === 'win') ? 'border-win' : 'border-loss'"
     )
       .card-top-header
         .header-title-flex
-          span.result-badge(:class="item.result === 'thang' ? 'badge-win' : 'badge-loss'")
-            | {{ item.result === 'thang' ? '🏆 CHIẾN THẮNG' : '💔 RÚT KINH NGHIỆM' }}
+          span.result-badge(:class="(item.result === 'thang' || item.result === 'win') ? 'badge-win' : 'badge-loss'")
+            | {{ (item.result === 'thang' || item.result === 'win') ? '🏆 CHIẾN THẮNG' : '💔 RÚT KINH NGHIỆM' }}
           h3.record-match-title {{ item.matchTitle }}
 
         .header-actions-right
@@ -258,8 +258,8 @@ const form = reactive({
   images: []
 });
 
-const winCount = computed(() => records.value.filter((r) => r.result === 'thang').length);
-const lossCount = computed(() => records.value.filter((r) => r.result === 'thua').length);
+const winCount = computed(() => records.value.filter((r) => r.result === 'thang' || r.result === 'win').length);
+const lossCount = computed(() => records.value.filter((r) => r.result === 'thua' || r.result === 'loss').length);
 const totalImagesCount = computed(() => {
   return records.value.reduce((acc, curr) => acc + (curr.images ? curr.images.length : 0), 0);
 });
