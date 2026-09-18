@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
 import api from '../services/api';
 import Swal from 'sweetalert2';
-import { CLASS_LIST, getClassInfo } from '../theme/classColors';
+import { getClassInfo } from '../theme/classColors';
 
 export const useLineupStore = defineStore('lineup', {
   state: () => ({
     eventId: '',
     title: 'ĐỘI HÌNH BANG CHIẾN',
-    viewMode: 'matrix', // 'matrix' (xem chuẩn) hoặc 'edit' (chỉnh sửa / kéo thả)
+    viewMode: 'edit', // 'matrix' (xem chuẩn) hoặc 'edit' (chỉnh sửa / kéo thả)
     
-    // Khối các Đoàn (Divisions) -> Teams -> Slots
+    // Danh sách các Đoàn (Divisions) -> Teams -> Slots
     divisions: [],
     
-    // Danh sách điểm danh chưa xếp slot
+    // Danh sách điểm danh chưa xếp slot (Pool chờ)
     attendancePool: [],
 
     // Danh sách đệ tử báo bận (status === 'absent')
@@ -20,31 +20,6 @@ export const useLineupStore = defineStore('lineup', {
     
     loading: false,
     events: [],
-
-    // Panels bên phải
-    rightPanels: {
-      rung1: {},
-      rung2: {},
-      rollCall: {
-        title: 'CHỐT ĐIỂM DANH',
-        totalCheckedIn: 0,
-        totalBusy: 0,
-      },
-      tactics: {
-        title: 'LƯU Ý & CHIẾN THUẬT',
-        notes: [
-          'Yêu cầu mọi người onl sớm trước 30 phút để chuẩn bị, ai onl sát giờ nhắn trên Discord cho Leader',
-          'Giờ ra vật tư: 22:50 > 17:40 > 12:30 > 7:20 > 2:20',
-          'Tập trung nghe call chỉ huy trong phòng Voice Discord'
-        ]
-      }
-    },
-    
-    // Băng rôn chiến thuật bên dưới
-    bannerNotes: [
-      { id: 'b1', text: 'Các Tố Vấn mid build trâu nhiều chút nhé', color: 'purple' },
-      { id: 'b2', text: 'Tank cầm Thái Cực Đồ + Như Phong Tự Bế + Phong Tuyết Kinh Đào hoặc Chuông', color: 'gold' }
-    ]
   }),
 
   getters: {
@@ -76,17 +51,6 @@ export const useLineupStore = defineStore('lineup', {
         }
       });
 
-      // Cộng thêm vị trí Trưởng Rừng nếu có phái
-      ['rung1', 'rung2'].forEach((key) => {
-        const rung = state.rightPanels[key];
-        if (rung && rung.userId && rung.class) {
-          const info = getClassInfo(rung.class);
-          if (counts[info.name] !== undefined) {
-            counts[info.name]++;
-          }
-        }
-      });
-
       return counts;
     },
 
@@ -103,11 +67,6 @@ export const useLineupStore = defineStore('lineup', {
           });
         }
       });
-
-      ['rung1', 'rung2'].forEach((key) => {
-        if (state.rightPanels[key]?.userId) total++;
-      });
-
       return total;
     },
 
@@ -124,18 +83,8 @@ export const useLineupStore = defineStore('lineup', {
           });
         }
       });
-
-      ['rung1', 'rung2'].forEach((key) => {
-        if (state.rightPanels[key]?.userId) assigned++;
-      });
-
       return assigned + state.attendancePool.length;
     },
-
-    // Dynamic busy count: number of users in event with status === 'absent'
-    totalBusyCount: (state) => {
-      return state.absentUsers ? state.absentUsers.length : (state.rightPanels.rollCall?.totalBusy || 0);
-    }
   },
 
   actions: {
@@ -143,71 +92,172 @@ export const useLineupStore = defineStore('lineup', {
       this.viewMode = this.viewMode === 'matrix' ? 'edit' : 'matrix';
     },
 
+    // Khởi tạo mặc định 2 Đoàn, mỗi đoàn 5 Team với 6 Slot
     initDefaultLineup() {
+      const createDefaultDivision = (divNumber) => ({
+        id: `div_${Date.now()}_${divNumber}_${Math.random().toString(36).substr(2, 4)}`,
+        divisionName: `Đoàn ${divNumber}`,
+        isCollapsed: false,
+        teams: [1, 2, 3, 4, 5].map((tNum) => ({
+          id: `team_${divNumber}_${tNum}_${Math.random().toString(36).substr(2, 4)}`,
+          teamName: `Team ${tNum}`,
+          teamTag: '',
+          slots: Array.from({ length: 6 }, (_, sIdx) => ({
+            slotIndex: sIdx,
+            userId: null,
+            displayName: '',
+            roleName: '',
+            className: '',
+            note: '',
+            isLeader: sIdx === 0,
+            isChecked: false,
+            skills: [],
+          })),
+        })),
+      });
+
       this.divisions = [
-        {
-          divisionName: 'ĐOÀN 1 MID',
-          leaderTag: 'LEADER',
-          footerTag: 'HEAL AOE',
-          teams: [1, 2, 3, 4, 5].map((num) => ({
-            teamName: `Nhóm ${num}`,
-            teamTag: '',
-            footerTag: 'VAI TRÒ',
-            slots: Array.from({ length: 6 }, (_, sIdx) => ({
-              slotIndex: sIdx,
-              userId: null,
-              displayName: '',
-              roleName: '',
-              className: '',
-              note: '',
-              isLeader: sIdx === 0,
-              isChecked: false,
-            })),
-          })),
-        },
-        {
-          divisionName: 'NHÓM 4 - 5 (TRANG 1)',
-          leaderTag: 'LEADER',
-          footerTag: 'VAI TRÒ',
-          teams: [4, 5].map((num) => ({
-            teamName: `Nhóm ${num}`,
-            teamTag: '',
-            footerTag: 'VAI TRÒ',
-            slots: Array.from({ length: 6 }, (_, sIdx) => ({
-              slotIndex: sIdx,
-              userId: null,
-              displayName: '',
-              roleName: '',
-              className: '',
-              note: '',
-              isLeader: sIdx === 0,
-              isChecked: false,
-            })),
-          })),
-        },
-        {
-          divisionName: 'NHÓM 1 - 2 - 3 (TRANG 1)',
-          leaderTag: 'LEADER',
-          footerTag: 'VAI TRÒ',
-          teams: [1, 2, 3].map((num) => ({
-            teamName: `Nhóm ${num}`,
-            teamTag: '',
-            footerTag: 'VAI TRÒ',
-            slots: Array.from({ length: 6 }, (_, sIdx) => ({
-              slotIndex: sIdx,
-              userId: null,
-              displayName: '',
-              roleName: '',
-              className: '',
-              note: '',
-              isLeader: sIdx === 0,
-              isChecked: false,
-            })),
-          })),
-        },
+        createDefaultDivision(1),
+        createDefaultDivision(2),
       ];
     },
 
+    // Thêm một Đoàn mới
+    addDivision() {
+      const newDivNumber = this.divisions.length + 1;
+      const newDiv = {
+        id: `div_${Date.now()}_${newDivNumber}_${Math.random().toString(36).substr(2, 4)}`,
+        divisionName: `Đoàn ${newDivNumber}`,
+        isCollapsed: false,
+        teams: [1, 2, 3, 4, 5].map((tNum) => ({
+          id: `team_${newDivNumber}_${tNum}_${Math.random().toString(36).substr(2, 4)}`,
+          teamName: `Team ${tNum}`,
+          teamTag: '',
+          slots: Array.from({ length: 6 }, (_, sIdx) => ({
+            slotIndex: sIdx,
+            userId: null,
+            displayName: '',
+            roleName: '',
+            className: '',
+            note: '',
+            isLeader: sIdx === 0,
+            isChecked: false,
+            skills: [],
+          })),
+        })),
+      };
+      this.divisions.push(newDiv);
+    },
+
+    // Xoá một Đoàn
+    removeDivision(dIdx) {
+      const div = this.divisions[dIdx];
+      if (!div) return;
+
+      // Trả các thành viên trong đoàn về pool
+      if (div.teams) {
+        div.teams.forEach((team) => {
+          if (team.slots) {
+            team.slots.forEach((slot) => {
+              if (slot.userId && !slot.userId.startsWith('leader_') && !slot.userId.startsWith('ext_')) {
+                this.attendancePool.push({
+                  userId: slot.userId,
+                  displayName: slot.displayName,
+                  username: slot.displayName,
+                  className: slot.className || slot.class,
+                  roleName: slot.roleName || slot.role,
+                  note: slot.note || '',
+                });
+              }
+            });
+          }
+        });
+      }
+
+      this.divisions.splice(dIdx, 1);
+    },
+
+    // Đổi trạng thái thu gọn Đoàn
+    toggleDivisionCollapse(dIdx) {
+      if (this.divisions[dIdx]) {
+        this.divisions[dIdx].isCollapsed = !this.divisions[dIdx].isCollapsed;
+      }
+    },
+
+    // Thêm Team vào Đoàn
+    addTeamToDivision(dIdx) {
+      const div = this.divisions[dIdx];
+      if (!div) return;
+      const nextTeamNum = (div.teams?.length || 0) + 1;
+      div.teams.push({
+        id: `team_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+        teamName: `Team ${nextTeamNum}`,
+        teamTag: '',
+        slots: Array.from({ length: 6 }, (_, sIdx) => ({
+          slotIndex: sIdx,
+          userId: null,
+          displayName: '',
+          roleName: '',
+          className: '',
+          note: '',
+          isLeader: sIdx === 0,
+          isChecked: false,
+          skills: [],
+        })),
+      });
+    },
+
+    // Xoá Team khỏi Đoàn
+    removeTeam(dIdx, tIdx) {
+      const div = this.divisions[dIdx];
+      if (!div || !div.teams || !div.teams[tIdx]) return;
+      
+      const team = div.teams[tIdx];
+      if (team.slots) {
+        team.slots.forEach((slot) => {
+          if (slot.userId && !slot.userId.startsWith('leader_') && !slot.userId.startsWith('ext_')) {
+            this.attendancePool.push({
+              userId: slot.userId,
+              displayName: slot.displayName,
+              username: slot.displayName,
+              className: slot.className || slot.class,
+              roleName: slot.roleName || slot.role,
+              note: slot.note || '',
+            });
+          }
+        });
+      }
+      div.teams.splice(tIdx, 1);
+    },
+
+    // Xoá trắng tất cả thành viên trong Team
+    clearTeam(dIdx, tIdx) {
+      const team = this.divisions[dIdx]?.teams[tIdx];
+      if (!team || !team.slots) return;
+
+      team.slots.forEach((slot) => {
+        if (slot.userId) {
+          if (!slot.userId.startsWith('leader_') && !slot.userId.startsWith('ext_')) {
+            this.attendancePool.push({
+              userId: slot.userId,
+              displayName: slot.displayName,
+              username: slot.displayName,
+              className: slot.className || slot.class,
+              roleName: slot.roleName || slot.role,
+            });
+          }
+          slot.userId = null;
+          slot.displayName = '';
+          slot.roleName = '';
+          slot.className = '';
+          slot.note = '';
+          slot.isChecked = false;
+          slot.skills = [];
+        }
+      });
+    },
+
+    // Tải dữ liệu từ DB
     async fetchEventData(eventId) {
       this.loading = true;
       this.eventId = eventId;
@@ -215,7 +265,7 @@ export const useLineupStore = defineStore('lineup', {
         const attRes = await api.getAttendance(eventId);
         const attendances = attRes.data || [];
 
-        // Store absent users (status === 'absent')
+        // Store absent users
         this.absentUsers = attendances.filter((item) => item.status === 'absent');
 
         const lineupRes = await api.getLineup(eventId);
@@ -223,29 +273,23 @@ export const useLineupStore = defineStore('lineup', {
           this.title = lineupRes.data.title || 'ĐỘI HÌNH BANG CHIẾN';
           this.divisions = lineupRes.data.divisions;
           
+          // Đảm bảo mỗi slot có đủ mảng skills & isLeader
           this.divisions.forEach((div) => {
+            if (div.isCollapsed === undefined) div.isCollapsed = false;
             if (div.teams) {
               div.teams.forEach((team) => {
                 if (team.slots) {
                   team.slots.forEach((slot, sIdx) => {
                     slot.isLeader = (sIdx === 0);
+                    if (!slot.skills) slot.skills = [];
                   });
                 }
               });
             }
           });
-
-          if (lineupRes.data.rightPanels) this.rightPanels = lineupRes.data.rightPanels;
-          if (lineupRes.data.bannerNotes) this.bannerNotes = lineupRes.data.bannerNotes;
         } else {
           this.initDefaultLineup();
         }
-
-        // Update totalBusy count with exact number of absent users
-        if (!this.rightPanels.rollCall) {
-          this.rightPanels.rollCall = { title: 'CHỐT ĐIỂM DANH', totalCheckedIn: 0, totalBusy: 0 };
-        }
-        this.rightPanels.rollCall.totalBusy = this.absentUsers.length;
 
         const occupiedUserIds = new Set();
         this.divisions.forEach((div) => {
@@ -257,12 +301,6 @@ export const useLineupStore = defineStore('lineup', {
                 });
               }
             });
-          }
-        });
-
-        ['rung1', 'rung2'].forEach((key) => {
-          if (this.rightPanels[key]?.userId) {
-            occupiedUserIds.add(this.rightPanels[key].userId);
           }
         });
 
@@ -298,7 +336,7 @@ export const useLineupStore = defineStore('lineup', {
       const targetSlot = this.divisions[targetDIdx]?.teams[targetTIdx]?.slots[targetSIdx];
       if (!targetSlot || !displayName || !displayName.trim()) return;
 
-      if (targetSlot.userId && !targetSlot.userId.startsWith('leader_') && !targetSlot.userId.startsWith('rung')) {
+      if (targetSlot.userId && !targetSlot.userId.startsWith('leader_')) {
         this.attendancePool.push({
           userId: targetSlot.userId,
           displayName: targetSlot.displayName,
@@ -319,31 +357,7 @@ export const useLineupStore = defineStore('lineup', {
       targetSlot.isChecked = false;
     },
 
-    // Thêm trực tiếp đệ tử ngoại bang vào ô Trưởng Rừng
-    assignExternalMemberToRung({ rungKey, displayName, className, note }) {
-      const rung = this.rightPanels[rungKey];
-      if (!rung || !displayName || !displayName.trim()) return;
-
-      if (rung.userId && !rung.userId.startsWith('rung')) {
-        this.attendancePool.push({
-          userId: rung.userId,
-          displayName: rung.leaderName,
-          username: rung.leaderName,
-          className: rung.class,
-          roleName: rung.subTag,
-          note: rung.subTag,
-          isExternal: rung.isExternal || rung.userId.startsWith('ext_'),
-        });
-      }
-
-      rung.userId = `ext_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-      rung.leaderName = displayName.trim();
-      rung.class = className || 'Huyết Hà';
-      rung.subTag = note || 'Trưởng Rừng';
-      rung.isExternal = true;
-    },
-
-    // Xóa vĩnh viễn đệ tử ngoại bang / đánh thuê khỏi sơ đồ và danh sách chờ
+    // Xóa vĩnh viễn đệ tử ngoại bang khỏi sơ đồ và danh sách chờ
     deleteExternalMember(userId) {
       if (!userId) return;
 
@@ -367,99 +381,39 @@ export const useLineupStore = defineStore('lineup', {
                   slot.note = '';
                   slot.isExternal = false;
                   slot.isChecked = false;
+                  slot.skills = [];
                 }
               });
             }
           });
         }
       });
-
-      // 3. Xóa khỏi ô Trưởng Rừng
-      ['rung1', 'rung2'].forEach((key) => {
-        const rung = this.rightPanels[key];
-        if (rung && rung.userId === userId) {
-          rung.userId = null;
-          rung.leaderName = '';
-          rung.class = '';
-          rung.subTag = '';
-          rung.isExternal = false;
-        }
-      });
     },
 
-    // Gán thành viên từ Pool vào ô Trưởng Rừng
-    assignToRungFromPool({ rungKey, member }) {
-      const rung = this.rightPanels[rungKey];
-      if (!rung || !member) return;
+    // Gán kỹ năng cho slot
+    toggleSkillOnSlot({ dIdx, tIdx, sIdx, skill }) {
+      const slot = this.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
+      if (!slot) return;
+      if (!slot.skills) slot.skills = [];
 
-      if (rung.userId && !rung.userId.startsWith('rung')) {
-        this.attendancePool.push({
-          userId: rung.userId,
-          displayName: rung.leaderName,
-          username: rung.leaderName,
-          className: rung.class,
-          roleName: rung.subTag,
+      const skillId = skill._id || skill.id;
+      const existIdx = slot.skills.findIndex((s) => (s._id || s.id) === skillId || s.name === skill.name);
+
+      if (existIdx !== -1) {
+        slot.skills.splice(existIdx, 1);
+      } else {
+        slot.skills.push({
+          id: skillId,
+          name: skill.name,
+          iconUrl: skill.iconUrl,
         });
       }
-
-      rung.userId = member.userId;
-      rung.leaderName = member.displayName || member.username || '';
-      rung.class = member.className || member.class || 'Huyết Hà';
-      rung.subTag = member.roleName || member.role || 'Trưởng Rừng';
-
-      const poolIdx = this.attendancePool.findIndex((m) => m.userId === member.userId);
-      if (poolIdx !== -1) {
-        this.attendancePool.splice(poolIdx, 1);
-      }
     },
 
-    assignToRungFromSlot({ rungKey, srcDIdx, srcTIdx, srcSIdx }) {
-      const srcSlot = this.divisions[srcDIdx]?.teams[srcTIdx]?.slots[srcSIdx];
-      const rung = this.rightPanels[rungKey];
-      if (!srcSlot || !srcSlot.userId || !rung) return;
-
-      const tempRungUser = rung.userId;
-      const tempRungName = rung.leaderName;
-      const tempRungClass = rung.class;
-      const tempRungTag = rung.subTag;
-
-      rung.userId = srcSlot.userId;
-      rung.leaderName = srcSlot.displayName;
-      rung.class = srcSlot.className || srcSlot.class || 'Huyết Hà';
-      rung.subTag = srcSlot.note || srcSlot.roleName || 'Trưởng Rừng';
-
-      if (tempRungUser && !tempRungUser.startsWith('rung')) {
-        srcSlot.userId = tempRungUser;
-        srcSlot.displayName = tempRungName;
-        srcSlot.className = tempRungClass;
-        srcSlot.roleName = tempRungTag;
-        srcSlot.note = tempRungTag;
-      } else {
-        srcSlot.userId = null;
-        srcSlot.displayName = '';
-        srcSlot.className = '';
-        srcSlot.roleName = '';
-        srcSlot.note = '';
-      }
-    },
-
-    clearRung(rungKey) {
-      const rung = this.rightPanels[rungKey];
-      if (rung && rung.userId) {
-        if (!rung.userId.startsWith('rung')) {
-          this.attendancePool.push({
-            userId: rung.userId,
-            displayName: rung.leaderName,
-            username: rung.leaderName,
-            className: rung.class,
-            roleName: rung.subTag,
-          });
-        }
-        rung.userId = null;
-        rung.leaderName = '';
-        rung.class = '';
-        rung.subTag = '';
-      }
+    removeSkillFromSlot({ dIdx, tIdx, sIdx, skillId }) {
+      const slot = this.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
+      if (!slot || !slot.skills) return;
+      slot.skills = slot.skills.filter((s) => (s._id || s.id) !== skillId && s.id !== skillId);
     },
 
     moveOrSwapSlot({ srcDIdx, srcTIdx, srcSIdx, targetDIdx, targetTIdx, targetSIdx }) {
@@ -483,6 +437,8 @@ export const useLineupStore = defineStore('lineup', {
         roleName: targetSlot.roleName || targetSlot.role || '',
         note: targetSlot.note || '',
         isChecked: targetSlot.isChecked || false,
+        skills: [...(targetSlot.skills || [])],
+        isExternal: targetSlot.isExternal,
       };
 
       targetSlot.userId = srcSlot.userId;
@@ -491,6 +447,8 @@ export const useLineupStore = defineStore('lineup', {
       targetSlot.roleName = srcSlot.roleName || srcSlot.role || '';
       targetSlot.note = srcSlot.note || '';
       targetSlot.isChecked = srcSlot.isChecked || false;
+      targetSlot.skills = [...(srcSlot.skills || [])];
+      targetSlot.isExternal = srcSlot.isExternal;
 
       srcSlot.userId = tempTargetData.userId;
       srcSlot.displayName = tempTargetData.displayName;
@@ -498,6 +456,8 @@ export const useLineupStore = defineStore('lineup', {
       srcSlot.roleName = tempTargetData.roleName;
       srcSlot.note = tempTargetData.note;
       srcSlot.isChecked = tempTargetData.isChecked;
+      srcSlot.skills = tempTargetData.skills;
+      srcSlot.isExternal = tempTargetData.isExternal;
     },
 
     assignFromPool({ targetDIdx, targetTIdx, targetSIdx, member }) {
@@ -531,7 +491,7 @@ export const useLineupStore = defineStore('lineup', {
       const targetSlot = this.divisions[targetDIdx]?.teams[targetTIdx]?.slots[targetSIdx];
       if (!targetSlot || !leader) return;
 
-      if (targetSlot.userId && !targetSlot.userId.startsWith('leader_') && !targetSlot.userId.startsWith('rung')) {
+      if (targetSlot.userId && !targetSlot.userId.startsWith('leader_')) {
         this.attendancePool.push({
           userId: targetSlot.userId,
           displayName: targetSlot.displayName,
@@ -552,7 +512,7 @@ export const useLineupStore = defineStore('lineup', {
     clearSlot(dIdx, tIdx, sIdx) {
       const slot = this.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
       if (slot && slot.userId) {
-        if (!slot.userId.startsWith('leader_') && !slot.userId.startsWith('rung')) {
+        if (!slot.userId.startsWith('leader_') && !slot.userId.startsWith('ext_')) {
           this.attendancePool.push({
             userId: slot.userId,
             displayName: slot.displayName,
@@ -567,6 +527,7 @@ export const useLineupStore = defineStore('lineup', {
         slot.className = '';
         slot.note = '';
         slot.isChecked = false;
+        slot.skills = [];
       }
     },
 
@@ -577,23 +538,11 @@ export const useLineupStore = defineStore('lineup', {
       }
     },
 
-    addTacticNote(noteText) {
-      if (noteText && noteText.trim()) {
-        this.rightPanels.tactics.notes.push(noteText.trim());
-      }
-    },
-
-    removeTacticNote(index) {
-      this.rightPanels.tactics.notes.splice(index, 1);
-    },
-
     async saveCurrentLineup() {
       try {
         await api.saveLineup(this.eventId, {
           title: this.title,
           divisions: this.divisions,
-          rightPanels: this.rightPanels,
-          bannerNotes: this.bannerNotes,
         });
 
         Swal.fire({

@@ -9,20 +9,37 @@
         span.toolbar-subtitle {{ store.title || 'Thiên Thư Môn' }}
 
     .toolbar-actions
+      //- Nút Thêm Đoàn Mới
+      button.btn-action.btn-add-division(
+        v-if="store.viewMode === 'edit'"
+        @click="store.addDivision()"
+        title="Thêm một Đoàn mới (5 Team)"
+      )
+        span ➕
+        span Thêm Đoàn
+
+      //- Nút Quản Lý Kỹ Năng / Phân Công Database
+      button.btn-action.btn-manage-skills(
+        @click="showSkillManageModal = true"
+        title="Thêm ảnh và tên skill vào database để phân công"
+      )
+        span ⚡
+        span Quản Lý Kỹ Năng
+
       //- Mode Toggle Switch
-      button.btn-mode(
+      button.btn-action.btn-mode(
         @click="store.toggleViewMode()"
         :class="store.viewMode === 'edit' ? 'mode-edit' : 'mode-view'"
       )
         span {{ store.viewMode === 'edit' ? '✏️ Thiết Lập Trận' : '👁️ Thẩm Nguyện Trận' }}
 
       //- Nút Thêm Đệ Tử Ngoại Bang
-      button.btn-add-member(
+      button.btn-action.btn-add-member(
         v-if="store.viewMode === 'edit'"
         @click="openAddMemberModal(null)"
         title="Thêm thành viên mới không trong danh sách vào trận đồ"
       )
-        span ➕
+        span 👤
         span Thêm Đệ Tử
 
       //- Dropdown Chọn Event
@@ -40,7 +57,7 @@
           ) {{ event.name || event.title }}
 
       //- Nút Xuất Ảnh PNG
-      button.btn-capture(
+      button.btn-action.btn-capture(
         @click="captureScreenshot"
         :disabled="isCapturing"
       )
@@ -48,7 +65,7 @@
         span {{ isCapturing ? 'Đang Xuất Họa Đồ...' : 'Xuất Họa Đồ' }}
 
       //- Nút Lưu Đội Hình
-      button.btn-save(
+      button.btn-action.btn-save(
         @click="handleSave"
         :disabled="isSaving"
       ) {{ isSaving ? 'Đang Khắc Đồ...' : '💾 Lưu Trận Đồ' }}
@@ -72,54 +89,38 @@
       ref="lineupCaptureRef"
       :class="themeStore.theme === 'light' ? 'matrix-light' : 'matrix-dark'"
     )
-      //- Cột Trái & Giữa: Các Division + Băng rôn chiến thuật
-      .divisions-container
-        //- Top Row Division
+      //- Danh sách các Đoàn (Divisions)
+      .divisions-list-container
         TacticalDivisionBox(
-          v-if="divMid"
-          :divisionIndex="0"
-          :division="divMid"
+          v-for="(division, dIdx) in store.divisions"
+          :key="division.id || dIdx"
+          :divisionIndex="dIdx"
+          :division="division"
           :isEditMode="store.viewMode === 'edit'"
-          @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(0, tIdx, sIdx)"
-          @removeSlot="({ tIdx, sIdx }) => store.clearSlot(0, tIdx, sIdx)"
-          @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 0, tIdx, sIdx })"
+          @toggleCollapse="store.toggleDivisionCollapse(dIdx)"
+          @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(dIdx, tIdx, sIdx)"
+          @removeSlot="({ tIdx, sIdx }) => store.clearSlot(dIdx, tIdx, sIdx)"
+          @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx, tIdx, sIdx })"
+          @openSkillAssign="({ tIdx, sIdx }) => handleOpenSkillAssign({ dIdx, tIdx, sIdx })"
+          @addTeam="store.addTeamToDivision(dIdx)"
+          @removeTeam="(tIdx) => store.removeTeam(dIdx, tIdx)"
+          @deleteDivision="(idx) => store.removeDivision(idx)"
         )
 
-        //- Bottom Row Divisions
-        .bottom-divisions-row
-          .bot-left-col
-            TacticalDivisionBox(
-              v-if="divBotLeft"
-              :divisionIndex="1"
-              :division="divBotLeft"
-              :isEditMode="store.viewMode === 'edit'"
-              @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(1, tIdx, sIdx)"
-              @removeSlot="({ tIdx, sIdx }) => store.clearSlot(1, tIdx, sIdx)"
-              @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 1, tIdx, sIdx })"
-            )
+  //- Modal Quản lý Kỹ Năng Database
+  SkillManageModal(
+    :visible="showSkillManageModal"
+    @close="showSkillManageModal = false"
+  )
 
-          .bot-mid-col
-            TacticalDivisionBox(
-              v-if="divBotMid"
-              :divisionIndex="2"
-              :division="divBotMid"
-              :isEditMode="store.viewMode === 'edit'"
-              @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(2, tIdx, sIdx)"
-              @removeSlot="({ tIdx, sIdx }) => store.clearSlot(2, tIdx, sIdx)"
-              @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx: 2, tIdx, sIdx })"
-            )
-
-        //- Dual Strategy Banners
-        TacticalBanners(
-          :banners="store.bannerNotes"
-          :isEditMode="store.viewMode === 'edit'"
-        )
-
-      //- Cột Phải: Panel Tiên Phong & Uy Danh
-      RightTacticalPanels(
-        :panels="store.rightPanels"
-        :isEditMode="store.viewMode === 'edit'"
-      )
+  //- Modal Phân Công Kỹ Năng cho Slot
+  SkillAssignModal(
+    :visible="showSkillAssignModal"
+    :targetInfo="targetSkillSlotInfo"
+    @close="showSkillAssignModal = false"
+    @toggleSkill="handleToggleSkill"
+    @openSkillManager="handleOpenSkillManagerFromAssign"
+  )
 
   //- Modal thêm đệ tử mới / ngoại bang
   AddMemberModal(
@@ -139,19 +140,21 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { toPng } from 'html-to-image';
 import { useLineupStore } from '../stores/lineupStore';
+import { useSkillStore } from '../stores/skillStore';
 import { useThemeStore } from '../stores/themeStore';
 import AttendancePool from '../components/lineup/AttendancePool.vue';
 import TacticalDivisionBox from '../components/lineup/TacticalDivisionBox.vue';
-import TacticalBanners from '../components/lineup/TacticalBanners.vue';
-import RightTacticalPanels from '../components/lineup/RightTacticalPanels.vue';
 import SaveConfirmModal from '../components/lineup/SaveConfirmModal.vue';
 import AddMemberModal from '../components/lineup/AddMemberModal.vue';
+import SkillManageModal from '../components/lineup/SkillManageModal.vue';
+import SkillAssignModal from '../components/lineup/SkillAssignModal.vue';
 import { CLASS_LIST } from '../theme/classColors';
 
 const store = useLineupStore();
+const skillStore = useSkillStore();
 const themeStore = useThemeStore();
 
 const selectedMessageId = ref('');
@@ -161,11 +164,18 @@ const isSaving = ref(false);
 const isCapturing = ref(false);
 const showScreenshotPrompt = ref(false);
 const showAddMemberModal = ref(false);
+const showSkillManageModal = ref(false);
+const showSkillAssignModal = ref(false);
 const targetSlotInfo = ref(null);
+const targetSkillSlotInfo = ref(null);
 
-const divMid = computed(() => store.divisions[0]);
-const divBotLeft = computed(() => store.divisions[1]);
-const divBotMid = computed(() => store.divisions[2]);
+onMounted(async () => {
+  await store.fetchEventsList();
+  await skillStore.fetchSkills();
+  if (store.divisions.length === 0) {
+    store.initDefaultLineup();
+  }
+});
 
 const openAddMemberModal = (slotInfo = null) => {
   targetSlotInfo.value = slotInfo;
@@ -187,6 +197,39 @@ const handleSlotClick = ({ dIdx, tIdx, sIdx }) => {
     sIdx,
     label
   });
+};
+
+const handleOpenSkillAssign = ({ dIdx, tIdx, sIdx }) => {
+  const div = store.divisions[dIdx];
+  const team = div?.teams[tIdx];
+  const slot = team?.slots[sIdx];
+
+  targetSkillSlotInfo.value = {
+    dIdx,
+    tIdx,
+    sIdx,
+    title: `${div?.divisionName || 'Đoàn'} — ${team?.teamName || 'Team'} (Slot ${sIdx + 1})`,
+    memberName: slot?.displayName || slot?.username || '',
+    skills: slot?.skills || [],
+  };
+  showSkillAssignModal.value = true;
+};
+
+const handleToggleSkill = (skill) => {
+  if (!targetSkillSlotInfo.value) return;
+  const { dIdx, tIdx, sIdx } = targetSkillSlotInfo.value;
+  store.toggleSkillOnSlot({ dIdx, tIdx, sIdx, skill });
+
+  // Update targetSkillSlotInfo skills
+  const updatedSlot = store.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
+  if (updatedSlot) {
+    targetSkillSlotInfo.value.skills = updatedSlot.skills;
+  }
+};
+
+const handleOpenSkillManagerFromAssign = () => {
+  showSkillAssignModal.value = false;
+  showSkillManageModal.value = true;
 };
 
 const handleAddMemberSubmit = (memberData) => {
@@ -247,320 +290,238 @@ const captureScreenshot = async () => {
     showScreenshotPrompt.value = false;
   }
 };
-
-onMounted(async () => {
-  await store.fetchEventsList();
-
-  if (store.events && store.events.length > 0) {
-    selectedMessageId.value = store.events[0].messageId;
-    store.fetchEventData(selectedMessageId.value);
-  }
-});
 </script>
 
 <style lang="stylus" scoped>
 .lineup-wrapper
-  flex 1
+  width 100%
+  min-height 100vh
   display flex
   flex-direction column
-  min-height calc(100vh - 57px)
-  font-family 'Lora', serif
-  position relative
-  overflow-x auto
+  background-attachment fixed
+  font-family 'Be Vietnam Pro', sans-serif
+  padding-bottom 3rem
+
+  &.lineup-light
+    background #f8fafc
+    color #0f172a
+
+  &.lineup-dark
+    background #060a12
+    color #f8fafc
 
 .lineup-toolbar
-  position relative
-  z-index 20
-  border-bottom 1px solid
-  backdrop-filter blur(8px)
-  padding 0.5rem 1rem
   display flex
   flex-wrap wrap
-  align-items center
   justify-content space-between
+  align-items center
+  padding 0.75rem 1.25rem
+  border-bottom 2px solid
   gap 0.75rem
+  position sticky
+  top 0
+  z-index 40
+  backdrop-filter blur(12px)
 
   .lineup-light &
-    background rgba(255, 255, 255, 0.95)
+    background rgba(255, 255, 255, 0.9)
     border-color #cbd5e1
 
   .lineup-dark &
-    background rgba(7, 12, 24, 0.9)
-    border-color #172439
+    background rgba(11, 17, 32, 0.9)
+    border-color #1e293b
 
 .toolbar-left
   display flex
   align-items center
-  gap 0.75rem
+  gap 0.65rem
 
 .toolbar-icon
-  font-size 1.25rem
+  font-size 1.5rem
+
+.toolbar-title-group
+  display flex
+  flex-direction column
 
 .toolbar-title
-  font-size 0.85rem
-  font-weight 700
-  text-transform uppercase
+  font-family 'Chakra Petch', 'Cinzel', serif
+  font-size 1.15rem
+  font-weight 800
   letter-spacing 0.05em
   margin 0
 
   .lineup-light &
-    color #b45309
+    color #0f172a
 
   .lineup-dark &
-    color #f5c518
+    color #f8fafc
 
 .toolbar-subtitle
-  font-size 0.65rem
-  font-family monospace
-
-  .lineup-light &
-    color #64748b
+  font-size 0.75rem
+  color #0284c7
 
   .lineup-dark &
-    color #64748b
+    color #38bdf8
 
 .toolbar-actions
   display flex
+  flex-wrap wrap
   align-items center
-  gap 0.65rem
+  gap 0.5rem
 
-.btn-mode
-  padding 0.4rem 0.75rem
-  border-radius 0.375rem
-  font-size 0.75rem
-  font-weight 600
-  border 1px solid
-  cursor pointer
-  transition all 0.15s ease
-  display flex
-  align-items center
-  gap 0.4rem
-
-  &.mode-edit
-    .lineup-light &
-      background #fef3c7
-      border-color #b45309
-      color #b45309
-
-    .lineup-dark &
-      background rgba(245, 197, 24, 0.15)
-      border-color #f5c518
-      color #f5c518
-
-  &.mode-view
-    .lineup-light &
-      background #ffffff
-      border-color #cbd5e1
-      color #475569
-      &:hover
-        color #0f172a
-
-    .lineup-dark &
-      background #1e293b
-      border-color #334155
-      color #94a3b8
-      &:hover
-        color #ffffff
-
-.btn-add-member
-  background #059669
-  border 1px solid rgba(52, 211, 153, 0.6)
-  color #ffffff
-  padding 0.4rem 0.75rem
-  border-radius 0.375rem
-  font-size 0.75rem
+.btn-action
+  padding 0.4rem 0.85rem
+  border-radius 0.25rem
+  font-family 'Chakra Petch', sans-serif
+  font-size 0.8rem
   font-weight 700
+  border 1.5px solid
   cursor pointer
   display flex
   align-items center
-  gap 0.4rem
-  transition all 0.2s ease
+  gap 0.35rem
+  transition all 0.15s ease
 
   &:hover
-    background #10b981
-    transform scale(1.03)
+    transform translateY(-1px)
+
+  &.btn-add-division
+    background rgba(34, 197, 94, 0.15)
+    border-color #22c55e
+    color #16a34a
+    .lineup-dark &
+      color #4ade80
+    &:hover
+      background #22c55e
+      color #ffffff
+
+  &.btn-manage-skills
+    background rgba(234, 179, 8, 0.15)
+    border-color #eab308
+    color #ca8a04
+    .lineup-dark &
+      color #fde047
+    &:hover
+      background #eab308
+      color #0f172a
+
+  &.btn-mode
+    &.mode-edit
+      background #2563eb
+      border-color #2563eb
+      color #ffffff
+    &.mode-view
+      background transparent
+      border-color #64748b
+      color inherit
+
+  &.btn-add-member
+    background rgba(56, 189, 248, 0.15)
+    border-color #38bdf8
+    color #0284c7
+    .lineup-dark &
+      color #38bdf8
+
+  &.btn-capture
+    background rgba(168, 85, 247, 0.15)
+    border-color #a855f7
+    color #9333ea
+    .lineup-dark &
+      color #c084fc
+
+  &.btn-save
+    background linear-gradient(135deg, #e0b854, #d97706)
+    border-color #d97706
+    color #ffffff
+    box-shadow 0 0 10px rgba(224, 184, 84, 0.3)
+
+.select-event-box
+  display flex
+  align-items center
 
 .event-select
-  padding 0.4rem 0.65rem
-  border-radius 0.375rem
-  font-size 0.75rem
-  font-weight 700
-  border 1px solid
-  outline none
-  cursor pointer
-
-  .lineup-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #b45309
-
-  .lineup-dark &
-    background #0f172a
-    border-color #1e293b
-    color #f5c518
-
-.btn-capture
   padding 0.4rem 0.75rem
-  border-radius 0.375rem
-  font-size 0.75rem
-  font-weight 600
-  border 1px solid
-  cursor pointer
-  display flex
-  align-items center
-  gap 0.4rem
-  transition all 0.15s ease
-
-  .lineup-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #0f172a
-    &:hover
-      background #f1f5f9
-
-  .lineup-dark &
-    background #1e293b
-    border-color #475569
-    color #ffffff
-    &:hover
-      background #334155
-
-  &:disabled
-    opacity 0.5
-
-.btn-save
-  background linear-gradient(to right, #2563eb, #1d4ed8)
-  color #ffffff
-  padding 0.4rem 1rem
-  border-radius 0.375rem
-  font-size 0.75rem
-  font-weight 700
-  border none
-  cursor pointer
-  transition all 0.15s ease
-
-  &:hover
-    filter brightness(1.1)
-
-  &:disabled
-    opacity 0.6
+  border-radius 0.25rem
+  border 1.5px solid #64748b
+  font-size 0.8rem
+  outline none
+  background transparent
+  color inherit
 
 .sect-legend-bar
-  position relative
-  z-index 10
+  display flex
+  flex-wrap wrap
+  align-items center
+  justify-content center
+  gap 1rem
   padding 0.4rem 1rem
   border-bottom 1px solid
-  display flex
-  align-items center
-  gap 1rem
-  overflow-x auto
+  font-size 0.75rem
 
   .lineup-light &
     background #ffffff
     border-color #e2e8f0
 
   .lineup-dark &
-    background #050810
-    border-color #111c2e
+    background #0b1120
+    border-color #1e293b
 
 .legend-label
-  font-size 0.6rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.15em
-  flex-shrink 0
-
-  .lineup-light &
-    color #64748b
-
-  .lineup-dark &
-    color #475569
+  color #64748b
+  letter-spacing 0.05em
 
 .legend-item
   display flex
   align-items center
   gap 0.35rem
-  flex-shrink 0
 
 .legend-icon
-  width 1rem
-  height 1rem
-  object-fit contain
+  width 18px
+  height 18px
+  border-radius 50%
+  object-fit cover
 
 .legend-dot
-  width 0.5rem
-  height 0.5rem
-  border-radius 9999px
+  width 10px
+  height 10px
+  border-radius 50%
 
 .legend-name
-  font-size 0.75rem
-  font-weight 500
-
-  .lineup-light &
-    color #0f172a
-
-  .lineup-dark &
-    color #cbd5e1
+  font-weight 600
 
 .lineup-workspace
-  position relative
-  z-index 10
-  flex 1
-  padding 0.75rem
   display flex
-  gap 0.75rem
-  overflow-x auto
+  flex 1
+  padding 1rem
+  gap 1rem
+  position relative
+  max-width 100%
+  overflow-x hidden
 
 .attendance-pool-col
-  width 15rem
+  width 260px
   flex-shrink 0
 
 .lineup-matrix-box
   flex 1
-  padding 0.75rem
+  min-width 0
   border-radius 0.5rem
-  border 1px solid
-  display flex
-  flex-direction column
-  gap 0.75rem
-  align-items flex-start
-  min-width 1050px
+  border 1.5px solid
+  padding 0.85rem
+  box-shadow 0 4px 20px rgba(0, 0, 0, 0.08)
 
   &.matrix-light
     background #ffffff
     border-color #cbd5e1
-    box-shadow 0 4px 20px rgba(0, 0, 0, 0.04)
 
   &.matrix-dark
-    background #060a12
-    border-color #131f33
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.4)
+    background #0a0e1a
+    border-color #1e293b
 
-@media (min-width: 768px)
-  .lineup-matrix-box
-    flex-direction row
-
-.divisions-container
-  flex 1
+.divisions-list-container
   display flex
   flex-direction column
-  justify-content flex-start
-  gap 0.65rem
-  width 100%
-
-.bottom-divisions-row
-  display flex
-  flex-direction column
-  gap 0.65rem
-  align-items stretch
-
-@media (min-width: 1280px)
-  .bottom-divisions-row
-    flex-direction row
-
-.bot-left-col
-  flex 1
-
-.bot-mid-col
-  flex 1.4
+  gap 0.5rem
 </style>

@@ -34,6 +34,17 @@ export default {
     return apiClient.post(`/lineup/${eventId}`, lineupData);
   },
 
+  // ===== QUẢN LÝ KỸ NĂNG / PHÂN CÔNG =====
+  getSkills() {
+    return apiClient.get('/skills');
+  },
+  createSkill(data) {
+    return apiClient.post('/skills', data);
+  },
+  deleteSkill(id) {
+    return apiClient.delete(`/skills/${id}`);
+  },
+
   // ===== DỮ LIỆU TRẬN ĐẤU & RÚT KINH NGHIỆM =====
   getMatchAnalysis() {
     return apiClient.get('/match-analysis');

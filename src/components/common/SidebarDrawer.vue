@@ -151,6 +151,13 @@ const menuItems = [
     badge: 'HOT'
   },
   {
+    name: 'Bản Đồ Chiến Thuật',
+    path: '/tactical-map',
+    icon: '🗺️',
+    desc: 'Bản đồ tác chiến bang chiến tương tác',
+    badge: 'MỚI'
+  },
+  {
     name: 'Công Thành Chiến Kỳ',
     path: '/schedule',
     icon: '⚔️',
@@ -204,39 +211,27 @@ const isActive = (path) => {
   flex-direction column
   justify-content space-between
   user-select none
-  font-family 'Lora', serif
-  box-shadow 0 25px 50px -12px rgba(0, 0, 0, 0.5)
+  font-family var(--font-body)
+  background var(--color-surface)
+  color var(--color-text)
 
   &.pos-left
     left 0
-    border-right 1px solid
+    border-right 2px solid var(--color-border)
+    box-shadow 4px 0 0px var(--color-border)
 
   &.pos-right
     right 0
-    border-left 1px solid
-
-  &.drawer-light
-    background rgba(255, 255, 255, 0.98)
-    border-color #cbd5e1
-    color #0f172a
-
-  &.drawer-dark
-    background rgba(8, 13, 25, 0.96)
-    border-color #1b2b46
-    color #e2e8f0
+    border-left 2px solid var(--color-border)
+    box-shadow -4px 0 0px var(--color-border)
 
 .drawer-header
   padding 1.25rem
-  border-bottom 1px solid
+  border-bottom 2px solid var(--color-border)
+  background var(--color-bg-subtle)
   display flex
   align-items center
   justify-content space-between
-
-  .drawer-light &
-    border-color #e2e8f0
-
-  .drawer-dark &
-    border-color #18263e
 
 .brand-group
   display flex
@@ -246,49 +241,37 @@ const isActive = (path) => {
 .brand-logo
   width 2.5rem
   height 2.5rem
-  border-radius 0.75rem
+  border-radius var(--radius, 2px)
   display flex
   align-items center
   justify-content center
   font-size 1.25rem
-
-  .drawer-light &
-    background linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(180, 83, 9, 0.25))
-    border 1px solid rgba(217, 119, 6, 0.4)
-
-  .drawer-dark &
-    background linear-gradient(135deg, rgba(245, 197, 24, 0.2), rgba(180, 83, 9, 0.3))
-    border 1px solid rgba(245, 197, 24, 0.4)
+  background var(--color-surface)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
 
 .brand-title
-  font-size 1rem
-  font-weight 800
+  font-size 1.05rem
+  font-weight 700
   letter-spacing 0.05em
   text-transform uppercase
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
-
-  .drawer-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-  .drawer-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
 
 .brand-subtitle
   font-size 0.6rem
   letter-spacing 0.15em
   text-transform uppercase
-  font-family monospace
+  font-family 'Share Tech Mono', monospace
   display block
+  margin-top 0.1rem
 
   .drawer-light &
-    color #64748b
+    color #78350f
 
   .drawer-dark &
-    color #94a3b8
+    color #38bdf8
 
 .close-btn
   width 2rem

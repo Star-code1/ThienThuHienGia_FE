@@ -218,58 +218,57 @@ const dashOffset = computed(() => {
 
 <style lang="stylus" scoped>
 .panels-wrapper
-  width 16rem
-  flex-shrink 0
   display flex
   flex-direction column
-  gap 0.65rem
-  user-select none
-  font-family 'Lora', serif
+  gap 0.75rem
+  width 15.5rem
+  flex-shrink 0
+  font-family 'Be Vietnam Pro', sans-serif
 
 .panel-box
-  border-radius 0.5rem
-  padding 0.75rem
-  box-shadow 0 4px 15px rgba(0, 0, 0, 0.05)
-  backdrop-filter blur(12px)
+  border-radius 0px
+  padding 0.85rem
   position relative
-  transition all 0.2s ease
+  border 2px solid
+  user-select none
 
   &.panel-light
-    background rgba(255, 255, 255, 0.95)
-    border 1px solid #cbd5e1
-    color #0f172a
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
 
   &.panel-dark
-    background rgba(8, 13, 23, 0.9)
-    border 1px solid #17263c
-    color #e2e8f0
+    background #0b1120
+    border-color #1e293b
+    box-shadow 3px 3px 0 #000
 
   &.drag-over-ring
-    outline 2px solid #3b82f6
-    background rgba(59, 130, 246, 0.1)
+    border-color #f5c518
+    background #141e33
 
 .panel-header-title
-  font-size 0.7rem
+  font-size 0.75rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
-  margin-bottom 0.5rem
-  padding-bottom 0.25rem
-  border-bottom 1px solid
+  font-family 'Chakra Petch', sans-serif
+  padding-bottom 0.5rem
+  margin-bottom 0.75rem
+  border-bottom 2px solid
 
   .panel-light &
-    border-color #e2e8f0
-    color #1d4ed8
+    color #92400e
+    border-color #1c1917
 
   .panel-dark &
-    border-color #18263e
-    color #93c5fd
+    color #f5c518
+    border-color #1e293b
 
   &.title-red
     .panel-light &
       color #dc2626
     .panel-dark &
-      color #ef5757
+      color #ef4444
 
   &.flex-row-between
     display flex

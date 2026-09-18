@@ -58,45 +58,30 @@ const handleLogin = () => {
   position relative
   width 100%
   max-width 28rem
-  border-radius 1rem
+  border-radius var(--radius-lg, 4px)
   padding 1.5rem
   text-align center
   display flex
   flex-direction column
   gap 1.5rem
-  font-family 'Lora', serif
-
-  &.modal-light
-    background #ffffff
-    border 1px solid #cbd5e1
-    box-shadow 0 20px 40px rgba(0, 0, 0, 0.15)
-    color #0f172a
-
-  &.modal-dark
-    background #080d19
-    border 1px solid rgba(245, 197, 24, 0.4)
-    box-shadow 0 0 40px rgba(245, 197, 24, 0.2)
-    color #e2e8f0
+  font-family var(--font-body)
+  background var(--color-surface)
+  color var(--color-text)
+  border 2px solid var(--color-border)
+  box-shadow 4px 4px 0px var(--color-border)
 
 .icon-circle
   width 4rem
   height 4rem
-  border-radius 9999px
+  border-radius var(--radius, 2px)
   display flex
   align-items center
   justify-content center
   font-size 2rem
   margin 0 auto
-  animation pulse 2s infinite
-
-  .modal-light &
-    background rgba(217, 119, 6, 0.1)
-    border 1px solid rgba(217, 119, 6, 0.4)
-
-  .modal-dark &
-    background rgba(245, 197, 24, 0.1)
-    border 1px solid rgba(245, 197, 24, 0.4)
-    box-shadow 0 0 20px rgba(245, 197, 24, 0.3)
+  background var(--color-bg-subtle)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
 
 .modal-body
   display flex
@@ -108,26 +93,18 @@ const handleLogin = () => {
   font-weight 700
   letter-spacing 0.15em
   text-transform uppercase
+  font-family var(--font-mono, monospace)
+  color var(--color-brand)
   display block
 
-  .modal-light &
-    color #b45309
-
-  .modal-dark &
-    color #d97706
-
 .modal-title
-  font-size 1.25rem
+  font-size 1.15rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
-
-  .modal-light &
-    color #0f172a
-
-  .modal-dark &
-    color #ffffff
 
 .modal-desc
   font-size 0.75rem
@@ -157,22 +134,29 @@ const handleLogin = () => {
 .discord-btn
   width 100%
   padding 0.75rem
-  border-radius 0.75rem
+  border-radius 0px
   font-weight 700
   font-size 0.75rem
-  background linear-gradient(to right, #5865F2, #404EED)
+  font-family 'Silkscreen', monospace
+  background #5865F2
   color #ffffff
-  border none
+  border 2px solid #1c1917
+  box-shadow 3px 3px 0 #1c1917
   cursor pointer
   display flex
   align-items center
   justify-content center
   gap 0.5rem
-  transition all 0.2s ease
-  box-shadow 0 4px 15px rgba(88, 101, 242, 0.3)
+  transition all 0.15s ease
 
   &:hover
     filter brightness(1.1)
+    transform translate(-1px, -1px)
+    box-shadow 4px 4px 0 #1c1917
+
+  &:active
+    transform translate(1px, 1px)
+    box-shadow 1px 1px 0 #1c1917
 
 .close-btn
   width 100%

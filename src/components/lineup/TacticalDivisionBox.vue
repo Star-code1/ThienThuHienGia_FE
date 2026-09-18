@@ -1,33 +1,54 @@
 <template lang="pug">
-.division-box(
-  :class="themeStore.theme === 'light' ? 'div-light' : 'div-dark'"
+.tactical-division-box(
+  :class="[themeStore.theme === 'light' ? 'div-light' : 'div-dark', { 'is-collapsed': division.isCollapsed }]"
 )
-  //- Header của Division
-  .division-header
-    .header-title-left
-      span.accent-line
+  //- Division Header Bar
+  .division-bar
+    //- Left: Collapse toggle button
+    .bar-left
+      button.btn-collapse-toggle(
+        @click="$emit('toggleCollapse')"
+        :title="division.isCollapsed ? 'Mở rộng Đoàn' : 'Thu gọn Đoàn'"
+      )
+        span.toggle-symbol {{ division.isCollapsed ? '➕' : '➖' }}
+
+    //- Center: Division Title
+    .bar-center
       template(v-if="!isEditMode")
-        h2.division-name {{ division.divisionName }}
+        h2.division-title {{ division.divisionName }}
       template(v-else)
-        input.division-name-input(
+        input.division-title-input(
           v-model="division.divisionName"
-          placeholder="Tên khối đoàn..."
+          placeholder="Tên Đoàn..."
         )
 
-    .header-leader-right
-      template(v-if="!isEditMode")
-        span.leader-tag(v-if="division.leaderTag") {{ division.leaderTag }}
-      template(v-else)
-        input.leader-tag-input(
-          v-model="division.leaderTag"
-          placeholder="Tag chỉ huy..."
-        )
+    //- Right: Actions (Kéo Đoàn, + Team, Xóa Đoàn)
+    .bar-right
+      button.btn-bar-action.btn-reorder(
+        v-if="isEditMode"
+        title="Kéo thứ tự Đoàn"
+      )
+        span ⠿ Kéo Đoàn
 
-  //- Lưới các Nhóm trong Division
-  .groups-grid
+      button.btn-bar-action.btn-add-team(
+        v-if="isEditMode"
+        @click="$emit('addTeam')"
+        title="Thêm 1 Team mới vào Đoàn này"
+      )
+        span ➕ Team
+
+      button.btn-bar-action.btn-delete-div(
+        v-if="isEditMode"
+        @click="handleDeleteDivision"
+        title="Xoá toàn bộ Đoàn này"
+      )
+        span 🗑️
+
+  //- Teams Grid (Khi không bị thu gọn)
+  .division-teams-grid(v-show="!division.isCollapsed")
     TacticalGroupCard(
       v-for="(team, tIdx) in division.teams"
-      :key="tIdx"
+      :key="team.id || tIdx"
       :divisionIndex="divisionIndex"
       :teamIndex="tIdx"
       :team="team"
@@ -35,147 +56,181 @@
       @toggleCheck="(sIdx) => $emit('toggleCheck', { tIdx, sIdx })"
       @removeSlot="(sIdx) => $emit('removeSlot', { tIdx, sIdx })"
       @clickSlot="(sIdx) => $emit('clickSlot', { tIdx, sIdx })"
+      @openSkillAssign="(sIdx) => $emit('openSkillAssign', { tIdx, sIdx })"
+      @deleteTeam="() => $emit('removeTeam', tIdx)"
     )
 </template>
 
 <script setup>
 import TacticalGroupCard from './TacticalGroupCard.vue';
 import { useThemeStore } from '../../stores/themeStore';
+import Swal from 'sweetalert2';
 
-defineProps({
+const props = defineProps({
   divisionIndex: { type: Number, required: true },
   division: { type: Object, required: true },
-  isEditMode: { type: Boolean, default: false }
+  isEditMode: { type: Boolean, default: false },
 });
 
-defineEmits(['toggleCheck', 'removeSlot', 'clickSlot']);
+const emit = defineEmits([
+  'toggleCollapse',
+  'toggleCheck',
+  'removeSlot',
+  'clickSlot',
+  'openSkillAssign',
+  'addTeam',
+  'removeTeam',
+  'deleteDivision',
+]);
 
 const themeStore = useThemeStore();
+
+const handleDeleteDivision = async () => {
+  const result = await Swal.fire({
+    title: 'Xoá Đoàn này?',
+    text: `Bạn có chắc muốn xoá toàn bộ "${props.division.divisionName}"? Các thành viên sẽ được trả về danh sách chờ.`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Xoá Đoàn',
+    cancelButtonText: 'Huỷ',
+    confirmButtonColor: '#ef4444',
+  });
+
+  if (result.isConfirmed) {
+    emit('deleteDivision', props.divisionIndex);
+  }
+};
 </script>
 
 <style lang="stylus" scoped>
-.division-box
-  border-radius 0.5rem
-  padding 0.65rem
-  position relative
-  font-family 'Lora', serif
-
-  &.div-light
-    background rgba(255, 255, 255, 0.95)
-    border 1px solid #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
-
-  &.div-dark
-    background rgba(8, 13, 23, 0.85)
-    border 1px solid #17263c
-    box-shadow 0 10px 25px rgba(0, 0, 0, 0.3)
-
-.division-header
+.tactical-division-box
   display flex
-  justify-content space-between
-  align-items center
-  margin-bottom 0.5rem
-  padding-bottom 0.35rem
-  padding-left 0.25rem
-  padding-right 0.25rem
-  border-bottom 1px solid
+  flex-direction column
   gap 0.5rem
+  margin-bottom 1.25rem
+
+.division-bar
+  display flex
+  align-items center
+  justify-content space-between
+  padding 0.4rem 0.75rem
+  border-radius 0.375rem
+  border 1.5px solid
+  transition all 0.2s ease
 
   .div-light &
-    border-color #e2e8f0
+    background #f1f5f9
+    border-color #cbd5e1
+    box-shadow 0 2px 6px rgba(0, 0, 0, 0.04)
 
   .div-dark &
-    border-color #18263e
+    background #0f172a
+    border-color #1e293b
+    box-shadow 0 3px 10px rgba(0, 0, 0, 0.4)
 
-.header-title-left
+.bar-left
   display flex
   align-items center
-  gap 0.5rem
-  flex 1
+  flex: 1
 
-.accent-line
-  width 0.375rem
-  height 0.875rem
-  border-radius 0.125rem
-  background linear-gradient(to bottom, #60a5fa, #1d4ed8)
-  flex-shrink 0
+.btn-collapse-toggle
+  background transparent
+  border 1px solid #94a3b8
+  border-radius 0.25rem
+  width 24px
+  height 24px
+  display flex
+  align-items center
+  justify-content center
+  font-size 0.7rem
+  cursor pointer
+  color inherit
+  transition all 0.15s ease
 
-.division-name
-  font-size 0.75rem
-  font-weight 700
-  text-transform uppercase
+  &:hover
+    border-color #3b82f6
+    background rgba(59, 130, 246, 0.1)
+
+.bar-center
+  flex: 2
+  text-align center
+
+.division-title
+  font-family 'Lora', 'Cinzel', serif
+  font-size 1.2rem
+  font-weight 800
   letter-spacing 0.05em
-  white-space nowrap
-  overflow hidden
-  text-overflow ellipsis
   margin 0
 
   .div-light &
-    color #1d4ed8
+    color #0f172a
 
   .div-dark &
-    color #93c5fd
+    color #f8fafc
+    text-shadow 0 0 10px rgba(56, 189, 248, 0.4)
 
-.division-name-input
-  flex 1
-  font-size 0.75rem
-  font-weight 700
-  padding 0.15rem 0.5rem
+.division-title-input
+  font-family 'Lora', serif
+  font-size 1.1rem
+  font-weight 800
+  text-align center
+  padding 0.2rem 0.5rem
   border-radius 0.25rem
-  border 1px solid
+  border 1px solid #3b82f6
   outline none
+  background transparent
+  color inherit
 
-  .div-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #1d4ed8
-
-  .div-dark &
-    background #060a12
-    border-color #2a3f63
-    color #93c5fd
-
-.header-leader-right
-  flex-shrink 0
-
-.leader-tag
-  font-size 0.7rem
-  font-weight 500
-  letter-spacing 0.025em
-  cursor pointer
-  transition color 0.15s ease
-
-  .div-light &
-    color #64748b
-    &:hover
-      color #b45309
-
-  .div-dark &
-    color #94a3b8
-    &:hover
-      color #f5c518
-
-.leader-tag-input
-  width 7rem
-  font-size 0.7rem
-  padding 0.15rem 0.4rem
-  border-radius 0.25rem
-  border 1px solid
-  outline none
-
-  .div-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #b45309
-
-  .div-dark &
-    background #060a12
-    border-color #2a3f63
-    color #f5c518
-
-.groups-grid
+.bar-right
+  flex: 1
   display flex
-  flex-wrap wrap
+  align-items center
+  justify-content flex-end
+  gap 0.4rem
+
+.btn-bar-action
+  padding 0.25rem 0.5rem
+  border-radius 0.25rem
+  font-size 0.7rem
+  font-weight 700
+  font-family 'Chakra Petch', sans-serif
+  border 1px solid
+  cursor pointer
+  transition all 0.15s ease
+  display flex
+  align-items center
+  gap 0.25rem
+
+  &.btn-reorder
+    background rgba(148, 163, 184, 0.15)
+    border-color #94a3b8
+    color inherit
+
+  &.btn-add-team
+    background rgba(37, 99, 235, 0.15)
+    border-color #3b82f6
+    color #2563eb
+    .div-dark &
+      color #60a5fa
+    &:hover
+      background #2563eb
+      color #ffffff
+
+  &.btn-delete-div
+    background rgba(239, 68, 68, 0.15)
+    border-color #ef4444
+    color #ef4444
+    &:hover
+      background #ef4444
+      color #ffffff
+
+.division-teams-grid
+  display grid
+  grid-template-columns repeat(5, minmax(0, 1fr))
   gap 0.65rem
-  align-items stretch
+  overflow-x auto
+  padding-bottom 0.25rem
+
+  @media (max-width: 1200px)
+    grid-template-columns repeat(auto-fit, minmax(200px, 1fr))
 </style>

@@ -319,22 +319,13 @@ onUnmounted(() => {
   position relative
   z-index 10
   padding 1.25rem 1.5rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  border-radius var(--radius-lg, 4px)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  background var(--color-surface)
   display flex
   flex-direction column
   gap 1rem
-
-  .sched-light &
-    background rgba(255, 255, 255, 0.95)
-    border-color #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
-
-  .sched-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #1e304d
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.4)
 
 @media (min-width: 768px)
   .header-banner
@@ -351,95 +342,69 @@ onUnmounted(() => {
   font-size 1.75rem
 
 .banner-main-title
-  font-size 1.25rem
-  font-weight 900
+  font-size 1.15rem
+  font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
 
-  .sched-light &
-    background linear-gradient(to right, #78350f, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-  .sched-dark &
-    background linear-gradient(to right, #fffbeb, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
 .banner-sub-desc
-  font-size 0.75rem
+  font-size 0.7rem
+  font-family var(--font-mono, monospace)
+  color var(--color-brand)
   margin-top 0.15rem
-
-  .sched-light &
-    color #475569
-
-  .sched-dark &
-    color #94a3b8
-
-.highlight-gold
-  font-weight 700
-
-  .sched-light &
-    color #b45309
-
-  .sched-dark &
-    color #f5c518
 
 .btn-lineup-nav
   padding 0.65rem 1.25rem
-  border-radius 0.75rem
+  border-radius var(--radius, 2px)
   font-size 0.75rem
-  font-weight 800
+  font-weight 700
+  font-family var(--font-mono, monospace)
   color #ffffff
-  background linear-gradient(to right, #2563eb, #1d4ed8)
+  background var(--color-brand)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
   text-decoration none
   display flex
   align-items center
   justify-content center
   gap 0.5rem
-  transition all 0.2s ease
-  box-shadow 0 0 20px rgba(37, 99, 235, 0.3)
+  transition transform 0.1s ease, box-shadow 0.1s ease
 
   &:hover
-    filter brightness(1.15)
-    transform scale(1.03)
+    background var(--color-brand-hover)
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0px var(--color-border)
 
 .hero-countdown-box
   position relative
   z-index 10
   padding 1.5rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  border-radius var(--radius-lg, 4px)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  background var(--color-surface)
+  color var(--color-text)
   display flex
   flex-direction column
-  gap 1rem
-
-  .sched-light &
-    background linear-gradient(to right, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95))
-    border-color #b45309
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
-
-  .sched-dark &
-    background linear-gradient(to right, rgba(12, 20, 36, 0.95), rgba(9, 16, 31, 0.95), rgba(21, 15, 41, 0.95))
-    border-color rgba(245, 197, 24, 0.5)
-    box-shadow 0 0 50px rgba(245, 197, 24, 0.15)
+  gap 1.5rem
 
 .countdown-header-row
   display flex
   align-items center
   justify-content space-between
   flex-wrap wrap
-  gap 0.5rem
+  gap 0.75rem
+  border-bottom 2px solid
   padding-bottom 0.75rem
-  border-bottom 1px solid
 
   .sched-light &
-    border-color #e2e8f0
+    border-color #1c1917
 
   .sched-dark &
-    border-color #1c2e4a
+    border-color #1e293b
 
 .countdown-tag-left
   display flex
@@ -447,18 +412,23 @@ onUnmounted(() => {
   gap 0.5rem
 
 .ping-dot
-  width 0.75rem
-  height 0.75rem
-  border-radius 9999px
+  width 0.5rem
+  height 0.5rem
   background #ef4444
-  animation ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite
+  box-shadow 0 0 6px #ef4444
 
 .tag-title
-  font-size 0.75rem
+  font-size 0.7rem
   font-weight 700
-  color #ef4444
+  letter-spacing 0.1em
   text-transform uppercase
-  letter-spacing 0.05em
+  font-family 'Silkscreen', monospace
+
+  .sched-light &
+    color #92400e
+
+  .sched-dark &
+    color #f5c518
 
 .countdown-tag-right
   display flex
@@ -467,40 +437,42 @@ onUnmounted(() => {
 
 .date-formatted
   font-size 0.75rem
-  font-family monospace
+  font-family 'Share Tech Mono', monospace
+  font-weight 700
 
   .sched-light &
-    color #475569
+    color #1c1917
 
   .sched-dark &
-    color #94a3b8
+    color #38bdf8
 
 .cycle-pill
-  padding 0.15rem 0.65rem
-  border-radius 9999px
+  padding 0.25rem 0.65rem
+  border-radius 0px
   font-size 0.65rem
-  font-weight 800
-  text-transform uppercase
+  font-weight 700
+  font-family 'Silkscreen', monospace
+  border 2px solid #1c1917
 
   &.pill-gold
-    .sched-light &
-      background #fef3c7
-      color #b45309
-      border 1px solid #fde68a
+    background #fef3c7
+    color #92400e
+    box-shadow 2px 2px 0 #1c1917
     .sched-dark &
-      background rgba(217, 119, 6, 0.2)
+      background #172439
       color #f5c518
-      border 1px solid rgba(245, 197, 24, 0.4)
+      border-color #f5c518
+      box-shadow 2px 2px 0 #000
 
   &.pill-blue
-    .sched-light &
-      background #e0f2fe
-      color #0284c7
-      border 1px solid #bae6fd
+    background #e0f2fe
+    color #0284c7
+    box-shadow 2px 2px 0 #1c1917
     .sched-dark &
-      background rgba(59, 130, 246, 0.2)
-      color #60a5fa
-      border 1px solid rgba(59, 130, 246, 0.4)
+      background #0c203b
+      color #38bdf8
+      border-color #38bdf8
+      box-shadow 2px 2px 0 #000
 
 .countdown-body-row
   display flex
@@ -519,13 +491,14 @@ onUnmounted(() => {
   gap 0.5rem
 
 .timer-main-title
-  font-size 1.25rem
+  font-size 1.1rem
   font-weight 700
   text-transform uppercase
+  font-family 'Silkscreen', monospace
   margin 0
 
   .sched-light &
-    color #0f172a
+    color #1c1917
 
   .sched-dark &
     color #ffffff
@@ -534,6 +507,7 @@ onUnmounted(() => {
   font-size 0.75rem
   line-height 1.6
   max-width 36rem
+  font-family 'Be Vietnam Pro', sans-serif
 
   .sched-light &
     color #475569
@@ -549,11 +523,6 @@ onUnmounted(() => {
 
 .timer-box
   padding 0.75rem
-  border-radius 0.75rem
-  border 1px solid
-  text-align center
-  min-width 70px
-
   .sched-light &
     background #f8fafc
     border-color #cbd5e1

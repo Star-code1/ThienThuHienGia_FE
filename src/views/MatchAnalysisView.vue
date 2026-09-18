@@ -635,22 +635,21 @@ onMounted(() => {
   position relative
   z-index 10
   padding 1.25rem 1.5rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  border-radius 0px
+  border 2px solid
   display flex
   flex-direction column
   gap 1rem
 
   .analysis-light &
-    background rgba(255, 255, 255, 0.95)
-    border-color #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 4px 4px 0 #1c1917
 
   .analysis-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #1e304d
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.4)
+    background #0b1120
+    border-color #f5c518
+    box-shadow 4px 4px 0 #000
 
 @media (min-width: 768px)
   .header-banner
@@ -667,77 +666,82 @@ onMounted(() => {
   font-size 1.75rem
 
 .banner-main-title
-  font-size 1.25rem
-  font-weight 900
+  font-size 1rem
+  font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family 'Chakra Petch', sans-serif
   margin 0
 
   .analysis-light &
-    background linear-gradient(to right, #78350f, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #92400e
 
   .analysis-dark &
-    background linear-gradient(to right, #fffbeb, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #f5c518
+    text-shadow 1px 1px 0 #000
 
 .banner-sub-desc
-  font-size 0.75rem
+  font-size 0.65rem
+  letter-spacing 0.1em
+  font-family 'Share Tech Mono', monospace
   margin-top 0.15rem
 
   .analysis-light &
-    color #475569
+    color #78350f
 
   .analysis-dark &
-    color #94a3b8
+    color #38bdf8
 
 .btn-add-log
   padding 0.65rem 1.25rem
-  border-radius 0.75rem
-  font-size 0.75rem
-  font-weight 800
+  border-radius 0px
+  font-size 0.7rem
+  font-weight 700
+  font-family 'Chakra Petch', sans-serif
   cursor pointer
   display inline-flex
   align-items center
   gap 0.5rem
-  transition all 0.2s ease
-  border none
+  transition all 0.15s ease
+  border 2px solid #1c1917
 
   .analysis-light &
-    background linear-gradient(to right, #b45309, #d97706)
+    background #f59e0b
     color #ffffff
-    box-shadow 0 4px 15px rgba(180, 83, 9, 0.2)
+    box-shadow 3px 3px 0 #1c1917
     &:hover
-      filter brightness(1.1)
+      background #d97706
+      transform translate(-1px, -1px)
+      box-shadow 4px 4px 0 #1c1917
 
   .analysis-dark &
-    background linear-gradient(to right, #d97706, #f5c518, #b45309)
-    color #020617
-    box-shadow 0 0 20px rgba(245, 197, 24, 0.3)
+    background #f5c518
+    color #050811
+    box-shadow 3px 3px 0 #000
+    border-color #000
     &:hover
-      filter brightness(1.25)
-      transform scale(1.03)
+      background #fef08a
+      transform translate(-1px, -1px)
+      box-shadow 4px 4px 0 #38bdf8
 
 .permission-tag
   padding 0.4rem 0.75rem
-  border-radius 0.75rem
-  font-size 0.75rem
+  border-radius 0px
+  font-size 0.65rem
+  font-family 'Share Tech Mono', monospace
   display flex
   align-items center
   gap 0.375rem
-  border 1px solid
+  border 2px solid #1c1917
 
   .analysis-light &
-    background #f1f5f9
-    border-color #cbd5e1
-    color #64748b
+    background #e2e8f0
+    color #475569
 
   .analysis-dark &
-    background #0f172a
-    border-color #1e293b
-    color #94a3b8
+    background #172439
+    border-color #38bdf8
+    color #38bdf8
 
 .overview-stats-grid
   display grid
@@ -750,33 +754,33 @@ onMounted(() => {
 
 .stat-card
   padding 1rem
-  border-radius 1rem
-  border 1px solid
+  border-radius 0px
+  border 2px solid
   display flex
   align-items center
   gap 0.75rem
-  backdrop-filter blur(12px)
 
   .analysis-light &
-    background #ffffff
-    border-color #cbd5e1
-    box-shadow 0 2px 10px rgba(0, 0, 0, 0.03)
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
 
   .analysis-dark &
-    background rgba(8, 13, 25, 0.8)
-    border-color #1e293b
+    background #0b1120
+    border-color #1c2e4a
+    box-shadow 3px 3px 0 #000
 
   &.card-win
     .analysis-dark &
-      border-color rgba(22, 101, 52, 0.4)
+      border-color #34d399
 
   &.card-loss
     .analysis-dark &
-      border-color rgba(153, 27, 27, 0.4)
+      border-color #ef4444
 
   &.card-images
     .analysis-dark &
-      border-color #1e304d
+      border-color #38bdf8
 
 .stat-icon
   font-size 1.5rem
@@ -789,9 +793,10 @@ onMounted(() => {
   font-size 0.6rem
   font-weight 700
   text-transform uppercase
+  font-family 'Chakra Petch', sans-serif
 
   .analysis-light &
-    color #64748b
+    color #78350f
 
   .analysis-dark &
     color #64748b
@@ -812,12 +817,12 @@ onMounted(() => {
       color #38bdf8
 
 .stat-value
-  font-size 1.125rem
+  font-size 1.5rem
   font-weight 700
-  font-family monospace
+  font-family 'VT323', monospace
 
   .analysis-light &
-    color #0f172a
+    color #1c1917
 
   .analysis-dark &
     color #ffffff

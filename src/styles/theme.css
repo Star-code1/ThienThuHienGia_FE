@@ -1,0 +1,224 @@
+/* src/styles/theme.css - Retro / Neo-Brutalist Design Tokens */
+:root {
+  /* 1. MÀU NỀN & BỀ MẶT */
+  --color-bg-light: #f4efe4;
+  --color-bg-dark: #121417;
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #1a1d21;
+  --color-bg-subtle-light: #eae3d2;
+  --color-bg-subtle-dark: #22262c;
+
+  /* 2. ĐƯỜNG VIỀN & CHỮ */
+  --color-border-light: #1f2328;
+  --color-border-dark: #e6edf3;
+  --color-text-light: #1f2328;
+  --color-text-dark: #f0f6fc;
+  --color-text-secondary-light: #57606a;
+  --color-text-secondary-dark: #8b949e;
+  --color-muted-light: #6e7781;
+  --color-muted-dark: #7d8590;
+
+  /* 3. MÀU NHẤN BRAND (TERRACOTTA / CAM ĐẤT) */
+  --color-brand-light: #ca4918;
+  --color-brand-dark: #f46936;
+  --color-brand-hover-light: #aa3b11;
+  --color-brand-hover-dark: #ff7b4b;
+
+  /* Defaults for Light Mode */
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-bg-subtle: var(--color-bg-subtle-light);
+  --color-border: var(--color-border-light);
+  --color-text: var(--color-text-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-muted: var(--color-muted-light);
+  --color-brand: var(--color-brand-light);
+  --color-brand-hover: var(--color-brand-hover-light);
+
+  /* 4. HÌNH HỌC SẮC NÉT & TYPOGRAPHY */
+  --radius: 2px;
+  --radius-lg: 4px;
+  --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  --font-heading: 'Chakra Petch', 'Be Vietnam Pro', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Dark Mode Variable Overrides */
+.dark-theme, .dark {
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-bg-subtle: var(--color-bg-subtle-dark);
+  --color-border: var(--color-border-dark);
+  --color-text: var(--color-text-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-muted: var(--color-muted-dark);
+  --color-brand: var(--color-brand-dark);
+  --color-brand-hover: var(--color-brand-hover-dark);
+}
+
+/* Base Light Theme */
+.light-theme, .light {
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-bg-subtle: var(--color-bg-subtle-light);
+  --color-border: var(--color-border-light);
+  --color-text: var(--color-text-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-muted: var(--color-muted-light);
+  --color-brand: var(--color-brand-light);
+  --color-brand-hover: var(--color-brand-hover-light);
+}
+
+/* Global Neo-Brutalist Utility Classes */
+.card, .retro-card {
+  border: 2px solid var(--color-border) !important;
+  border-radius: var(--radius-lg, 4px) !important;
+  box-shadow: 3px 3px 0px var(--color-border) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+.retro-button {
+  background: var(--color-brand) !important;
+  color: #ffffff !important;
+  border: 2px solid var(--color-border) !important;
+  border-radius: var(--radius, 2px) !important;
+  box-shadow: 2px 2px 0px var(--color-border) !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  cursor: pointer !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
+}
+
+.retro-button:hover {
+  background: var(--color-brand-hover) !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 3px 3px 0px var(--color-border) !important;
+}
+
+.retro-button:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px var(--color-border) !important;
+}
+
+/* Secondary Button */
+.retro-button-secondary {
+  background: var(--color-bg-subtle) !important;
+  color: var(--color-text) !important;
+  border: 2px solid var(--color-border) !important;
+  border-radius: var(--radius, 2px) !important;
+  box-shadow: 2px 2px 0px var(--color-border) !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+}
+
+.retro-button-secondary:hover {
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 3px 3px 0px var(--color-border) !important;
+}
+
+.retro-button-secondary:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px var(--color-border) !important;
+}
+
+/* Typewriter Form Controls */
+input[type="text"], input[type="date"], input[type="search"], textarea, select, .retro-input {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius, 2px);
+  box-shadow: 2px 2px 0px var(--color-border);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus, input[type="date"]:focus, input[type="search"]:focus, textarea:focus, select:focus {
+  border-color: var(--color-brand) !important;
+  box-shadow: 3px 3px 0px var(--color-brand) !important;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+}
+
+/* Badges & Chips */
+.badge, .retro-badge {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 3px 8px !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius, 2px) !important;
+  box-shadow: 1px 1px 0px var(--color-border) !important;
+}
+
+/* Data Tables */
+.data-table, .retro-table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 2px solid var(--color-border) !important;
+  border-radius: var(--radius, 2px) !important;
+  box-shadow: 2px 2px 0px var(--color-border) !important;
+  background: var(--color-surface) !important;
+}
+
+.data-table th, .retro-table th {
+  background: var(--color-bg-subtle) !important;
+  border-bottom: 2px solid var(--color-border) !important;
+  border-right: 1px solid var(--color-border) !important;
+  padding: 10px 14px !important;
+  font-family: var(--font-heading) !important;
+  font-weight: bold !important;
+  color: var(--color-text) !important;
+}
+
+.data-table td, .retro-table td {
+  padding: 10px 14px !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  border-right: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+.data-table tr:last-child td, .retro-table tr:last-child td {
+  border-bottom: none !important;
+}
+
+.data-table th:last-child, .data-table td:last-child, .retro-table th:last-child, .retro-table td:last-child {
+  border-right: none !important;
+}
+
+/* Retro Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius, 2px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-hover);
+}

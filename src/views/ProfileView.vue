@@ -120,17 +120,20 @@ const userPrimaryRole = computed(() => {
   gap 1.5rem
 
 .profile-header
-  padding-bottom 1rem
-  border-bottom 1px solid
+  padding 1.25rem 1.5rem
+  border-radius var(--radius-lg, 4px)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  background var(--color-surface)
   display flex
-  align-items center
-  justify-content space-between
+  flex-direction column
+  gap 1rem
 
-  .prof-light &
-    border-color #cbd5e1
-
-  .prof-dark &
-    border-color #172439
+@media (min-width: 768px)
+  .profile-header
+    flex-direction row
+    align-items center
+    justify-content space-between
 
 .title-row
   display flex
@@ -141,77 +144,51 @@ const userPrimaryRole = computed(() => {
   font-size 1.5rem
 
 .header-title
-  font-size 1.25rem
-  font-weight 900
-  text-transform uppercase
+  font-size 1rem
+  font-weight 700
   letter-spacing 0.05em
+  text-transform uppercase
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
 
-  .prof-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-  .prof-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
 .header-subtitle
-  font-size 0.75rem
+  font-size 0.65rem
+  letter-spacing 0.1em
+  text-transform uppercase
+  font-family var(--font-mono, monospace)
+  color var(--color-brand)
   margin-top 0.25rem
-
-  .prof-light &
-    color #64748b
-
-  .prof-dark &
-    color #94a3b8
 
 .btn-home
   padding 0.5rem 1rem
-  border-radius 0.75rem
-  font-size 0.75rem
+  border-radius var(--radius, 2px)
+  background var(--color-bg-subtle)
+  color var(--color-text)
+  font-size 0.7rem
   font-weight 700
+  font-family var(--font-mono, monospace)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
   text-decoration none
-  border 1px solid
-  transition all 0.15s ease
+  transition transform 0.1s ease, box-shadow 0.1s ease
 
-  .prof-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #475569
-    &:hover
-      background #f1f5f9
-      color #0f172a
-
-  .prof-dark &
-    background #121c2e
-    border-color #1e304d
-    color #94a3b8
-    &:hover
-      background #1b2b45
-      color #ffffff
+  &:hover
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0px var(--color-border)
 
 .profile-main-card
   position relative
   padding 1.5rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  border-radius var(--radius-lg, 4px)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  background var(--color-surface)
+  color var(--color-text)
   display flex
   flex-direction column
   gap 1.5rem
   overflow hidden
-
-  .prof-light &
-    background #ffffff
-    border-color #cbd5e1
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
-
-  .prof-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #1e304d
-    box-shadow 0 20px 40px rgba(0, 0, 0, 0.4)
 
 @media (min-width: 768px)
   .profile-main-card
@@ -231,13 +208,13 @@ const userPrimaryRole = computed(() => {
   align-items center
   gap 1.5rem
   padding-bottom 1.5rem
-  border-bottom 1px solid
+  border-bottom 2px solid
 
   .prof-light &
-    border-color #e2e8f0
+    border-color #1c1917
 
   .prof-dark &
-    border-color #142033
+    border-color #1e293b
 
 @media (min-width: 768px)
   .profile-top-row
@@ -250,17 +227,14 @@ const userPrimaryRole = computed(() => {
 .avatar-img
   width 6rem
   height 6rem
-  border-radius 1rem
+  border-radius 0px
   object-fit cover
-  border 2px solid
-
-  .prof-light &
-    border-color #b45309
-    box-shadow 0 0 20px rgba(180, 83, 9, 0.2)
+  border 2px solid #1c1917
+  box-shadow 3px 3px 0 #1c1917
 
   .prof-dark &
-    border-color rgba(245, 197, 24, 0.6)
-    box-shadow 0 0 25px rgba(245, 197, 24, 0.25)
+    border-color #f5c518
+    box-shadow 3px 3px 0 #000
 
 @media (min-width: 768px)
   .avatar-img
@@ -273,7 +247,7 @@ const userPrimaryRole = computed(() => {
   bottom -0.5rem
   width 1.5rem
   height 1.5rem
-  border-radius 9999px
+  border-radius 0px
   background #34d399
   color #000000
   display flex
@@ -281,13 +255,7 @@ const userPrimaryRole = computed(() => {
   justify-content center
   font-size 0.625rem
   font-weight 800
-  border 2px solid
-
-  .prof-light &
-    border-color #ffffff
-
-  .prof-dark &
-    border-color #080d19
+  border 2px solid #1c1917
 
 .profile-info
   display flex
@@ -312,22 +280,25 @@ const userPrimaryRole = computed(() => {
     justify-content flex-start
 
 .user-display-name
-  font-size 1.5rem
-  font-weight 800
+  font-size 1.35rem
+  font-weight 700
+  font-family 'Silkscreen', monospace
   margin 0
 
   .prof-light &
-    color #0f172a
+    color #1c1917
 
   .prof-dark &
     color #ffffff
 
 .class-pill-badge
   padding 0.25rem 0.85rem
-  border-radius 9999px
-  font-size 0.75rem
+  border-radius 0px
+  font-size 0.7rem
   font-weight 700
-  border 1px solid
+  font-family 'Silkscreen', monospace
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
   display flex
   align-items center
   gap 0.375rem
@@ -339,13 +310,13 @@ const userPrimaryRole = computed(() => {
 
 .discord-handle
   font-size 0.75rem
-  font-family monospace
+  font-family 'Share Tech Mono', monospace
 
   .prof-light &
     color #64748b
 
   .prof-dark &
-    color #64748b
+    color #94a3b8
 
 .roles-list
   display flex
@@ -355,41 +326,37 @@ const userPrimaryRole = computed(() => {
 
 .role-pill
   padding 0.25rem 0.75rem
-  border-radius 0.375rem
-  font-size 0.75rem
-  font-weight 800
+  border-radius 0px
+  font-size 0.65rem
+  font-weight 700
+  font-family 'Silkscreen', monospace
   display flex
   align-items center
   gap 0.375rem
-  border 1px solid
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
 
   &.role-duong-gia
-    .prof-light &
-      background #fef3c7
-      border-color #b45309
-      color #b45309
+    background #fef3c7
+    color #92400e
     .prof-dark &
-      background rgba(245, 197, 24, 0.2)
-      border-color rgba(245, 197, 24, 0.5)
+      background #172439
       color #f5c518
-      box-shadow 0 0 10px rgba(245, 197, 24, 0.3)
+      border-color #f5c518
+      box-shadow 2px 2px 0 #000
 
   &.role-duong-chu
-    .prof-light &
-      background #e0f2fe
-      border-color #0284c7
-      color #0284c7
+    background #e0f2fe
+    color #0284c7
     .prof-dark &
-      background rgba(56, 189, 248, 0.2)
-      border-color rgba(56, 189, 248, 0.5)
+      background #0c203b
       color #38bdf8
-      box-shadow 0 0 10px rgba(56, 189, 248, 0.3)
+      border-color #38bdf8
+      box-shadow 2px 2px 0 #000
 
   &.role-bang-chung
-    .prof-light &
-      background #f1f5f9
-      border-color #cbd5e1
-      color #475569
+    background #f1f5f9
+    color #475569
     .prof-dark &
       background #1e293b
       border-color #334155

@@ -148,14 +148,32 @@ const filteredMembers = computed(() => {
 .roster-container
   position relative
   min-height calc(100vh - 57px)
-  padding 1.5rem
+  padding 1rem 1.25rem
+  border-radius 0px
+  border 2px solid
+  display flex
+  flex-direction column
+  gap 1rem
   max-width 80rem
   margin 0 auto
   font-family 'Lora', serif
   user-select none
-  display flex
-  flex-direction column
-  gap 1.5rem
+
+  .roster-light &
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
+
+  .roster-dark &
+    background #0b1120
+    border-color #f5c518
+    box-shadow 3px 3px 0 #000
+
+@media (min-width: 768px)
+  .roster-header
+    flex-direction row
+    align-items center
+    justify-content space-between
 
 .roster-header
   padding-bottom 1rem
@@ -163,18 +181,6 @@ const filteredMembers = computed(() => {
   display flex
   flex-direction column
   gap 1rem
-
-  .roster-light &
-    border-color #cbd5e1
-
-  .roster-dark &
-    border-color #172439
-
-@media (min-width: 640px)
-  .roster-header
-    flex-direction row
-    align-items center
-    justify-content space-between
 
 .title-row
   display flex
@@ -185,31 +191,32 @@ const filteredMembers = computed(() => {
   font-size 1.5rem
 
 .header-title
-  font-size 1.5rem
-  font-weight 900
-  text-transform uppercase
+  font-size 1rem
+  font-weight 700
   letter-spacing 0.05em
+  text-transform uppercase
+  font-family 'Silkscreen', monospace
   margin 0
 
   .roster-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #92400e
 
   .roster-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #f5c518
+    text-shadow 1px 1px 0 #000
 
 .header-subtitle
-  font-size 0.75rem
+  font-size 0.65rem
+  letter-spacing 0.1em
+  text-transform uppercase
+  font-family 'Share Tech Mono', monospace
   margin-top 0.25rem
 
   .roster-light &
-    color #64748b
+    color #78350f
 
   .roster-dark &
-    color #94a3b8
+    color #38bdf8
 
 .header-actions
   display flex
@@ -220,36 +227,41 @@ const filteredMembers = computed(() => {
   width 14rem
   font-size 0.75rem
   padding 0.5rem 0.85rem
-  border-radius 0.75rem
-  border 1px solid
+  border-radius 0px
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
   outline none
-  font-family 'Lora', serif
+  font-family 'Be Vietnam Pro', sans-serif
 
   .roster-light &
     background #ffffff
-    border-color #cbd5e1
-    color #0f172a
+    color #1c1917
     &::placeholder
       color #94a3b8
 
   .roster-dark &
-    background #0f172a
-    border-color #1e293b
+    background #172439
+    border-color #38bdf8
     color #ffffff
     &::placeholder
-      color #64748b
+      color #94a3b8
 
 .btn-lineup
   padding 0.5rem 1rem
-  border-radius 0.75rem
+  border-radius 0px
   background #2563eb
   color #ffffff
-  font-size 0.75rem
+  font-size 0.7rem
   font-weight 700
+  font-family 'Silkscreen', monospace
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
   text-decoration none
   transition all 0.15s ease
   &:hover
     background #3b82f6
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0 #1c1917
 
 .class-breakdown-grid
   display grid
@@ -266,36 +278,41 @@ const filteredMembers = computed(() => {
 
 .class-card
   padding 0.75rem
-  border-radius 0.75rem
-  border 1px solid
+  border-radius 0px
+  border 2px solid
   display flex
   flex-direction column
   align-items center
   cursor pointer
-  transition all 0.2s ease
+  transition all 0.15s ease
 
   .roster-light &
-    background #ffffff
-    border-color #cbd5e1
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 2px 2px 0 #1c1917
     &:hover
-      border-color #2563eb
+      transform translate(-1px, -1px)
+      box-shadow 3px 3px 0 #1c1917
 
   .roster-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #17263c
+    background #0b1120
+    border-color #1c2e4a
+    box-shadow 2px 2px 0 #000
     &:hover
-      border-color #3b82f6
+      border-color #38bdf8
+      transform translate(-1px, -1px)
+      box-shadow 3px 3px 0 #38bdf8
 
   &.selected
     .roster-light &
       background #fef3c7
-      border-color #b45309
-      box-shadow 0 0 12px rgba(180, 83, 9, 0.2)
+      border-color #1c1917
+      box-shadow 3px 3px 0 #92400e
 
     .roster-dark &
-      background rgba(245, 197, 24, 0.1)
+      background #172439
       border-color #f5c518
-      box-shadow 0 0 12px rgba(245, 197, 24, 0.2)
+      box-shadow 3px 3px 0 #f5c518
 
 .class-card-icon
   width 1.75rem
@@ -304,18 +321,19 @@ const filteredMembers = computed(() => {
   margin-bottom 0.25rem
 
 .class-card-name
-  font-size 0.75rem
+  font-size 0.7rem
   font-weight 700
+  font-family 'Silkscreen', monospace
 
   .roster-light &
-    color #0f172a
+    color #1c1917
 
   .roster-dark &
     color #ffffff
 
 .class-card-count
-  font-size 0.625rem
-  font-family monospace
+  font-size 0.85rem
+  font-family 'VT323', monospace
   font-weight 700
   margin-top 0.15rem
 
@@ -326,45 +344,25 @@ const filteredMembers = computed(() => {
     color #f5c518
 
 .table-card
-  border-radius 1rem
+  border-radius var(--radius-lg, 4px)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  background var(--color-surface)
   overflow hidden
-  border 1px solid
-  backdrop-filter blur(12px)
-
-  .roster-light &
-    background #ffffff
-    border-color #cbd5e1
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
-
-  .roster-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #17263c
-    box-shadow 0 20px 40px rgba(0, 0, 0, 0.4)
 
 .table-header
-  padding 1rem
-  border-bottom 1px solid
-
-  .roster-light &
-    background #f8fafc
-    border-color #e2e8f0
-
-  .roster-dark &
-    background #050810
-    border-color #17263c
+  padding 1rem 1.25rem
+  border-bottom 2px solid var(--color-border)
+  background var(--color-bg-subtle)
 
 .table-title
-  font-size 0.875rem
+  font-size 0.85rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
-
-  .roster-light &
-    color #1d4ed8
-
-  .roster-dark &
-    color #93c5fd
 
 .table-wrapper
   overflow-x auto
@@ -373,44 +371,38 @@ const filteredMembers = computed(() => {
   width 100%
   text-align left
   font-size 0.75rem
-  border-collapse collapse
-
-.table-head
-  font-size 0.625rem
-  text-transform uppercase
-  letter-spacing 0.05em
-  border-bottom 1px solid
-
-  .roster-light &
-    background #f1f5f9
-    border-color #cbd5e1
-    color #64748b
-
-  .roster-dark &
-    background #0f172a
-    border-color #1e293b
-    color #64748b
+  border-collapse separate
+  border-spacing 0
+  background var(--color-surface)
 
 .th-cell
-  padding 0.75rem 1rem
+  padding 10px 14px
   font-weight 700
+  font-family var(--font-heading)
+  background var(--color-bg-subtle)
+  color var(--color-text)
+  border-bottom 2px solid var(--color-border)
+  border-right 1px solid var(--color-border)
+
+  &:last-child
+    border-right none
 
 .tr-row
-  border-bottom 1px solid
   transition background 0.15s ease
-
-  .roster-light &
-    border-color #f1f5f9
-    &:hover
-      background #f8fafc
-
-  .roster-dark &
-    border-color #17263c
-    &:hover
-      background rgba(15, 23, 42, 0.6)
+  &:hover
+    background var(--color-bg-subtle)
 
 .td-cell
-  padding 0.75rem 1rem
+  padding 10px 14px
+  color var(--color-text)
+  border-bottom 1px solid var(--color-border)
+  border-right 1px solid var(--color-border)
+
+  &:last-child
+    border-right none
+
+.tr-row:last-child .td-cell
+  border-bottom none
 
 .user-td
   display flex
@@ -421,44 +413,30 @@ const filteredMembers = computed(() => {
 .avatar-img
   width 2rem
   height 2rem
-  border-radius 0.5rem
+  border-radius var(--radius, 2px)
   object-fit cover
-  border 1px solid
-
-  .roster-light &
-    border-color #cbd5e1
-
-  .roster-dark &
-    border-color #1e304d
+  border 2px solid var(--color-border)
 
 .user-display-name
   font-size 0.75rem
   font-weight 700
   display block
-
-  .roster-light &
-    color #0f172a
-
-  .roster-dark &
-    color #ffffff
+  color var(--color-text)
 
 .user-username
-  font-size 0.625rem
-  font-family monospace
+  font-size 0.65rem
+  font-family var(--font-mono, monospace)
   display block
-
-  .roster-light &
-    color #64748b
-
-  .roster-dark &
-    color #64748b
+  color var(--color-text-secondary)
 
 .class-pill
-  padding 0.15rem 0.65rem
-  border-radius 0.25rem
+  padding 3px 8px
+  border-radius var(--radius, 2px)
   font-size 0.7rem
-  font-weight 600
-  border 1px solid
+  font-weight 700
+  font-family var(--font-mono, monospace)
+  border 1px solid var(--color-border)
+  box-shadow 1px 1px 0px var(--color-border)
   display inline-flex
   align-items center
   gap 0.375rem
@@ -469,11 +447,15 @@ const filteredMembers = computed(() => {
   object-fit contain
 
 .role-badge
-  font-size 0.625rem
-  padding 0.15rem 0.65rem
-  border-radius 9999px
+  font-size 0.7rem
+  padding 3px 8px
+  border-radius var(--radius, 2px)
   font-weight 700
+  font-family var(--font-mono, monospace)
   text-transform uppercase
+  letter-spacing 0.5px
+  border 1px solid var(--color-border)
+  box-shadow 1px 1px 0px var(--color-border)
   display inline-block
 
   &.role-duong-gia

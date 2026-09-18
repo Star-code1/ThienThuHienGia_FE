@@ -161,24 +161,15 @@ onUnmounted(() => {
 .navbar-header
   position relative
   z-index 30
-  padding 0.65rem 1rem
+  padding 0.75rem 1.25rem
   display flex
   align-items center
   justify-content space-between
   gap 1rem
   user-select none
-  backdrop-filter blur(12px)
-  transition background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease
-
-  &.nav-light
-    background rgba(255, 255, 255, 0.92)
-    border-bottom 1px solid #e2e8f0
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.03)
-
-  &.nav-dark
-    background rgba(9, 15, 29, 0.92)
-    border-bottom 1px solid #172439
-    box-shadow 0 4px 20px rgba(0, 0, 0, 0.4)
+  background var(--color-surface)
+  border-bottom 2px solid var(--color-border)
+  box-shadow 0 3px 0px var(--color-border)
 
 .nav-left
   display flex
@@ -186,37 +177,32 @@ onUnmounted(() => {
   gap 0.75rem
 
 .menu-btn
-  padding 0.4rem 0.75rem
-  border-radius 0.5rem
+  padding 0.45rem 0.85rem
+  border-radius var(--radius, 2px)
   font-size 0.75rem
   font-weight 700
   cursor pointer
   display flex
   align-items center
   gap 0.5rem
-  transition all 0.2s ease
-  font-family 'Lora', serif
+  font-family var(--font-mono, monospace)
+  background var(--color-brand)
+  color #ffffff
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
+  transition transform 0.1s ease, box-shadow 0.1s ease
 
-  .nav-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #b45309
+  &:hover
+    background var(--color-brand-hover)
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0px var(--color-border)
 
-    &:hover
-      background #e2e8f0
-      color #78350f
-
-  .nav-dark &
-    background #121c2d
-    border 1px solid #233758
-    color #f5c518
-
-    &:hover
-      background #1d2d48
-      color #ffffff
+  &:active
+    transform translate(1px, 1px)
+    box-shadow 1px 1px 0px var(--color-border)
 
 .menu-icon
-  font-size 1rem
+  font-size 0.9rem
 
 @media (max-width: 639px)
   .menu-text
@@ -229,54 +215,34 @@ onUnmounted(() => {
   text-decoration none
 
 .brand-icon
-  width 2rem
-  height 2rem
-  border-radius 0.5rem
+  width 2.25rem
+  height 2.25rem
+  border-radius var(--radius, 2px)
   display flex
   align-items center
   justify-content center
-  font-size 1.1rem
-  transition transform 0.2s ease
-
-  .nav-light &
-    background linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(180, 83, 9, 0.25))
-    border 1px solid rgba(217, 119, 6, 0.4)
-
-  .nav-dark &
-    background linear-gradient(135deg, rgba(245, 197, 24, 0.2), rgba(180, 83, 9, 0.4))
-    border 1px solid rgba(245, 197, 24, 0.5)
-    box-shadow 0 0 10px rgba(245, 197, 24, 0.2)
+  font-size 1.2rem
+  background var(--color-bg-subtle)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
 
 .brand-title
-  font-size 1rem
-  font-weight 800
+  font-size 1.1rem
+  font-weight 700
   letter-spacing 0.05em
   text-transform uppercase
-  font-family 'Lora', serif
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
 
-  .nav-light &
-    background linear-gradient(to right, #b45309, #d97706, #78350f)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-  .nav-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
 .brand-subtitle
-  font-size 0.55rem
+  font-size 0.6rem
   letter-spacing 0.15em
   text-transform uppercase
-  font-family monospace
+  font-family var(--font-mono, monospace)
+  color var(--color-brand)
   display block
-
-  .nav-light &
-    color #64748b
-
-  .nav-dark &
-    color #94a3b8
+  margin-top 0.1rem
 
 .nav-right
   display flex
@@ -288,7 +254,7 @@ onUnmounted(() => {
   flex-direction column
   align-items flex-end
   text-align right
-  font-family 'Lora', serif
+  font-family var(--font-mono, monospace)
 
 @media (min-width: 1280px)
   .server-time
@@ -299,35 +265,38 @@ onUnmounted(() => {
   text-transform uppercase
   font-weight 700
   letter-spacing 0.15em
-
-  .nav-light &
-    color #64748b
-
-  .nav-dark &
-    color #94a3b8
+  color var(--color-text-secondary)
 
 .time-value
-  font-size 0.75rem
-  font-family monospace
+  font-size 0.95rem
+  font-family 'VT323', monospace
   font-weight 700
-
-  .nav-light &
-    color #b45309
-
-  .nav-dark &
-    color #f5c518
+  letter-spacing 0.1em
+  color var(--color-brand)
 
 .theme-toggle-btn
-  padding 0.35rem 0.65rem
-  border-radius 0.75rem
+  padding 0.4rem 0.75rem
+  border-radius var(--radius, 2px)
   font-size 0.75rem
   font-weight 700
   cursor pointer
   display flex
   align-items center
   gap 0.4rem
-  transition all 0.3s ease
-  font-family 'Lora', serif
+  font-family var(--font-mono, monospace)
+  background var(--color-bg-subtle)
+  color var(--color-text)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
+  transition transform 0.1s ease, box-shadow 0.1s ease
+
+  &:hover
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0px var(--color-border)
+
+  &:active
+    transform translate(1px, 1px)
+    box-shadow 1px 1px 0px var(--color-border)
 
   .nav-light &
     background #fef3c7

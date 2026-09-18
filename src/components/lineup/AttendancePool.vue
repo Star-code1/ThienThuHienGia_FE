@@ -164,97 +164,101 @@ const onDropToPool = (evt) => {
 
 <style lang="stylus" scoped>
 .pool-container
-  border-radius 0.5rem
-  padding 0.75rem
+  border-radius 0px
+  padding 1rem
   height 100%
   display flex
   flex-direction column
   user-select none
-  backdrop-filter blur(12px)
-  font-family 'Lora', serif
+  font-family 'Be Vietnam Pro', sans-serif
+  border 2px solid
 
   &.pool-light
-    background rgba(255, 255, 255, 0.95)
-    border 1px solid #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
-    color #0f172a
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
+    color #1c1917
 
   &.pool-dark
-    background rgba(8, 13, 23, 0.95)
-    border 1px solid #17263c
-    box-shadow 0 10px 25px rgba(0, 0, 0, 0.4)
-    color #ffffff
+    background #0b1120
+    border-color #f5c518
+    box-shadow 3px 3px 0 #000
+    color #e2e8f0
 
 .pool-header
-  padding-bottom 0.5rem
-  margin-bottom 0.5rem
-  border-bottom 1px solid
+  padding-bottom 0.65rem
+  margin-bottom 0.75rem
+  border-bottom 2px solid
   display flex
   justify-content space-between
   align-items center
 
   .pool-light &
-    border-color #e2e8f0
+    border-color #1c1917
 
   .pool-dark &
-    border-color #18263e
+    border-color #1e293b
 
 .pool-title
   font-size 0.75rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family 'Chakra Petch', sans-serif
   margin 0
 
   .pool-light &
-    color #b45309
+    color #92400e
 
   .pool-dark &
     color #f5c518
 
 .pool-counter
-  font-size 0.65rem
-  padding 0.1rem 0.5rem
-  border-radius 9999px
-  font-family monospace
+  font-size 0.85rem
+  padding 0.15rem 0.5rem
+  border-radius 0px
+  font-family 'VT323', monospace
   font-weight 700
+  border 2px solid #1c1917
 
   .pool-light &
     background #fef3c7
-    color #b45309
-    border 1px solid #fde68a
+    color #92400e
+    box-shadow 2px 2px 0 #1c1917
 
   .pool-dark &
-    background rgba(245, 197, 24, 0.1)
+    background #172439
     color #f5c518
-    border 1px solid rgba(245, 197, 24, 0.3)
+    border-color #f5c518
+    box-shadow 2px 2px 0 #000
 
 .search-box
   position relative
-  margin-bottom 0.5rem
+  margin-bottom 0.65rem
 
 .search-input
   width 100%
   font-size 0.75rem
-  padding 0.4rem 0.65rem
-  border-radius 0.375rem
-  border 1px solid
+  padding 0.5rem 0.75rem
+  border-radius 0px
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
   outline none
   box-sizing border-box
+  font-family 'Be Vietnam Pro', sans-serif
 
   .pool-light &
     background #ffffff
-    border-color #cbd5e1
-    color #0f172a
+    color #1c1917
     &::placeholder
       color #94a3b8
 
   .pool-dark &
-    background #060a12
-    border-color #1e293b
-    color #e2e8f0
+    background #172439
+    border-color #38bdf8
+    color #ffffff
     &::placeholder
-      color #64748b
+      color #94a3b8
 
 .clear-search-btn
   position absolute

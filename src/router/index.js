@@ -7,6 +7,7 @@ import StatsView from '../views/StatsView.vue';
 import AuthCallbackView from '../views/AuthCallbackView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import MatchAnalysisView from '../views/MatchAnalysisView.vue';
+import TacticalMapView from '../views/TacticalMapView.vue';
 import { useAuthStore } from '../stores/authStore';
 
 const routes = [
@@ -15,6 +16,12 @@ const routes = [
     name: 'Home',
     component: HomeView,
     meta: { title: 'Trang Chủ - Thiên Thư Môn', requiresAuth: false }
+  },
+  {
+    path: '/tactical-map',
+    name: 'TacticalMap',
+    component: TacticalMapView,
+    meta: { title: 'Bản Đồ Chiến Thuật - Thiên Thư Môn', requiresAuth: false }
   },
   {
     path: '/auth/callback',

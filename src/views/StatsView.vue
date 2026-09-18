@@ -174,20 +174,25 @@ const classStatsList = computed(() => {
   flex-direction column
   gap 1.5rem
 
-.stats-header
-  padding-bottom 1rem
-  border-bottom 1px solid
+.stats-container.stats-header
+  padding 1.25rem 1.5rem
+  border-radius 0px
+  border 2px solid
   display flex
   flex-direction column
   gap 1rem
 
   .stats-light &
-    border-color #cbd5e1
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 4px 4px 0 #1c1917
 
   .stats-dark &
-    border-color #172439
+    background #0b1120
+    border-color #f5c518
+    box-shadow 4px 4px 0 #000
 
-@media (min-width: 640px)
+@media (min-width: 768px)
   .stats-header
     flex-direction row
     align-items center
@@ -202,62 +207,67 @@ const classStatsList = computed(() => {
   font-size 1.5rem
 
 .header-title
-  font-size 1.25rem
-  font-weight 900
-  text-transform uppercase
+  font-size 1rem
+  font-weight 700
   letter-spacing 0.05em
+  text-transform uppercase
+  font-family 'Silkscreen', monospace
   margin 0
 
   .stats-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #92400e
 
   .stats-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #f5c518
+    text-shadow 1px 1px 0 #000
 
 .header-subtitle
-  font-size 0.75rem
+  font-size 0.65rem
+  letter-spacing 0.1em
+  text-transform uppercase
+  font-family 'Share Tech Mono', monospace
   margin-top 0.25rem
 
   .stats-light &
-    color #64748b
+    color #78350f
 
   .stats-dark &
-    color #94a3b8
+    color #38bdf8
 
 .btn-lineup-link
   padding 0.5rem 1rem
-  border-radius 0.75rem
+  border-radius 0px
   background #2563eb
   color #ffffff
-  font-size 0.75rem
+  font-size 0.7rem
   font-weight 700
+  font-family 'Silkscreen', monospace
+  border 2px solid #1c1917
+  box-shadow 2px 2px 0 #1c1917
   text-decoration none
   transition all 0.15s ease
   &:hover
     background #3b82f6
+    transform translate(-1px, -1px)
+    box-shadow 3px 3px 0 #1c1917
 
 .event-selector-bar
-  padding 1rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  padding 1rem 1.25rem
+  border-radius 0px
+  border 2px solid
   display flex
   flex-direction column
   gap 1rem
 
   .stats-light &
-    background rgba(255, 255, 255, 0.95)
-    border-color #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
 
   .stats-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #1e304d
-    box-shadow 0 10px 25px rgba(0, 0, 0, 0.3)
+    background #0b1120
+    border-color #1e293b
+    box-shadow 3px 3px 0 #000
 
 @media (min-width: 640px)
   .event-selector-bar
@@ -273,7 +283,7 @@ const classStatsList = computed(() => {
 .event-icon-box
   width 2.25rem
   height 2.25rem
-  border-radius 0.75rem
+  border-radius 0px
   display flex
   align-items center
   justify-content center
@@ -281,12 +291,14 @@ const classStatsList = computed(() => {
 
   .stats-light &
     background #fef3c7
-    border 1px solid #fde68a
-    color #b45309
+    border 2px solid #1c1917
+    box-shadow 2px 2px 0 #1c1917
+    color #92400e
 
   .stats-dark &
-    background rgba(245, 197, 24, 0.1)
-    border 1px solid rgba(245, 197, 24, 0.3)
+    background #172439
+    border 2px solid #f5c518
+    box-shadow 2px 2px 0 #000
     color #f5c518
 
 .event-meta
@@ -297,17 +309,18 @@ const classStatsList = computed(() => {
   font-size 0.6rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
+  font-family 'Silkscreen', monospace
 
   .stats-light &
-    color #64748b
+    color #78350f
 
   .stats-dark &
-    color #64748b
+    color #94a3b8
 
 .event-current-title
   font-size 0.75rem
   font-weight 700
+  font-family 'Be Vietnam Pro', sans-serif
 
   .stats-light &
     color #b45309
@@ -326,8 +339,9 @@ const classStatsList = computed(() => {
     width auto
 
 .select-label
-  font-size 0.75rem
-  font-weight 600
+  font-size 0.65rem
+  font-weight 700
+  font-family 'Share Tech Mono', monospace
   flex-shrink 0
 
   .stats-light &
@@ -339,22 +353,22 @@ const classStatsList = computed(() => {
 .event-select
   width 100%
   padding 0.5rem 0.85rem
-  border-radius 0.75rem
-  border 1px solid
+  border-radius 0px
+  border 2px solid #1c1917
   font-size 0.75rem
   font-weight 700
   outline none
   cursor pointer
-  font-family 'Lora', serif
+  font-family 'Be Vietnam Pro', sans-serif
+  box-shadow 2px 2px 0 #1c1917
 
   .stats-light &
     background #ffffff
-    border-color #cbd5e1
-    color #b45309
+    color #92400e
 
   .stats-dark &
-    background #0f172a
-    border-color #1e293b
+    background #172439
+    border-color #38bdf8
     color #f5c518
 
 @media (min-width: 640px)
@@ -372,34 +386,35 @@ const classStatsList = computed(() => {
 
 .metric-card
   padding 1.25rem
-  border-radius 1rem
-  border 1px solid
+  border-radius 0px
+  border 2px solid
 
   .stats-light &
-    background #ffffff
-    border-color #cbd5e1
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
+    background #fdfbf7
+    border-color #1c1917
+    box-shadow 3px 3px 0 #1c1917
 
   .stats-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #17263c
-    box-shadow 0 10px 25px rgba(0, 0, 0, 0.3)
+    background #0b1120
+    border-color #1c2e4a
+    box-shadow 3px 3px 0 #000
 
 .metric-label
-  font-size 0.75rem
+  font-size 0.65rem
   font-weight 700
   text-transform uppercase
+  font-family 'Silkscreen', monospace
 
   .stats-light &
-    color #64748b
+    color #78350f
 
   .stats-dark &
     color #64748b
 
 .metric-val
-  font-size 1.75rem
-  font-weight 800
-  font-family monospace
+  font-size 2rem
+  font-weight 700
+  font-family 'VT323', monospace
   margin-top 0.5rem
 
   &.val-gold

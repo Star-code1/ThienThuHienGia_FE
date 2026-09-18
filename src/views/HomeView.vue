@@ -65,7 +65,21 @@
             span Vào Trận Đồ
             span ➔
 
-      //- Feature 2: Lịch Bang Chiến
+      //- Feature 2: Bản Đồ Chiến Thuật
+      .feature-card.card-amber
+        .bg-watermark 🗺️
+        .card-body
+          .icon-box.icon-amber 🗺️
+          h3.card-title Bản Đồ Chiến Thuật
+          p.card-desc
+            | Sa bàn tác chiến trực quan thời gian thực. Kéo thả đội hình, vẽ mũi tên chỉ hướng tấn công, cắm cờ điểm tập kết và xuất ảnh chiến thuật.
+        .card-footer
+          span.footer-tag.tag-amber Sa Bàn Tác Chiến
+          RouterLink.footer-link.link-amber(to="/tactical-map")
+            span Mở Bản Đồ
+            span ➔
+
+      //- Feature 3: Lịch Bang Chiến
       .feature-card.card-cyan
         .bg-watermark ⚔️
         .card-body
@@ -79,7 +93,21 @@
             span Xem Chiến Kỳ
             span ➔
 
-      //- Feature 3: Quản Lý Bang Hội
+      //- Feature 4: Dữ Liệu Trận Đấu
+      .feature-card.card-rose
+        .bg-watermark 📈
+        .card-body
+          .icon-box.icon-rose 📈
+          h3.card-title Dữ Liệu Trận Đấu
+          p.card-desc
+            | Lưu trữ kết quả chiến trường, tổng hợp hình ảnh chi tiết và phân tích rút kinh nghiệm các lỗi sai nhằm hoàn thiện chiến thuật tương lai.
+        .card-footer
+          span.footer-tag.tag-rose Rút Kinh Nghiệm
+          RouterLink.footer-link.link-rose(to="/match-analysis")
+            span Xem Dữ Liệu
+            span ➔
+
+      //- Feature 5: Quản Lý Bang Hội
       .feature-card.card-emerald
         .bg-watermark 👥
         .card-body
@@ -93,7 +121,7 @@
             span Xem Bang Chúng
             span ➔
 
-      //- Feature 4: Thống Kê Điểm Danh
+      //- Feature 6: Thống Kê Điểm Danh
       .feature-card.card-purple
         .bg-watermark 📊
         .card-body
@@ -177,180 +205,168 @@ onMounted(() => {
 .hero-badge
   display inline-flex
   align-items center
-  gap 0.65rem
-  padding 0.4rem 1rem
-  border-radius 9999px
-  font-size 0.75rem
+  gap 0.5rem
+  padding 0.35rem 0.85rem
+  border-radius var(--radius, 2px)
+  font-size 0.7rem
   font-weight 700
-  text-transform uppercase
-  letter-spacing 0.15em
-  margin-bottom 1.5rem
-  backdrop-filter blur(12px)
-
-  .home-light &
-    background #fef3c7
-    border 1px solid #fde68a
-    color #b45309
-
-  .home-dark &
-    background rgba(13, 21, 38, 0.9)
-    border 1px solid rgba(245, 197, 24, 0.5)
-    color #f5c518
-    box-shadow 0 0 20px rgba(245, 197, 24, 0.2)
-
-.badge-icon
-  font-size 0.85rem
+  letter-spacing 0.1em
+  font-family var(--font-mono, monospace)
+  width fit-content
+  background var(--color-surface)
+  color var(--color-brand)
+  border 2px solid var(--color-border)
+  box-shadow 2px 2px 0px var(--color-border)
 
 .hero-title-group
-  position relative
+  display flex
+  flex-direction column
+  align-items center
 
 .hero-sub-calligraphy
-  display block
-  font-size 0.85rem
+  font-size 0.75rem
+  letter-spacing 0.2em
   text-transform uppercase
-  letter-spacing 0.35em
-  font-weight 600
-  margin-bottom 0.25rem
-
-  .home-light &
-    color #b45309
-
-  .home-dark &
-    color #d97706
+  font-family var(--font-mono, monospace)
+  color var(--color-brand)
 
 .hero-title
   font-size 2.5rem
-  font-weight 900
-  letter-spacing -0.025em
+  font-weight 700
+  letter-spacing 0.05em
   text-transform uppercase
-  margin 0
+  font-family var(--font-heading)
+  color var(--color-text)
+  margin 0.25rem 0
 
-  .home-light &
-    background linear-gradient(to right, #78350f, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-  .home-dark &
-    background linear-gradient(to right, #fffbeb, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
-
-@media (min-width: 640px)
+@media (min-width: 768px)
   .hero-title
-    font-size 4rem
+    font-size 3.5rem
 
 .hero-subtitle
-  margin-top 1.25rem
-  font-size 1rem
   max-width 42rem
-  font-weight 500
-  line-height 1.625
-
-  .home-light &
-    color #475569
-
-  .home-dark &
-    color #94a3b8
+  font-size 0.875rem
+  line-height 1.7
+  font-family var(--font-body)
+  color var(--color-text-secondary)
 
 .hero-actions
-  margin-top 2rem
   display flex
   flex-wrap wrap
-  justify-content center
   align-items center
-  gap 1rem
+  justify-content center
+  gap 0.85rem
+  margin-top 0.5rem
 
 .btn-hero-primary
-  position relative
-  display inline-flex
-  align-items center
-  gap 0.65rem
-  padding 0.85rem 1.75rem
-  border-radius 0.75rem
-  font-weight 800
-  font-size 0.875rem
-  text-decoration none
-  transition all 0.2s ease
-  box-shadow 0 0 25px rgba(245, 197, 24, 0.4)
-
-  .home-light &
-    background linear-gradient(to right, #b45309, #d97706, #78350f)
-    color #ffffff
-    &:hover
-      filter brightness(1.15)
-      transform scale(1.03)
-
-  .home-dark &
-    background linear-gradient(to right, #d97706, #f5c518, #b45309)
-    color #020617
-    &:hover
-      filter brightness(1.25)
-      transform scale(1.03)
-
-.btn-hero-secondary, .btn-hero-outline
+  padding 0.75rem 1.5rem
+  border-radius var(--radius, 2px)
+  font-size 0.8rem
+  font-weight 700
+  font-family var(--font-heading)
+  cursor pointer
   display inline-flex
   align-items center
   gap 0.5rem
-  padding 0.85rem 1.5rem
-  border-radius 0.75rem
-  font-weight 600
-  font-size 0.875rem
   text-decoration none
-  transition all 0.2s ease
-  backdrop-filter blur(8px)
+  background var(--color-brand)
+  color #ffffff
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  transition transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease
+
+  &:hover
+    background var(--color-brand-hover)
+    transform translate(-1px, -1px)
+    box-shadow 4px 4px 0px var(--color-border)
+
+  &:active
+    transform translate(1px, 1px)
+    box-shadow 1px 1px 0px var(--color-border)
+
+.btn-hero-secondary
+  padding 0.75rem 1.25rem
+  border-radius var(--radius, 2px)
+  font-size 0.8rem
+  font-weight 700
+  font-family var(--font-heading)
+  cursor pointer
+  text-decoration none
+  background var(--color-bg-subtle)
+  color var(--color-text)
+  border 2px solid var(--color-border)
+  box-shadow 3px 3px 0px var(--color-border)
+  transition transform 0.1s ease, box-shadow 0.1s ease
+
+  &:hover
+    transform translate(-1px, -1px)
+    box-shadow 4px 4px 0px var(--color-border)
+
+  &:active
+    transform translate(1px, 1px)
+    box-shadow 1px 1px 0px var(--color-border)
+
+.btn-hero-outline
+  padding 0.75rem 1.25rem
+  font-size 0.8rem
+  font-weight 700
+  font-family 'Silkscreen', monospace
+  cursor pointer
+  text-decoration none
+  transition all 0.15s ease
 
   .home-light &
     background #ffffff
-    border 1px solid #cbd5e1
-    color #0f172a
-    box-shadow 0 4px 12px rgba(0, 0, 0, 0.05)
+    border 2px solid #cbd5e1
+    box-shadow 3px 3px 0 #1c1917
+    color #475569
+
     &:hover
-      border-color #b45309
-      color #b45309
-      transform scale(1.03)
+      border-color #1c1917
+      color #1c1917
+      transform translate(-1px, -1px)
 
   .home-dark &
-    background rgba(13, 23, 42, 0.9)
-    border 1px solid #263750
-    color #e2e8f0
+    background #0b1120
+    border 2px solid #334155
+    box-shadow 3px 3px 0 #000
+    color #94a3b8
+
     &:hover
-      border-color rgba(245, 197, 24, 0.8)
-      color #ffffff
-      transform scale(1.03)
+      border-color #f5c518
+      color #f5c518
+      transform translate(-1px, -1px)
 
 .stats-scroll-bar
-  margin-top 3rem
-  width 100%
-  max-width 56rem
   display grid
   grid-template-columns repeat(2, minmax(0, 1fr))
   gap 0.75rem
+  width 100%
+  max-width 52rem
   padding 1rem
-  border-radius 1rem
-  backdrop-filter blur(12px)
-  position relative
-  overflow hidden
+  border-radius 0px
+  margin-top 1rem
 
   .home-light &
-    background rgba(255, 255, 255, 0.95)
-    border 1px solid #cbd5e1
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.05)
+    background #fdfbf7
+    border 2px solid #1c1917
+    box-shadow 4px 4px 0 #1c1917
 
   .home-dark &
-    background rgba(8, 13, 25, 0.85)
-    border 1px solid #1e304d
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.5)
+    background #0b1120
+    border 2px solid #f5c518
+    box-shadow 4px 4px 0 #000
 
 @media (min-width: 640px)
   .stats-scroll-bar
     grid-template-columns repeat(4, minmax(0, 1fr))
 
 .stat-cell
-  padding 0.75rem
   text-align center
   position relative
   z-index 10
-  border-right 1px solid
+  padding 0.5rem
+  border-right 2px solid
 
   .home-light &
     border-color #e2e8f0
@@ -363,9 +379,10 @@ onMounted(() => {
 
 .stat-value
   font-size 1.75rem
-  font-weight 800
-  font-family monospace
+  font-weight 700
+  font-family 'VT323', monospace
   display block
+  letter-spacing 0.05em
 
   &.gold
     .home-light &
@@ -394,9 +411,10 @@ onMounted(() => {
 .stat-label
   font-size 0.65rem
   display block
-  font-weight 600
+  font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family 'Share Tech Mono', monospace
   margin-top 0.25rem
 
   .home-light &
@@ -420,55 +438,57 @@ onMounted(() => {
   display flex
   align-items center
   justify-content space-between
-  border-bottom 1px solid
+  border-bottom 3px solid
   padding-bottom 0.75rem
 
   .home-light &
-    border-color #cbd5e1
+    border-color #1c1917
 
   .home-dark &
-    border-color #182740
+    border-color #f5c518
 
 .section-title
   font-size 1.1rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.05em
+  font-family 'Silkscreen', monospace
   margin 0
 
   .home-light &
-    color #b45309
+    color #92400e
 
   .home-dark &
     color #f5c518
+    text-shadow 1px 1px 0 #000
 
 .features-grid
   display grid
   grid-template-columns 1fr
-  gap 1.25rem
+  gap 1.5rem
 
-@media (min-width: 768px)
+@media (min-width: 640px)
   .features-grid
     grid-template-columns repeat(2, minmax(0, 1fr))
 
 @media (min-width: 1024px)
   .features-grid
-    grid-template-columns repeat(4, minmax(0, 1fr))
+    grid-template-columns repeat(3, minmax(0, 1fr))
 
 .feature-card
   position relative
-  border-radius 1rem
-  padding 1.5rem
-  transition all 0.3s ease
   display flex
   flex-direction column
   justify-content space-between
-  backdrop-filter blur(12px)
+  padding 1.5rem
+  border-radius 0.75rem
+  border 1px solid
   overflow hidden
+  transition transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease
 
   .home-light &
     background #ffffff
-    border 1px solid #cbd5e1
+    border-color #cbd5e1
     box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
 
   .home-dark &
@@ -515,6 +535,16 @@ onMounted(() => {
       border 1px solid rgba(245, 197, 24, 0.3)
       color #f5c518
 
+  &.icon-amber
+    .home-light &
+      background #ffedd5
+      border 1px solid #fed7aa
+      color #ea580c
+    .home-dark &
+      background rgba(249, 115, 22, 0.1)
+      border 1px solid rgba(249, 115, 22, 0.3)
+      color #fb923c
+
   &.icon-cyan
     .home-light &
       background #e0f2fe
@@ -524,6 +554,16 @@ onMounted(() => {
       background rgba(56, 189, 248, 0.1)
       border 1px solid rgba(56, 189, 248, 0.3)
       color #38bdf8
+
+  &.icon-rose
+    .home-light &
+      background #ffe4e6
+      border 1px solid #fecdd3
+      color #e11d48
+    .home-dark &
+      background rgba(244, 63, 94, 0.1)
+      border 1px solid rgba(244, 63, 94, 0.3)
+      color #fb7185
 
   &.icon-emerald
     .home-light &
@@ -546,7 +586,7 @@ onMounted(() => {
       color #c084fc
 
 .card-title
-  font-size 1rem
+  font-size 1.05rem
   font-weight 700
   margin 0
 
@@ -558,7 +598,7 @@ onMounted(() => {
 
 .card-desc
   margin-top 0.5rem
-  font-size 0.75rem
+  font-size 0.775rem
   line-height 1.6
 
   .home-light &
@@ -593,11 +633,23 @@ onMounted(() => {
     .home-dark &
       color #f5c518
 
+  &.tag-amber
+    .home-light &
+      color #ea580c
+    .home-dark &
+      color #fb923c
+
   &.tag-cyan
     .home-light &
       color #0284c7
     .home-dark &
       color #38bdf8
+
+  &.tag-rose
+    .home-light &
+      color #e11d48
+    .home-dark &
+      color #fb7185
 
   &.tag-emerald
     .home-light &
@@ -626,11 +678,23 @@ onMounted(() => {
     .home-dark &
       color #f5c518
 
+  &.link-amber
+    .home-light &
+      color #ea580c
+    .home-dark &
+      color #fb923c
+
   &.link-cyan
     .home-light &
       color #0284c7
     .home-dark &
       color #38bdf8
+
+  &.link-rose
+    .home-light &
+      color #e11d48
+    .home-dark &
+      color #fb7185
 
   &.link-emerald
     .home-light &
@@ -640,6 +704,9 @@ onMounted(() => {
 
   &.link-purple
     .home-light &
+      color #7c3aed
+    .home-dark &
+      color #c084fc
       color #7c3aed
     .home-dark &
       color #c084fc
