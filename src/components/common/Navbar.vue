@@ -161,45 +161,45 @@ onUnmounted(() => {
 .navbar-header
   position relative
   z-index 30
-  padding 0.75rem 1.25rem
+  padding 0.75rem 1.5rem
   display flex
   align-items center
   justify-content space-between
   gap 1rem
   user-select none
   background var(--color-surface)
-  border-bottom 2px solid var(--color-border)
-  box-shadow 0 3px 0px var(--color-border)
+  border-bottom 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
+  backdrop-filter blur(8px)
 
 .nav-left
   display flex
   align-items center
-  gap 0.75rem
+  gap 0.85rem
 
 .menu-btn
-  padding 0.45rem 0.85rem
-  border-radius var(--radius, 2px)
+  padding 0.5rem 0.95rem
+  border-radius var(--radius-full, 9999px)
   font-size 0.75rem
-  font-weight 700
+  font-weight 600
   cursor pointer
   display flex
   align-items center
   gap 0.5rem
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
   background var(--color-brand)
   color #ffffff
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
-  transition transform 0.1s ease, box-shadow 0.1s ease
+  border 1px solid transparent
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
   &:hover
     background var(--color-brand-hover)
-    transform translate(-1px, -1px)
-    box-shadow 3px 3px 0px var(--color-border)
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
 
   &:active
-    transform translate(1px, 1px)
-    box-shadow 1px 1px 0px var(--color-border)
+    transform translateY(0)
 
 .menu-icon
   font-size 0.9rem
@@ -211,25 +211,25 @@ onUnmounted(() => {
 .brand-link
   display flex
   align-items center
-  gap 0.65rem
+  gap 0.75rem
   text-decoration none
 
 .brand-icon
   width 2.25rem
   height 2.25rem
-  border-radius var(--radius, 2px)
+  border-radius var(--radius-md, 12px)
   display flex
   align-items center
   justify-content center
   font-size 1.2rem
-  background var(--color-bg-subtle)
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
+  background var(--color-brand-subtle)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
 
 .brand-title
   font-size 1.1rem
-  font-weight 700
-  letter-spacing 0.05em
+  font-weight 800
+  letter-spacing 0.03em
   text-transform uppercase
   font-family var(--font-heading)
   color var(--color-text)
@@ -237,9 +237,10 @@ onUnmounted(() => {
 
 .brand-subtitle
   font-size 0.6rem
-  letter-spacing 0.15em
+  letter-spacing 0.12em
   text-transform uppercase
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
+  font-weight 600
   color var(--color-brand)
   display block
   margin-top 0.1rem
@@ -254,7 +255,7 @@ onUnmounted(() => {
   flex-direction column
   align-items flex-end
   text-align right
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
 
 @media (min-width: 1280px)
   .server-time
@@ -264,56 +265,52 @@ onUnmounted(() => {
   font-size 0.6rem
   text-transform uppercase
   font-weight 700
-  letter-spacing 0.15em
+  letter-spacing 0.1em
   color var(--color-text-secondary)
 
 .time-value
-  font-size 0.95rem
-  font-family 'VT323', monospace
+  font-size 0.85rem
+  font-family monospace
   font-weight 700
-  letter-spacing 0.1em
+  letter-spacing 0.05em
   color var(--color-brand)
 
 .theme-toggle-btn
-  padding 0.4rem 0.75rem
-  border-radius var(--radius, 2px)
+  padding 0.45rem 0.85rem
+  border-radius var(--radius-full, 9999px)
   font-size 0.75rem
-  font-weight 700
+  font-weight 600
   cursor pointer
   display flex
   align-items center
   gap 0.4rem
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
   background var(--color-bg-subtle)
   color var(--color-text)
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
-  transition transform 0.1s ease, box-shadow 0.1s ease
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
   &:hover
-    transform translate(-1px, -1px)
-    box-shadow 3px 3px 0px var(--color-border)
-
-  &:active
-    transform translate(1px, 1px)
-    box-shadow 1px 1px 0px var(--color-border)
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
+    border-color var(--color-brand)
 
   .nav-light &
     background #fef3c7
-    border 1px solid #fde68a
+    border-color #fde68a
     color #92400e
 
     &:hover
       background #fde68a
 
   .nav-dark &
-    background #0c1424
-    border 1px solid #1e304d
-    color #f5c518
+    background #172554
+    border-color #1e3a8a
+    color #93c5fd
 
     &:hover
-      background #16233b
-      border-color rgba(245, 197, 24, 0.6)
+      background #1e3a8a
 
 .user-section
   position relative

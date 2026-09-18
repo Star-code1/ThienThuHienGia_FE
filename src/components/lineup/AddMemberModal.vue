@@ -126,15 +126,15 @@ const handleSubmit = () => {
 
   &.modal-light
     background #ffffff
-    border 1px solid #cbd5e1
-    box-shadow 0 20px 40px rgba(0, 0, 0, 0.15)
+    border 1px solid #e2e8f0
+    box-shadow var(--shadow-modal)
     color #0f172a
 
   &.modal-dark
-    background rgba(8, 13, 25, 0.95)
-    border 1px solid rgba(245, 197, 24, 0.4)
-    box-shadow 0 0 40px rgba(245, 197, 24, 0.15)
-    color #e2e8f0
+    background #0f172a
+    border 1px solid #1e293b
+    box-shadow var(--shadow-modal)
+    color #f8fafc
 
 .modal-header
   display flex
@@ -148,7 +148,7 @@ const handleSubmit = () => {
     border-color #e2e8f0
 
   .modal-dark &
-    border-color #1c2c47
+    border-color #1e293b
 
 .header-left
   display flex
@@ -159,60 +159,51 @@ const handleSubmit = () => {
   font-size 1.25rem
 
 .modal-title
-  font-size 0.9rem
+  font-size 0.95rem
   font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   margin 0
 
   .modal-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #0f172a
 
   .modal-dark &
-    background linear-gradient(to right, #fef08a, #f5c518, #b45309)
-    -webkit-background-clip text
-    -webkit-text-fill-color transparent
+    color #f8fafc
 
 .modal-subtitle
-  font-size 0.6rem
-  font-family monospace
+  font-size 0.65rem
+  font-family var(--font-body)
   display block
-
-  .modal-light &
-    color #64748b
-
-  .modal-dark &
-    color #64748b
+  color var(--color-muted)
 
 .close-btn
   width 1.75rem
   height 1.75rem
-  border-radius 0.5rem
+  border-radius 50%
   font-size 0.75rem
   display flex
   align-items center
   justify-content center
   cursor pointer
   border 1px solid
-  transition all 0.15s ease
+  transition all 0.2s ease
 
   .modal-light &
     background #f1f5f9
-    border-color #cbd5e1
+    border-color #e2e8f0
     color #64748b
     &:hover
-      color #dc2626
-      border-color #dc2626
+      color #ef4444
+      border-color #fecaca
 
   .modal-dark &
-    background #0f172a
+    background #141f32
     border-color #1e293b
     color #94a3b8
     &:hover
       color #ffffff
-      border-color #ef5757
+      border-color #ef4444
 
 .modal-form
   display flex
@@ -227,7 +218,7 @@ const handleSubmit = () => {
   font-size 0.75rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   margin-bottom 0.35rem
 
   .modal-light &
@@ -237,36 +228,39 @@ const handleSubmit = () => {
     color #e2e8f0
 
 .required-star
-  color #ef5757
+  color #ef4444
 
 .form-input
   width 100%
-  font-size 0.75rem
-  font-weight 600
-  padding 0.65rem 0.85rem
-  border-radius 0.75rem
+  font-size 0.8rem
+  font-weight 500
+  padding 0.55rem 0.85rem
+  border-radius var(--radius-md, 12px)
   border 1px solid
   outline none
   box-sizing border-box
-  font-family 'Lora', serif
+  font-family var(--font-body)
+  transition all 0.2s ease
 
   .modal-light &
-    background #ffffff
-    border-color #cbd5e1
+    background #f8fafc
+    border-color #e2e8f0
     color #0f172a
     &::placeholder
       color #94a3b8
     &:focus
-      border-color #b45309
+      border-color #3b82f6
+      box-shadow 0 0 0 3px rgba(59, 130, 246, 0.15)
 
   .modal-dark &
-    background #050912
+    background #141f32
     border-color #1e293b
     color #ffffff
     &::placeholder
-      color #475569
+      color #64748b
     &:focus
-      border-color #f5c518
+      border-color #60a5fa
+      box-shadow 0 0 0 3px rgba(96, 165, 250, 0.15)
 
 .class-grid
   display grid
@@ -279,10 +273,10 @@ const handleSubmit = () => {
   align-items center
   justify-content center
   padding 0.5rem
-  border-radius 0.75rem
+  border-radius var(--radius-md, 12px)
   border 1px solid
   cursor pointer
-  transition all 0.15s ease
+  transition all 0.2s ease
   background none
 
   .modal-light &
@@ -290,30 +284,29 @@ const handleSubmit = () => {
     border-color #e2e8f0
     color #475569
     &:hover
-      border-color #b45309
+      border-color #3b82f6
       color #0f172a
 
   .modal-dark &
-    background rgba(6, 10, 18, 0.8)
-    border-color #142033
+    background #141f32
+    border-color #1e293b
     color #94a3b8
     &:hover
-      border-color #2b4266
+      border-color #60a5fa
       color #ffffff
 
   &.selected
     .modal-light &
-      background #fef3c7
-      border-color #b45309
-      color #b45309
-      box-shadow 0 0 10px rgba(180, 83, 9, 0.2)
+      background #eff6ff
+      border-color #3b82f6
+      color #2563eb
+      box-shadow var(--shadow-sm)
 
     .modal-dark &
-      background #18263e
-      border-color #f5c518
-      color #f5c518
-      box-shadow 0 0 12px rgba(245, 197, 24, 0.25)
-      transform scale(1.03)
+      background rgba(37, 99, 235, 0.2)
+      border-color #60a5fa
+      color #93c5fd
+      box-shadow var(--shadow-sm)
 
 .class-icon
   width 1.5rem
@@ -328,7 +321,7 @@ const handleSubmit = () => {
   margin-bottom 0.25rem
 
 .class-name
-  font-size 0.625rem
+  font-size 0.65rem
   font-weight 700
   white-space nowrap
   overflow hidden
@@ -336,18 +329,18 @@ const handleSubmit = () => {
 
 .target-location-box
   padding 0.65rem
-  border-radius 0.75rem
+  border-radius var(--radius-md, 12px)
   border 1px solid
   font-size 0.75rem
 
   .modal-light &
     background #f1f5f9
-    border-color #cbd5e1
+    border-color #e2e8f0
     color #475569
 
   .modal-dark &
-    background #0f172a
-    border-color #1e2a3e
+    background #141f32
+    border-color #1e293b
     color #94a3b8
 
 .target-label
@@ -355,23 +348,13 @@ const handleSubmit = () => {
   font-weight 700
   text-transform uppercase
   display block
-
-  .modal-light &
-    color #64748b
-
-  .modal-dark &
-    color #64748b
+  color var(--color-muted)
 
 .target-value
   font-weight 700
   display block
   margin-top 0.1rem
-
-  .modal-light &
-    color #b45309
-
-  .modal-dark &
-    color #f5c518
+  color var(--color-brand)
 
 .modal-actions
   padding-top 0.75rem
@@ -385,55 +368,35 @@ const handleSubmit = () => {
     border-color #e2e8f0
 
   .modal-dark &
-    border-color #18263e
+    border-color #1e293b
 
 .btn-cancel
   padding 0.5rem 1rem
-  border-radius 0.75rem
+  border-radius var(--radius-md, 12px)
   font-size 0.75rem
   font-weight 600
   cursor pointer
-  transition all 0.15s ease
-
-  .modal-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #475569
-    &:hover
-      background #e2e8f0
-      color #0f172a
-
-  .modal-dark &
-    background #0f172a
-    border 1px solid #1e293b
-    color #94a3b8
-    &:hover
-      background #1e293b
-      color #ffffff
+  transition all 0.2s ease
+  background var(--color-bg-subtle)
+  border 1px solid var(--color-border)
+  color var(--color-text)
+  &:hover
+    border-color var(--color-brand)
 
 .btn-submit
   padding 0.5rem 1.25rem
-  border-radius 0.75rem
+  border-radius var(--radius-md, 12px)
   font-size 0.75rem
-  font-weight 800
+  font-weight 700
   cursor pointer
   transition all 0.2s ease
   border none
-
-  .modal-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    color #ffffff
-    box-shadow 0 4px 15px rgba(180, 83, 9, 0.3)
-    &:hover
-      filter brightness(1.1)
-
-  .modal-dark &
-    background linear-gradient(to right, #d97706, #f5c518, #b45309)
-    color #020617
-    box-shadow 0 0 15px rgba(245, 197, 24, 0.3)
-    &:hover
-      filter brightness(1.25)
-      transform scale(1.03)
+  background #3b82f6
+  color #ffffff
+  box-shadow 0 2px 8px rgba(59, 130, 246, 0.3)
+  &:hover
+    background #2563eb
+    transform translateY(-1px)
 
 .fade-enter-active, .fade-leave-active
   transition opacity 0.2s ease

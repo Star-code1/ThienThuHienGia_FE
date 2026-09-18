@@ -109,16 +109,16 @@ const onSkillsClick = () => {
   align-items center
   min-height 38px
   border-bottom 1px solid
-  padding 0.25rem 0.35rem
+  padding 0.3rem 0.4rem
   gap 0.35rem
   position relative
-  transition background 0.15s ease
+  transition background 0.2s ease
 
   &.row-light
-    border-color #dbeafe
-    background #f8fafc
+    border-color #f1f5f9
+    background #ffffff
     &:hover
-      background #f1f5f9
+      background #f8fafc
 
   &.row-dark
     border-color #1e293b
@@ -130,14 +130,14 @@ const onSkillsClick = () => {
     border-bottom none
 
 .col-ingame
-  flex 1.2
+  flex 1.4
   min-width 0
   display flex
   align-items center
   cursor pointer
 
 .col-skills
-  flex 0.9
+  flex 0.8
   min-width 0
   display flex
   align-items center
@@ -147,20 +147,20 @@ const onSkillsClick = () => {
 
 .member-pill
   width 100%
-  height 28px
-  border-radius 14px
+  height 27px
+  border-radius var(--radius-full, 9999px)
   display flex
   align-items center
-  justify-content center
-  padding 0 0.5rem
-  gap 0.35rem
-  font-family 'Be Vietnam Pro', sans-serif
-  font-size 0.75rem
-  font-weight 700
-  box-shadow 0 2px 5px rgba(0, 0, 0, 0.15)
+  justify-content flex-start
+  padding 0 0.45rem
+  gap 0.3rem
+  font-family var(--font-body)
+  font-size 0.7rem
+  font-weight 600
+  letter-spacing -0.015em
+  box-shadow var(--shadow-sm)
   border 1px solid transparent
   overflow hidden
-  text-overflow ellipsis
   white-space nowrap
   transition transform 0.15s ease
 
@@ -168,8 +168,8 @@ const onSkillsClick = () => {
     transform scale(1.02)
 
 .pill-class-icon
-  width 16px
-  height 16px
+  width 15px
+  height 15px
   border-radius 50%
   object-fit cover
   flex-shrink 0
@@ -179,31 +179,34 @@ const onSkillsClick = () => {
   text-overflow ellipsis
   white-space nowrap
   flex 1
-  text-align center
+  min-width 0
+  text-align left
+  font-size 0.68rem
+  line-height 1.2
 
 .pill-ext-badge
-  font-size 0.7rem
+  font-size 0.65rem
   flex-shrink 0
 
 .empty-pill
   width 100%
   height 26px
-  border-radius 13px
-  border 1px dashed #94a3b8
+  border-radius var(--radius-full, 9999px)
+  border 1px dashed #cbd5e1
   display flex
   align-items center
   justify-content center
   gap 0.25rem
   color #94a3b8
-  font-size 0.7rem
+  font-size 0.68rem
   font-weight 600
   background rgba(148, 163, 184, 0.05)
-  transition all 0.15s ease
+  transition all 0.2s ease
 
   &:hover
-    border-color #0284c7
-    color #0284c7
-    background rgba(2, 132, 199, 0.08)
+    border-color #3b82f6
+    color #3b82f6
+    background rgba(59, 130, 246, 0.08)
 
 .empty-icon
   font-size 0.65rem
@@ -217,17 +220,17 @@ const onSkillsClick = () => {
 .skill-mini-badge
   width 24px
   height 24px
-  border-radius 4px
-  border 1px solid #38bdf8
+  border-radius var(--radius-xs, 4px)
+  border 1px solid rgba(56, 189, 248, 0.4)
   overflow hidden
-  background #000
+  background #0f172a
   flex-shrink 0
-  box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
+  box-shadow var(--shadow-sm)
   transition transform 0.15s ease
 
   &:hover
     transform scale(1.15)
-    border-color #e0b854
+    border-color #38bdf8
 
 .skill-mini-icon
   width 100%
@@ -237,24 +240,24 @@ const onSkillsClick = () => {
 .add-skill-placeholder
   font-size 0.65rem
   font-weight 600
-  color #0284c7
-  opacity 0.7
-  padding 0.15rem 0.35rem
-  border-radius 3px
-  border 1px dashed rgba(2, 132, 199, 0.4)
-  transition all 0.15s ease
+  color #3b82f6
+  opacity 0.75
+  padding 0.15rem 0.4rem
+  border-radius var(--radius-sm, 8px)
+  border 1px dashed rgba(59, 130, 246, 0.4)
+  transition all 0.2s ease
 
   .row-dark &
-    color #38bdf8
-    border-color rgba(56, 189, 248, 0.4)
+    color #60a5fa
+    border-color rgba(96, 165, 250, 0.4)
 
   &:hover
     opacity 1
-    background rgba(2, 132, 199, 0.1)
+    background rgba(59, 130, 246, 0.1)
 
 .slot-quick-actions
   position absolute
-  right 2px
+  right 4px
   top 50%
   transform translateY(-50%)
   display flex
@@ -262,8 +265,8 @@ const onSkillsClick = () => {
   z-index 2
 
 .btn-quick-remove
-  background rgba(239, 68, 68, 0.15)
-  border 1px solid #ef4444
+  background #fef2f2
+  border 1px solid #fecaca
   color #ef4444
   width 18px
   height 18px
@@ -273,8 +276,8 @@ const onSkillsClick = () => {
   align-items center
   justify-content center
   cursor pointer
-  opacity 0.6
-  transition all 0.15s
+  opacity 0.7
+  transition all 0.15s ease
 
   &:hover
     opacity 1

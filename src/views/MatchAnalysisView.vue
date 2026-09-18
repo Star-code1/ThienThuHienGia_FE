@@ -624,7 +624,7 @@ onMounted(() => {
   padding 1.5rem
   max-width 80rem
   margin 0 auto
-  font-family 'Lora', serif
+  font-family var(--font-sans)
   user-select none
   display flex
   flex-direction column
@@ -635,21 +635,13 @@ onMounted(() => {
   position relative
   z-index 10
   padding 1.25rem 1.5rem
-  border-radius 0px
-  border 2px solid
+  border-radius var(--radius-lg, 16px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  box-shadow var(--shadow-sm)
   display flex
   flex-direction column
   gap 1rem
-
-  .analysis-light &
-    background #fdfbf7
-    border-color #1c1917
-    box-shadow 4px 4px 0 #1c1917
-
-  .analysis-dark &
-    background #0b1120
-    border-color #f5c518
-    box-shadow 4px 4px 0 #000
 
 @media (min-width: 768px)
   .header-banner
@@ -666,82 +658,55 @@ onMounted(() => {
   font-size 1.75rem
 
 .banner-main-title
-  font-size 1rem
-  font-weight 700
+  font-size 1.1rem
+  font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
-  font-family 'Chakra Petch', sans-serif
+  letter-spacing -0.01em
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
 
-  .analysis-light &
-    color #92400e
-
-  .analysis-dark &
-    color #f5c518
-    text-shadow 1px 1px 0 #000
-
 .banner-sub-desc
-  font-size 0.65rem
-  letter-spacing 0.1em
-  font-family 'Share Tech Mono', monospace
+  font-size 0.75rem
+  color var(--color-text-muted)
   margin-top 0.15rem
-
-  .analysis-light &
-    color #78350f
-
-  .analysis-dark &
-    color #38bdf8
 
 .btn-add-log
   padding 0.65rem 1.25rem
-  border-radius 0px
-  font-size 0.7rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.8rem
   font-weight 700
-  font-family 'Chakra Petch', sans-serif
+  font-family var(--font-heading)
   cursor pointer
   display inline-flex
   align-items center
   gap 0.5rem
-  transition all 0.15s ease
-  border 2px solid #1c1917
+  transition all 0.2s ease
+  border 1px solid transparent
+  background linear-gradient(135deg, #f59e0b, #d97706)
+  color #ffffff
+  box-shadow var(--shadow-sm)
 
-  .analysis-light &
-    background #f59e0b
-    color #ffffff
-    box-shadow 3px 3px 0 #1c1917
-    &:hover
-      background #d97706
-      transform translate(-1px, -1px)
-      box-shadow 4px 4px 0 #1c1917
+  &:hover
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
+    filter brightness(1.05)
 
   .analysis-dark &
-    background #f5c518
-    color #050811
-    box-shadow 3px 3px 0 #000
-    border-color #000
-    &:hover
-      background #fef08a
-      transform translate(-1px, -1px)
-      box-shadow 4px 4px 0 #38bdf8
+    background linear-gradient(135deg, #fbbf24, #d97706)
+    color #0f172a
 
 .permission-tag
-  padding 0.4rem 0.75rem
-  border-radius 0px
-  font-size 0.65rem
-  font-family 'Share Tech Mono', monospace
+  padding 0.4rem 0.85rem
+  border-radius var(--radius-full, 9999px)
+  font-size 0.75rem
+  font-family var(--font-heading)
   display flex
   align-items center
   gap 0.375rem
-  border 2px solid #1c1917
-
-  .analysis-light &
-    background #e2e8f0
-    color #475569
-
-  .analysis-dark &
-    background #172439
-    border-color #38bdf8
-    color #38bdf8
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text-muted)
 
 .overview-stats-grid
   display grid
@@ -753,63 +718,39 @@ onMounted(() => {
     grid-template-columns repeat(4, minmax(0, 1fr))
 
 .stat-card
-  padding 1rem
-  border-radius 0px
-  border 2px solid
+  padding 1.15rem
+  border-radius var(--radius-lg, 16px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  box-shadow var(--shadow-sm)
   display flex
   align-items center
-  gap 0.75rem
+  gap 0.85rem
+  transition all 0.2s ease
 
-  .analysis-light &
-    background #fdfbf7
-    border-color #1c1917
-    box-shadow 3px 3px 0 #1c1917
-
-  .analysis-dark &
-    background #0b1120
-    border-color #1c2e4a
-    box-shadow 3px 3px 0 #000
-
-  &.card-win
-    .analysis-dark &
-      border-color #34d399
-
-  &.card-loss
-    .analysis-dark &
-      border-color #ef4444
-
-  &.card-images
-    .analysis-dark &
-      border-color #38bdf8
+  &:hover
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
 
 .stat-icon
-  font-size 1.5rem
+  font-size 1.6rem
 
 .stat-meta
   display flex
   flex-direction column
 
 .stat-label
-  font-size 0.6rem
+  font-size 0.7rem
   font-weight 700
   text-transform uppercase
-  font-family 'Chakra Petch', sans-serif
-
-  .analysis-light &
-    color #78350f
-
-  .analysis-dark &
-    color #64748b
+  font-family var(--font-heading)
+  color var(--color-text-muted)
 
   &.label-win
-    color #059669
-    .analysis-dark &
-      color #4ade80
+    color #10b981
 
   &.label-loss
-    color #dc2626
-    .analysis-dark &
-      color #f87171
+    color #ef4444
 
   &.label-images
     color #0284c7
@@ -818,24 +759,15 @@ onMounted(() => {
 
 .stat-value
   font-size 1.5rem
-  font-weight 700
-  font-family 'VT323', monospace
-
-  .analysis-light &
-    color #1c1917
-
-  .analysis-dark &
-    color #ffffff
+  font-weight 800
+  font-family var(--font-heading)
+  color var(--color-text)
 
   &.val-win
-    color #059669
-    .analysis-dark &
-      color #4ade80
+    color #10b981
 
   &.val-loss
-    color #dc2626
-    .analysis-dark &
-      color #f87171
+    color #ef4444
 
   &.val-images
     color #0284c7
@@ -845,27 +777,20 @@ onMounted(() => {
 .loading-box, .empty-box
   padding 4rem 1.5rem
   text-align center
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  border-radius var(--radius-xl, 20px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  box-shadow var(--shadow-sm)
   display flex
   flex-direction column
   align-items center
   gap 0.75rem
 
-  .analysis-light &
-    background #ffffff
-    border-color #cbd5e1
-
-  .analysis-dark &
-    background rgba(8, 13, 25, 0.8)
-    border-color #1c2e4a
-
 .spinner
   width 2.5rem
   height 2.5rem
-  border 4px solid #f5c518
-  border-top-color transparent
+  border 3px solid var(--color-border)
+  border-top-color var(--color-brand)
   border-radius 9999px
   animation spin 1s linear infinite
 
@@ -873,60 +798,40 @@ onMounted(() => {
   font-size 3rem
 
 .empty-title
-  font-size 1rem
-  font-weight 700
-  text-transform uppercase
+  font-size 1.1rem
+  font-weight 800
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
 
-  .analysis-light &
-    color #0f172a
-
-  .analysis-dark &
-    color #ffffff
-
 .empty-desc
-  font-size 0.75rem
-
-  .analysis-light &
-    color #475569
-
-  .analysis-dark &
-    color #94a3b8
+  font-size 0.8rem
+  color var(--color-text-muted)
 
 .records-list
   display flex
   flex-direction column
-  gap 1.5rem
+  gap 1.25rem
 
 .record-card
-  padding 1.25rem
-  border-radius 1rem
-  border 1px solid
-  backdrop-filter blur(12px)
+  padding 1.5rem
+  border-radius var(--radius-xl, 20px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  box-shadow var(--shadow-sm)
   display flex
   flex-direction column
   gap 1rem
   transition all 0.2s ease
 
-  .analysis-light &
-    background #ffffff
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
-
-  .analysis-dark &
-    background rgba(8, 13, 25, 0.9)
-    box-shadow 0 10px 30px rgba(0, 0, 0, 0.4)
+  &:hover
+    box-shadow var(--shadow-md)
 
   &.border-win
-    .analysis-light &
-      border-color #a7f3d0
-    .analysis-dark &
-      border-color rgba(52, 211, 153, 0.4)
+    border-color rgba(16, 185, 129, 0.3)
 
   &.border-loss
-    .analysis-light &
-      border-color #fca5a5
-    .analysis-dark &
-      border-color rgba(239, 68, 68, 0.4)
+    border-color rgba(239, 68, 68, 0.3)
 
 .card-top-header
   display flex
@@ -935,13 +840,7 @@ onMounted(() => {
   flex-wrap wrap
   gap 0.5rem
   padding-bottom 0.75rem
-  border-bottom 1px solid
-
-  .analysis-light &
-    border-color #e2e8f0
-
-  .analysis-dark &
-    border-color #18263e
+  border-bottom 1px solid var(--color-border)
 
 .header-title-flex
   display flex
@@ -949,42 +848,38 @@ onMounted(() => {
   gap 0.65rem
 
 .result-badge
-  padding 0.25rem 0.65rem
-  border-radius 0.25rem
-  font-size 0.65rem
+  padding 0.3rem 0.75rem
+  border-radius var(--radius-full, 9999px)
+  font-size 0.7rem
   font-weight 800
+  font-family var(--font-heading)
   text-transform uppercase
+  border 1px solid
 
   &.badge-win
-    .analysis-light &
-      background #d1fae5
-      color #059669
-      border 1px solid #a7f3d0
+    background #d1fae5
+    color #059669
+    border-color #a7f3d0
     .analysis-dark &
-      background rgba(52, 211, 153, 0.2)
+      background rgba(16, 185, 129, 0.15)
       color #34d399
-      border 1px solid rgba(52, 211, 153, 0.4)
+      border-color rgba(16, 185, 129, 0.3)
 
   &.badge-loss
-    .analysis-light &
-      background #fee2e2
-      color #dc2626
-      border 1px solid #fca5a5
+    background #fee2e2
+    color #dc2626
+    border-color #fca5a5
     .analysis-dark &
-      background rgba(239, 68, 68, 0.2)
-      color #ef4444
-      border 1px solid rgba(239, 68, 68, 0.4)
+      background rgba(239, 68, 68, 0.15)
+      color #f87171
+      border-color rgba(239, 68, 68, 0.3)
 
 .record-match-title
-  font-size 1rem
+  font-size 1.05rem
   font-weight 800
+  font-family var(--font-heading)
+  color var(--color-text)
   margin 0
-
-  .analysis-light &
-    color #0f172a
-
-  .analysis-dark &
-    color #ffffff
 
 .header-actions-right
   display flex
@@ -992,14 +887,8 @@ onMounted(() => {
   gap 0.75rem
 
 .event-date-text
-  font-size 0.75rem
-  font-family monospace
-
-  .analysis-light &
-    color #64748b
-
-  .analysis-dark &
-    color #94a3b8
+  font-size 0.8rem
+  color var(--color-text-muted)
 
 .action-btn-group
   display flex
@@ -1007,29 +896,28 @@ onMounted(() => {
   gap 0.35rem
 
 .btn-icon-action
-  padding 0.25rem 0.5rem
-  border-radius 0.375rem
+  padding 0.35rem 0.6rem
+  border-radius var(--radius-sm, 8px)
   font-size 0.75rem
-  border 1px solid
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text)
   cursor pointer
-  transition all 0.15s ease
+  transition all 0.2s ease
 
-  .analysis-light &
-    background #f1f5f9
-    border-color #cbd5e1
-    &:hover
-      background #e2e8f0
-
-  .analysis-dark &
-    background #0f172a
-    border-color #1e293b
-    &:hover
-      background #1e293b
+  &:hover
+    background var(--color-surface-hover)
+    border-color var(--color-border-strong)
 
   &.btn-delete
     &:hover
-      background #ef5757 !important
-      color #ffffff !important
+      background #fee2e2 !important
+      color #dc2626 !important
+      border-color #fca5a5 !important
+      .analysis-dark &
+        background rgba(239, 68, 68, 0.2) !important
+        color #f87171 !important
+        border-color rgba(239, 68, 68, 0.4) !important
 
 .record-body-grid
   display grid
@@ -1042,61 +930,53 @@ onMounted(() => {
 
 .analysis-box
   padding 1rem
-  border-radius 0.75rem
-  border 1px solid
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
   display flex
   flex-direction column
   gap 0.5rem
 
   &.box-mistakes
-    .analysis-light &
-      background #fef2f2
-      border-color #fca5a5
+    background #fef2f2
+    border-color #fecaca
     .analysis-dark &
-      background rgba(239, 68, 68, 0.05)
-      border-color rgba(239, 68, 68, 0.2)
+      background rgba(239, 68, 68, 0.08)
+      border-color rgba(239, 68, 68, 0.25)
 
   &.box-improvements
-    .analysis-light &
-      background #f0fdf4
-      border-color #a7f3d0
+    background #f0fdf4
+    border-color #bbf7d0
     .analysis-dark &
-      background rgba(52, 211, 153, 0.05)
-      border-color rgba(52, 211, 153, 0.2)
+      background rgba(16, 185, 129, 0.08)
+      border-color rgba(16, 185, 129, 0.25)
 
 .box-sec-title
   font-size 0.75rem
   font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.02em
+  font-family var(--font-heading)
   margin 0
   display flex
   align-items center
   gap 0.35rem
 
   .box-mistakes &
-    .analysis-light &
-      color #dc2626
+    color #dc2626
     .analysis-dark &
-      color #ef4444
+      color #f87171
 
   .box-improvements &
-    .analysis-light &
-      color #059669
+    color #059669
     .analysis-dark &
       color #34d399
 
 .sec-content
-  font-size 0.75rem
+  font-size 0.8rem
   line-height 1.6
   margin 0
   white-space pre-line
-
-  .analysis-light &
-    color #0f172a
-
-  .analysis-dark &
-    color #cbd5e1
+  color var(--color-text)
 
 .gallery-section
   display flex
@@ -1104,16 +984,12 @@ onMounted(() => {
   gap 0.5rem
 
 .gallery-title
-  font-size 0.75rem
+  font-size 0.8rem
   font-weight 800
   text-transform uppercase
+  font-family var(--font-heading)
+  color var(--color-brand)
   margin 0
-
-  .analysis-light &
-    color #b45309
-
-  .analysis-dark &
-    color #f5c518
 
 .gallery-grid
   display grid
@@ -1131,16 +1007,15 @@ onMounted(() => {
 .gallery-item
   position relative
   aspect-ratio 16/9
-  border-radius 0.5rem
+  border-radius var(--radius-md, 12px)
   overflow hidden
-  border 1px solid
+  border 1px solid var(--color-border)
   cursor pointer
+  transition transform 0.2s ease
 
-  .analysis-light &
-    border-color #cbd5e1
-
-  .analysis-dark &
-    border-color #1e293b
+  &:hover
+    transform translateY(-1px)
+    box-shadow var(--shadow-sm)
 
 .gallery-img
   width 100%
@@ -1150,7 +1025,7 @@ onMounted(() => {
 .image-overlay
   position absolute
   inset 0
-  background rgba(0, 0, 0, 0.7)
+  background rgba(0, 0, 0, 0.6)
   display flex
   flex-direction column
   align-items center
@@ -1167,105 +1042,77 @@ onMounted(() => {
   font-size 1.25rem
 
 .image-caption
-  font-size 0.625rem
+  font-size 0.65rem
   color #ffffff
   margin-top 0.25rem
 
 .record-footer
   padding-top 0.75rem
-  border-top 1px solid
+  border-top 1px solid var(--color-border)
   display flex
   align-items center
   justify-content space-between
-  font-size 0.65rem
-
-  .analysis-light &
-    border-color #e2e8f0
-    color #64748b
-
-  .analysis-dark &
-    border-color #18263e
-    color #64748b
+  font-size 0.75rem
+  color var(--color-text-muted)
 
 .modal-overlay
   position fixed
   inset 0
   z-index 50
-  background rgba(0, 0, 0, 0.75)
-  backdrop-filter blur(6px)
+  background rgba(0, 0, 0, 0.6)
+  backdrop-filter blur(8px)
   display flex
   align-items center
   justify-content center
   padding 1rem
   user-select none
-  font-family 'Lora', serif
+  font-family var(--font-sans)
 
 .modal-card
   width 100%
   max-width 42rem
   max-height 90vh
-  border-radius 1rem
-  padding 1.5rem
+  border-radius var(--radius-xl, 20px)
+  padding 1.75rem
   overflow-y auto
-
-  &.modal-light
-    background #ffffff
-    border 1px solid #cbd5e1
-    color #0f172a
-    box-shadow 0 20px 40px rgba(0, 0, 0, 0.15)
-
-  &.modal-dark
-    background #080d19
-    border 1px solid #1e304d
-    color #e2e8f0
-    box-shadow 0 0 40px rgba(0, 0, 0, 0.5)
+  background var(--color-surface)
+  border 1px solid var(--color-border)
+  color var(--color-text)
+  box-shadow var(--shadow-modal)
 
 .modal-header
   display flex
   align-items center
   justify-content space-between
   padding-bottom 0.75rem
-  border-bottom 1px solid
+  border-bottom 1px solid var(--color-border)
   margin-bottom 1rem
 
-  .modal-light &
-    border-color #e2e8f0
-
-  .modal-dark &
-    border-color #1c2c47
-
 .modal-title
-  font-size 1rem
+  font-size 1.1rem
   font-weight 800
+  font-family var(--font-heading)
   text-transform uppercase
+  color var(--color-brand)
   margin 0
 
-  .modal-light &
-    color #b45309
-
-  .modal-dark &
-    color #f5c518
-
 .close-btn
-  width 1.75rem
-  height 1.75rem
-  border-radius 0.5rem
-  font-size 0.75rem
+  width 2rem
+  height 2rem
+  border-radius var(--radius-sm, 8px)
+  font-size 0.85rem
   display flex
   align-items center
   justify-content center
   cursor pointer
-  border 1px solid
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text-muted)
+  transition all 0.2s ease
 
-  .modal-light &
-    background #f1f5f9
-    border-color #cbd5e1
-    color #64748b
-
-  .modal-dark &
-    background #0f172a
-    border-color #1e293b
-    color #94a3b8
+  &:hover
+    background var(--color-surface-hover)
+    color var(--color-text)
 
 .modal-form
   display flex
@@ -1279,41 +1126,30 @@ onMounted(() => {
 .form-label
   font-size 0.75rem
   font-weight 700
+  font-family var(--font-heading)
   text-transform uppercase
+  color var(--color-text)
   margin-bottom 0.35rem
 
-  .modal-light &
-    color #0f172a
-
-  .modal-dark &
-    color #e2e8f0
-
 .required-star
-  color #ef5757
+  color #ef4444
 
 .form-input, .form-select, .form-textarea
   width 100%
-  font-size 0.75rem
-  padding 0.65rem
-  border-radius 0.75rem
-  border 1px solid
+  font-size 0.8rem
+  padding 0.7rem 0.85rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text)
   outline none
   box-sizing border-box
-  font-family 'Lora', serif
+  font-family var(--font-sans)
+  transition all 0.2s ease
 
-  .modal-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #0f172a
-    &::placeholder
-      color #94a3b8
-
-  .modal-dark &
-    background #050912
-    border-color #1e293b
-    color #ffffff
-    &::placeholder
-      color #475569
+  &:focus
+    border-color var(--color-brand)
+    box-shadow 0 0 0 3px rgba(217, 119, 6, 0.15)
 
 .form-grid-2
   display grid
@@ -1335,21 +1171,22 @@ onMounted(() => {
   justify-content space-between
 
 .btn-add-img
-  font-size 0.65rem
+  font-size 0.75rem
   font-weight 700
-  padding 0.25rem 0.5rem
-  border-radius 0.375rem
-  border 1px solid
+  padding 0.35rem 0.75rem
+  border-radius var(--radius-md, 8px)
+  border 1px solid rgba(2, 132, 199, 0.3)
+  background rgba(2, 132, 199, 0.1)
+  color #0284c7
   cursor pointer
+  transition all 0.2s ease
 
-  .modal-light &
-    background #e0f2fe
-    border-color #bae6fd
-    color #0284c7
+  &:hover
+    background rgba(2, 132, 199, 0.18)
 
-  .modal-dark &
+  .analysis-dark &
     background rgba(56, 189, 248, 0.15)
-    border-color rgba(56, 189, 248, 0.4)
+    border-color rgba(56, 189, 248, 0.3)
     color #38bdf8
 
 .images-list
@@ -1359,19 +1196,12 @@ onMounted(() => {
 
 .image-input-item
   padding 0.75rem
-  border-radius 0.75rem
-  border 1px solid
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
   display flex
   flex-direction column
   gap 0.5rem
-
-  .modal-light &
-    background #f8fafc
-    border-color #cbd5e1
-
-  .modal-dark &
-    background #050912
-    border-color #1c2e4a
 
 .img-input-row
   display flex
@@ -1379,29 +1209,25 @@ onMounted(() => {
   gap 0.5rem
 
 .btn-upload-file
-  padding 0.5rem 0.75rem
-  border-radius 0.5rem
-  font-size 0.7rem
+  padding 0.5rem 0.85rem
+  border-radius var(--radius-md, 8px)
+  font-size 0.75rem
   font-weight 700
   cursor pointer
   flex-shrink 0
-  border 1px solid
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  color var(--color-brand)
+  transition all 0.2s ease
 
-  .modal-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #b45309
-
-  .modal-dark &
-    background #18263e
-    border-color #2b4266
-    color #f5c518
+  &:hover
+    background var(--color-surface-hover)
 
 .hidden-file-input
   display none
 
 .btn-remove-img
-  color #ef5757
+  color #ef4444
   background none
   border none
   cursor pointer
@@ -1409,42 +1235,26 @@ onMounted(() => {
 
 .dropzone-container
   position relative
-  padding 1.25rem 1rem
-  border 2px dashed
-  border-radius 0.85rem
+  padding 1.5rem 1rem
+  border 2px dashed var(--color-border)
+  border-radius var(--radius-lg, 16px)
   text-align center
   cursor pointer
-  transition all 0.25s ease
+  transition all 0.2s ease
   display flex
   flex-direction column
   align-items center
   justify-content center
+  background var(--color-bg-subtle)
   margin-bottom 0.5rem
 
-  .modal-light &
-    background #f8fafc
-    border-color #cbd5e1
-    &:hover
-      background #f1f5f9
-      border-color #b45309
-
-  .modal-dark &
-    background rgba(15, 23, 42, 0.6)
-    border-color #1e304d
-    &:hover
-      background rgba(15, 23, 42, 0.9)
-      border-color #f5c518
+  &:hover
+    border-color var(--color-brand)
+    background var(--color-surface-hover)
 
   &.is-dragging
-    transform scale(1.01)
-    .modal-light &
-      background #fef3c7
-      border-color #d97706
-      box-shadow 0 0 15px rgba(217, 119, 6, 0.3)
-    .modal-dark &
-      background rgba(245, 197, 24, 0.12)
-      border-color #f5c518
-      box-shadow 0 0 20px rgba(245, 197, 24, 0.35)
+    border-color var(--color-brand)
+    background rgba(217, 119, 6, 0.08)
 
 .hidden-dropzone-input
   display none
@@ -1464,42 +1274,24 @@ onMounted(() => {
   flex-wrap wrap
 
 .dz-badge
-  font-size 0.65rem
+  font-size 0.7rem
   font-weight 700
-  padding 0.2rem 0.5rem
-  border-radius 0.375rem
-  border 1px solid
-
-  .modal-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #b45309
-
-  .modal-dark &
-    background #080d19
-    border-color #1e293b
-    color #f5c518
+  padding 0.25rem 0.6rem
+  border-radius var(--radius-sm, 6px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  color var(--color-brand)
 
 .dropzone-main-text
-  font-size 0.8rem
+  font-size 0.85rem
   font-weight 700
+  color var(--color-text)
   margin 0
-
-  .modal-light &
-    color #0f172a
-
-  .modal-dark &
-    color #ffffff
 
 .dropzone-sub-text
-  font-size 0.68rem
+  font-size 0.75rem
+  color var(--color-text-muted)
   margin 0
-
-  .modal-light &
-    color #64748b
-
-  .modal-dark &
-    color #94a3b8
 
 .img-item-header
   display flex
@@ -1509,28 +1301,18 @@ onMounted(() => {
 .img-preview-box
   width 3rem
   height 3rem
-  border-radius 0.5rem
+  border-radius var(--radius-md, 8px)
   overflow hidden
-  border 1px solid
+  border 1px solid var(--color-border)
   flex-shrink 0
   display flex
   align-items center
   justify-content center
   font-size 1.25rem
-
-  .modal-light &
-    background #e2e8f0
-    border-color #cbd5e1
-
-  .modal-dark &
-    background #0f172a
-    border-color #1e293b
+  background var(--color-bg-subtle)
 
   &.box-loading
-    .modal-light &
-      background #fef3c7
-    .modal-dark &
-      background rgba(245, 197, 24, 0.1)
+    background rgba(217, 119, 6, 0.1)
 
 .img-thumb
   width 100%
@@ -1540,56 +1322,51 @@ onMounted(() => {
 .spinner-mini
   width 1.25rem
   height 1.25rem
-  border 2px solid #f5c518
+  border 2px solid var(--color-brand)
   border-top-color transparent
   border-radius 9999px
   animation spin 0.8s linear infinite
 
 .modal-actions
   padding-top 0.75rem
-  border-top 1px solid
+  border-top 1px solid var(--color-border)
   display flex
   align-items center
   justify-content flex-end
   gap 0.65rem
 
-  .modal-light &
-    border-color #e2e8f0
-
-  .modal-dark &
-    border-color #18263e
-
 .btn-cancel
-  padding 0.5rem 1rem
-  border-radius 0.75rem
-  font-size 0.75rem
+  padding 0.55rem 1.15rem
+  border-radius var(--radius-md, 10px)
+  font-size 0.8rem
+  font-weight 600
   cursor pointer
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text-muted)
+  transition all 0.2s ease
 
-  .modal-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #475569
-
-  .modal-dark &
-    background #0f172a
-    border 1px solid #1e293b
-    color #94a3b8
+  &:hover
+    background var(--color-surface-hover)
+    color var(--color-text)
 
 .btn-submit
-  padding 0.5rem 1.25rem
-  border-radius 0.75rem
-  font-size 0.75rem
+  padding 0.55rem 1.35rem
+  border-radius var(--radius-md, 10px)
+  font-size 0.8rem
   font-weight 800
+  font-family var(--font-heading)
   cursor pointer
   border none
+  background linear-gradient(135deg, #f59e0b, #d97706)
+  color #ffffff
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
-  .modal-light &
-    background linear-gradient(to right, #b45309, #d97706)
-    color #ffffff
-
-  .modal-dark &
-    background linear-gradient(to right, #d97706, #f5c518, #b45309)
-    color #020617
+  &:hover
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
+    filter brightness(1.05)
 
 @keyframes spin
   to

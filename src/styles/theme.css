@@ -1,46 +1,83 @@
-/* src/styles/theme.css - Retro / Neo-Brutalist Design Tokens */
+/* src/styles/theme.css - Modern Soft Pastel & Rounded Design Tokens */
 :root {
   /* 1. MÀU NỀN & BỀ MẶT */
-  --color-bg-light: #f4efe4;
-  --color-bg-dark: #121417;
+  --color-bg-light: #f8fafc;
+  --color-bg-dark: #0b1120;
   --color-surface-light: #ffffff;
-  --color-surface-dark: #1a1d21;
-  --color-bg-subtle-light: #eae3d2;
-  --color-bg-subtle-dark: #22262c;
+  --color-surface-dark: #1e293b;
+  --color-bg-subtle-light: #f1f5f9;
+  --color-bg-subtle-dark: #151f32;
 
   /* 2. ĐƯỜNG VIỀN & CHỮ */
-  --color-border-light: #1f2328;
-  --color-border-dark: #e6edf3;
-  --color-text-light: #1f2328;
-  --color-text-dark: #f0f6fc;
-  --color-text-secondary-light: #57606a;
-  --color-text-secondary-dark: #8b949e;
-  --color-muted-light: #6e7781;
-  --color-muted-dark: #7d8590;
+  --color-border-light: #e2e8f0;
+  --color-border-dark: #334155;
+  --color-border-subtle-light: #edf2f7;
+  --color-border-subtle-dark: #1e293b;
 
-  /* 3. MÀU NHẤN BRAND (TERRACOTTA / CAM ĐẤT) */
-  --color-brand-light: #ca4918;
-  --color-brand-dark: #f46936;
-  --color-brand-hover-light: #aa3b11;
-  --color-brand-hover-dark: #ff7b4b;
+  --color-text-light: #0f172a;
+  --color-text-dark: #f8fafc;
+  --color-text-secondary-light: #475569;
+  --color-text-secondary-dark: #94a3b8;
+  --color-muted-light: #64748b;
+  --color-muted-dark: #64748b;
+
+  /* 3. MÀU NHẤN PASTEL (BLUE / GOLD / EMERALD) */
+  --color-brand-light: #3b82f6;
+  --color-brand-dark: #60a5fa;
+  --color-brand-hover-light: #2563eb;
+  --color-brand-hover-dark: #93c5fd;
+  --color-brand-subtle-light: #eff6ff;
+  --color-brand-subtle-dark: rgba(59, 130, 246, 0.15);
+
+  --color-gold-light: #d97706;
+  --color-gold-dark: #f5c518;
+  --color-gold-subtle-light: #fef3c7;
+  --color-gold-subtle-dark: rgba(245, 197, 24, 0.15);
+
+  --color-emerald-light: #10b981;
+  --color-emerald-dark: #34d399;
+  --color-emerald-subtle-light: #ecfdf5;
+  --color-emerald-subtle-dark: rgba(52, 211, 153, 0.15);
+
+  --color-rose-light: #f43f5e;
+  --color-rose-dark: #fb7185;
+  --color-rose-subtle-light: #fff1f2;
+  --color-rose-subtle-dark: rgba(251, 113, 133, 0.15);
 
   /* Defaults for Light Mode */
   --color-bg: var(--color-bg-light);
   --color-surface: var(--color-surface-light);
   --color-bg-subtle: var(--color-bg-subtle-light);
   --color-border: var(--color-border-light);
+  --color-border-subtle: var(--color-border-subtle-light);
   --color-text: var(--color-text-light);
   --color-text-secondary: var(--color-text-secondary-light);
   --color-muted: var(--color-muted-light);
   --color-brand: var(--color-brand-light);
   --color-brand-hover: var(--color-brand-hover-light);
+  --color-brand-subtle: var(--color-brand-subtle-light);
 
-  /* 4. HÌNH HỌC SẮC NÉT & TYPOGRAPHY */
-  --radius: 2px;
-  --radius-lg: 4px;
-  --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
-  --font-heading: 'Chakra Petch', 'Be Vietnam Pro', sans-serif;
-  --font-body: 'Be Vietnam Pro', sans-serif;
+  /* 4. BO TRÒN HIỆN ĐẠI (ROUNDED) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  --radius: var(--radius-md);
+  --radius-lg-default: var(--radius-lg);
+
+  /* 5. ĐỔ BÓNG MỀM TỰ NHIÊN */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  --shadow-modal: 0 20px 40px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.05);
+
+  /* TYPOGRAPHY */
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-heading: 'Lora', 'Cinzel', 'Be Vietnam Pro', sans-serif;
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
 }
 
 /* Dark Mode Variable Overrides */
@@ -49,11 +86,18 @@
   --color-surface: var(--color-surface-dark);
   --color-bg-subtle: var(--color-bg-subtle-dark);
   --color-border: var(--color-border-dark);
+  --color-border-subtle: var(--color-border-subtle-dark);
   --color-text: var(--color-text-dark);
   --color-text-secondary: var(--color-text-secondary-dark);
   --color-muted: var(--color-muted-dark);
   --color-brand: var(--color-brand-dark);
   --color-brand-hover: var(--color-brand-hover-dark);
+  --color-brand-subtle: var(--color-brand-subtle-dark);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.45);
+  --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
 }
 
 /* Base Light Theme */
@@ -62,86 +106,85 @@
   --color-surface: var(--color-surface-light);
   --color-bg-subtle: var(--color-bg-subtle-light);
   --color-border: var(--color-border-light);
+  --color-border-subtle: var(--color-border-subtle-light);
   --color-text: var(--color-text-light);
   --color-text-secondary: var(--color-text-secondary-light);
   --color-muted: var(--color-muted-light);
   --color-brand: var(--color-brand-light);
   --color-brand-hover: var(--color-brand-hover-light);
+  --color-brand-subtle: var(--color-brand-subtle-light);
 }
 
-/* Global Neo-Brutalist Utility Classes */
-.card, .retro-card {
-  border: 2px solid var(--color-border) !important;
-  border-radius: var(--radius-lg, 4px) !important;
-  box-shadow: 3px 3px 0px var(--color-border) !important;
+/* Modern Rounded Utility Classes */
+.card, .modern-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  box-shadow: var(--shadow-md) !important;
   background: var(--color-surface) !important;
   color: var(--color-text) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 
-.retro-button {
+.modern-button, .btn-primary {
   background: var(--color-brand) !important;
   color: #ffffff !important;
-  border: 2px solid var(--color-border) !important;
-  border-radius: var(--radius, 2px) !important;
-  box-shadow: 2px 2px 0px var(--color-border) !important;
-  font-family: var(--font-mono, monospace) !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-md, 12px) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
   cursor: pointer !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease !important;
 }
 
-.retro-button:hover {
+.modern-button:hover, .btn-primary:hover {
   background: var(--color-brand-hover) !important;
-  transform: translate(-1px, -1px) !important;
-  box-shadow: 3px 3px 0px var(--color-border) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: var(--shadow-md) !important;
 }
 
-.retro-button:active {
-  transform: translate(1px, 1px) !important;
-  box-shadow: 1px 1px 0px var(--color-border) !important;
+.modern-button:active, .btn-primary:active {
+  transform: translateY(0px) !important;
 }
 
 /* Secondary Button */
-.retro-button-secondary {
+.btn-secondary {
   background: var(--color-bg-subtle) !important;
   color: var(--color-text) !important;
-  border: 2px solid var(--color-border) !important;
-  border-radius: var(--radius, 2px) !important;
-  box-shadow: 2px 2px 0px var(--color-border) !important;
-  font-family: var(--font-mono, monospace) !important;
-  font-weight: bold !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md, 12px) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease !important;
 }
 
-.retro-button-secondary:hover {
-  transform: translate(-1px, -1px) !important;
-  box-shadow: 3px 3px 0px var(--color-border) !important;
+.btn-secondary:hover {
+  background: var(--color-surface) !important;
+  border-color: var(--color-brand) !important;
+  color: var(--color-brand) !important;
+  transform: translateY(-1px) !important;
 }
 
-.retro-button-secondary:active {
-  transform: translate(1px, 1px) !important;
-  box-shadow: 1px 1px 0px var(--color-border) !important;
-}
-
-/* Typewriter Form Controls */
-input[type="text"], input[type="date"], input[type="search"], textarea, select, .retro-input {
+/* Modern Rounded Form Controls */
+input[type="text"], input[type="date"], input[type="search"], textarea, select {
   background: var(--color-surface);
   color: var(--color-text);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius, 2px);
-  box-shadow: 2px 2px 0px var(--color-border);
-  font-family: var(--font-mono, monospace);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 8px);
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input[type="text"]:focus, input[type="date"]:focus, input[type="search"]:focus, textarea:focus, select:focus {
   border-color: var(--color-brand) !important;
-  box-shadow: 3px 3px 0px var(--color-brand) !important;
+  box-shadow: 0 0 0 3px var(--color-brand-subtle) !important;
 }
 
 input[type="checkbox"] {
@@ -149,76 +192,74 @@ input[type="checkbox"] {
   height: 16px;
   accent-color: var(--color-brand);
   cursor: pointer;
+  border-radius: 4px;
 }
 
-/* Badges & Chips */
-.badge, .retro-badge {
-  font-family: var(--font-mono, monospace) !important;
+/* Modern Pastel Badges & Chips */
+.badge, .chip {
+  font-family: var(--font-body) !important;
   font-size: 0.75rem !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  padding: 3px 8px !important;
-  background: var(--color-surface) !important;
-  color: var(--color-text) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius, 2px) !important;
-  box-shadow: 1px 1px 0px var(--color-border) !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  background: var(--color-brand-subtle) !important;
+  color: var(--color-brand) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-full, 9999px) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-/* Data Tables */
-.data-table, .retro-table {
+/* Modern Data Tables */
+.data-table {
   width: 100%;
   border-collapse: separate !important;
   border-spacing: 0 !important;
-  border: 2px solid var(--color-border) !important;
-  border-radius: var(--radius, 2px) !important;
-  box-shadow: 2px 2px 0px var(--color-border) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md, 12px) !important;
+  box-shadow: var(--shadow-sm) !important;
   background: var(--color-surface) !important;
+  overflow: hidden;
 }
 
-.data-table th, .retro-table th {
+.data-table th {
   background: var(--color-bg-subtle) !important;
-  border-bottom: 2px solid var(--color-border) !important;
-  border-right: 1px solid var(--color-border) !important;
-  padding: 10px 14px !important;
-  font-family: var(--font-heading) !important;
-  font-weight: bold !important;
-  color: var(--color-text) !important;
-}
-
-.data-table td, .retro-table td {
-  padding: 10px 14px !important;
   border-bottom: 1px solid var(--color-border) !important;
-  border-right: 1px solid var(--color-border) !important;
-  color: var(--color-text) !important;
+  padding: 10px 14px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  color: var(--color-text-secondary) !important;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.data-table tr:last-child td, .retro-table tr:last-child td {
+.data-table td {
+  padding: 10px 14px !important;
+  border-bottom: 1px solid var(--color-border-subtle) !important;
+  color: var(--color-text) !important;
+  font-size: 0.85rem;
+}
+
+.data-table tr:last-child td {
   border-bottom: none !important;
 }
 
-.data-table th:last-child, .data-table td:last-child, .retro-table th:last-child, .retro-table td:last-child {
-  border-right: none !important;
-}
-
-/* Retro Custom Scrollbars */
+/* Smooth Rounded Scrollbars */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius, 2px);
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-hover);
+  background: rgba(148, 163, 184, 0.7);
 }

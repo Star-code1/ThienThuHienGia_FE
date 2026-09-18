@@ -2,12 +2,9 @@
 .app-wrapper(
   :class="themeStore.theme === 'light' ? 'light-theme' : 'dark-theme'"
 )
-  //- CRT Scanline Overlay
-  .crt-scanlines
-
   //- Atmospheric Background Image
   .bg-image(
-    :class="themeStore.theme === 'light' ? 'opacity-15 scale-100' : 'opacity-45 scale-105'"
+    :class="themeStore.theme === 'light' ? 'opacity-20 scale-100' : 'opacity-40 scale-105'"
   )
 
   //- Gradient Overlay for Contrast
@@ -15,7 +12,7 @@
     :class="themeStore.theme === 'light' ? 'overlay-light' : 'overlay-dark'"
   )
 
-  //- Kiếm Hiệp Retro Ambient Glows
+  //- Modern Pastel Ambient Glows
   .ambient-glows(
     :class="themeStore.theme === 'light' ? 'glows-light' : 'glows-dark'"
   )
@@ -52,56 +49,6 @@ onMounted(() => {
 </script>
 
 <style lang="stylus">
-/* Retro Font Utility Definitions */
-.font-pixel
-  font-family 'Chakra Petch', 'Silkscreen', sans-serif !important
-  text-transform uppercase
-  letter-spacing 0.04em
-
-.font-arcade
-  font-family 'VT323', monospace !important
-  letter-spacing 0.05em
-
-.font-retro-tech
-  font-family 'Share Tech Mono', monospace !important
-
-/* CRT Scanline Overlay */
-.crt-scanlines
-  position fixed
-  inset 0
-  z-index 999
-  pointer-events none
-  background linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.2) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.02),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.02)
-  )
-  background-size 100% 3px, 6px 100%
-  opacity 0.45
-  contain strict
-  transform translateZ(0)
-
-/* Pixelated Custom Scrollbars */
-::-webkit-scrollbar
-  width 8px
-  height 8px
-
-::-webkit-scrollbar-track
-  background #0b1120
-
-::-webkit-scrollbar-thumb
-  background #3b82f6
-  border-radius 0px
-  box-shadow inset -1px -1px 0px #1d4ed8, inset 1px 1px 0px #60a5fa
-
-::-webkit-scrollbar-thumb:hover
-  background #f5c518
-  box-shadow inset -1px -1px 0px #b45309, inset 1px 1px 0px #fef08a
-
 /* App Container */
 .app-wrapper
   min-height 100vh
@@ -110,25 +57,20 @@ onMounted(() => {
   font-family 'Be Vietnam Pro', system-ui, -apple-system, sans-serif
   position relative
   overflow-x hidden
-  transition background-color 0.2s ease, color 0.2s ease
+  transition background-color 0.25s ease, color 0.25s ease
 
   &.light-theme
-    background-color #f5efe0
-    color #1c1917
+    background-color #f8fafc
+    color #0f172a
 
   &.dark-theme
-    background-color #080c16
-    color #e2e8f0
+    background-color #0b1120
+    color #f8fafc
 
 .bg-image
   position fixed
   inset 0
   z-index 0
-  background-image url('@/assets/bg.png')
-  background-size cover
-  background-position center
-  background-repeat no-repeat
-  background-attachment fixed
   pointer-events none
   contain strict
   transform translateZ(0)
@@ -139,16 +81,15 @@ onMounted(() => {
   inset 0
   z-index 0
   pointer-events none
-  backdrop-filter blur(1px)
   contain strict
   transform translateZ(0)
   transition background 0.3s ease
 
   &.overlay-light
-    background linear-gradient(to bottom, rgba(245, 239, 224, 0.94), rgba(238, 228, 207, 0.88), rgba(230, 217, 192, 0.96))
+    background radial-gradient(at 100% 0%, rgba(254, 243, 199, 0.25) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(224, 242, 254, 0.3) 0px, transparent 50%), #f8fafc
 
   &.overlay-dark
-    background linear-gradient(to bottom, rgba(8, 12, 22, 0.92), rgba(12, 17, 30, 0.8), rgba(5, 8, 16, 0.96))
+    background radial-gradient(at 100% 0%, rgba(245, 197, 24, 0.08) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(56, 189, 248, 0.08) 0px, transparent 50%), #0b1120
 
 .ambient-glows
   position fixed
@@ -160,12 +101,12 @@ onMounted(() => {
   transition opacity 0.3s ease
 
   &.glows-light
-    opacity 0.3
-    background radial-gradient(60rem 30rem at 20% -10%, rgba(217, 119, 6, 0.2), transparent), radial-gradient(50rem 30rem at 85% 30%, rgba(2, 132, 199, 0.15), transparent)
+    opacity 0.6
+    background radial-gradient(55rem 25rem at 20% -5%, rgba(191, 219, 254, 0.35), transparent), radial-gradient(45rem 25rem at 85% 25%, rgba(254, 243, 199, 0.35), transparent)
 
   &.glows-dark
-    opacity 0.5
-    background radial-gradient(60rem 30rem at 20% -10%, rgba(245, 197, 24, 0.18), transparent), radial-gradient(50rem 30rem at 85% 30%, rgba(56, 189, 248, 0.15), transparent)
+    opacity 0.4
+    background radial-gradient(55rem 25rem at 20% -5%, rgba(59, 130, 246, 0.15), transparent), radial-gradient(45rem 25rem at 85% 25%, rgba(245, 197, 24, 0.12), transparent)
 
 .main-content
   position relative
@@ -176,13 +117,13 @@ onMounted(() => {
 
 .page-fade-enter-active,
 .page-fade-leave-active
-  transition opacity 0.15s ease, transform 0.15s ease
+  transition opacity 0.18s ease, transform 0.18s ease
 
 .page-fade-enter-from
   opacity 0
-  transform translateY(3px)
+  transform translateY(4px)
 
 .page-fade-leave-to
   opacity 0
-  transform translateY(-3px)
+  transform translateY(-4px)
 </style>

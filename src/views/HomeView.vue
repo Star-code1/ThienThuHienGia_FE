@@ -8,6 +8,7 @@
       span HIỀN GIẢ TRỊ BANG • THIÊN THƯ DIỄN VÕ
       span.badge-icon ⚔️
 
+
     //- Main Title
     .hero-title-group
       span.hero-sub-calligraphy 天 書 門 — CÔNG THÀNH CHIẾN HỆ THỐNG
@@ -128,7 +129,7 @@
           .icon-box.icon-purple 📊
           h3.card-title Uy Danh Thống Kê
           p.card-desc
-            | Uy danh điểm danh, tổng hợp đệ tử xuất trận, theo dõi số lượng báo bận và phân bổ lực lượng Bát Đại Võ Phái theo từng sự kiện.
+            | Uy danh điểm danh, tổng hợp đệ tử xuất trận, theo dõi số lượng báo bận và phân bổ lực lượng Thất Đại Võ Phái theo từng sự kiện.
         .card-footer
           span.footer-tag.tag-purple Uy Danh Bảng
           RouterLink.footer-link.link-purple(to="/stats")
@@ -140,7 +141,7 @@
     .sects-card
       .sects-header
         .sects-title-group
-          h3.sects-title ⚔️ BÁT ĐẠI VÕ PHÁI — THIÊN THƯ MÔN
+          h3.sects-title ⚔️ THẤT ĐẠI VÕ PHÁI — THIÊN THƯ MÔN
           p.sects-subtitle Cơ cấu lực lượng võ phái chính phục vụ Công Thành Chiến
         RouterLink.btn-lineup-link(to="/lineup")
           span Vào Xếp Đội Hình
@@ -219,6 +220,7 @@ onMounted(() => {
   box-shadow 2px 2px 0px var(--color-border)
 
 .hero-title-group
+  margin-top 1.5rem
   display flex
   flex-direction column
   align-items center
@@ -259,83 +261,72 @@ onMounted(() => {
   margin-top 0.5rem
 
 .btn-hero-primary
-  padding 0.75rem 1.5rem
-  border-radius var(--radius, 2px)
-  font-size 0.8rem
+  padding 0.75rem 1.75rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.85rem
   font-weight 700
-  font-family var(--font-heading)
+  font-family var(--font-body)
   cursor pointer
   display inline-flex
   align-items center
   gap 0.5rem
   text-decoration none
-  background var(--color-brand)
+  background #3b82f6
   color #ffffff
-  border 2px solid var(--color-border)
-  box-shadow 3px 3px 0px var(--color-border)
-  transition transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease
+  border 1px solid transparent
+  box-shadow 0 4px 12px rgba(59, 130, 246, 0.3)
+  transition all 0.2s ease
 
   &:hover
-    background var(--color-brand-hover)
-    transform translate(-1px, -1px)
-    box-shadow 4px 4px 0px var(--color-border)
+    background #2563eb
+    transform translateY(-2px)
+    box-shadow 0 6px 16px rgba(59, 130, 246, 0.4)
 
   &:active
-    transform translate(1px, 1px)
-    box-shadow 1px 1px 0px var(--color-border)
+    transform translateY(0)
 
 .btn-hero-secondary
-  padding 0.75rem 1.25rem
-  border-radius var(--radius, 2px)
-  font-size 0.8rem
+  padding 0.75rem 1.5rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.85rem
   font-weight 700
-  font-family var(--font-heading)
+  font-family var(--font-body)
   cursor pointer
   text-decoration none
   background var(--color-bg-subtle)
   color var(--color-text)
-  border 2px solid var(--color-border)
-  box-shadow 3px 3px 0px var(--color-border)
-  transition transform 0.1s ease, box-shadow 0.1s ease
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
   &:hover
-    transform translate(-1px, -1px)
-    box-shadow 4px 4px 0px var(--color-border)
+    background var(--color-surface)
+    border-color var(--color-brand)
+    transform translateY(-2px)
+    box-shadow var(--shadow-md)
 
   &:active
-    transform translate(1px, 1px)
-    box-shadow 1px 1px 0px var(--color-border)
+    transform translateY(0)
 
 .btn-hero-outline
-  padding 0.75rem 1.25rem
-  font-size 0.8rem
+  padding 0.75rem 1.5rem
+  font-size 0.85rem
   font-weight 700
-  font-family 'Silkscreen', monospace
+  font-family var(--font-body)
+  border-radius var(--radius-md, 12px)
   cursor pointer
   text-decoration none
-  transition all 0.15s ease
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  color var(--color-text)
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
-  .home-light &
-    background #ffffff
-    border 2px solid #cbd5e1
-    box-shadow 3px 3px 0 #1c1917
-    color #475569
-
-    &:hover
-      border-color #1c1917
-      color #1c1917
-      transform translate(-1px, -1px)
-
-  .home-dark &
-    background #0b1120
-    border 2px solid #334155
-    box-shadow 3px 3px 0 #000
-    color #94a3b8
-
-    &:hover
-      border-color #f5c518
-      color #f5c518
-      transform translate(-1px, -1px)
+  &:hover
+    border-color var(--color-brand)
+    color var(--color-brand)
+    transform translateY(-2px)
+    box-shadow var(--shadow-md)
 
 .stats-scroll-bar
   display grid
@@ -343,19 +334,17 @@ onMounted(() => {
   gap 0.75rem
   width 100%
   max-width 52rem
-  padding 1rem
-  border-radius 0px
-  margin-top 1rem
+  padding 1.25rem
+  border-radius var(--radius-lg, 16px)
+  margin-top 1.5rem
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-md)
 
   .home-light &
-    background #fdfbf7
-    border 2px solid #1c1917
-    box-shadow 4px 4px 0 #1c1917
+    background #ffffff
 
   .home-dark &
-    background #0b1120
-    border 2px solid #f5c518
-    box-shadow 4px 4px 0 #000
+    background #0f172a
 
 @media (min-width: 640px)
   .stats-scroll-bar
@@ -378,11 +367,11 @@ onMounted(() => {
     border-right none
 
 .stat-value
-  font-size 1.75rem
-  font-weight 700
-  font-family 'VT323', monospace
+  font-size 1.6rem
+  font-weight 800
+  font-family var(--font-heading)
   display block
-  letter-spacing 0.05em
+  letter-spacing -0.01em
 
   &.gold
     .home-light &
@@ -409,12 +398,12 @@ onMounted(() => {
       color #c084fc
 
 .stat-label
-  font-size 0.65rem
+  font-size 0.75rem
   display block
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
-  font-family 'Share Tech Mono', monospace
+  letter-spacing 0.02em
+  font-family var(--font-heading)
   margin-top 0.25rem
 
   .home-light &
@@ -438,29 +427,17 @@ onMounted(() => {
   display flex
   align-items center
   justify-content space-between
-  border-bottom 3px solid
+  border-bottom 1px solid var(--color-border)
   padding-bottom 0.75rem
 
-  .home-light &
-    border-color #1c1917
-
-  .home-dark &
-    border-color #f5c518
-
 .section-title
-  font-size 1.1rem
-  font-weight 700
+  font-size 1.15rem
+  font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
-  font-family 'Silkscreen', monospace
+  letter-spacing 0.03em
+  font-family var(--font-heading)
   margin 0
-
-  .home-light &
-    color #92400e
-
-  .home-dark &
-    color #f5c518
-    text-shadow 1px 1px 0 #000
+  color var(--color-text)
 
 .features-grid
   display grid

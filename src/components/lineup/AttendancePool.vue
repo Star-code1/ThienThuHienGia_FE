@@ -164,73 +164,71 @@ const onDropToPool = (evt) => {
 
 <style lang="stylus" scoped>
 .pool-container
-  border-radius 0px
+  border-radius var(--radius-lg, 16px)
   padding 1rem
   height 100%
   display flex
   flex-direction column
   user-select none
-  font-family 'Be Vietnam Pro', sans-serif
-  border 2px solid
+  font-family var(--font-body)
+  border 1px solid
+  box-shadow var(--shadow-sm)
 
   &.pool-light
-    background #fdfbf7
-    border-color #1c1917
-    box-shadow 3px 3px 0 #1c1917
-    color #1c1917
+    background #ffffff
+    border-color #e2e8f0
+    color #0f172a
 
   &.pool-dark
-    background #0b1120
-    border-color #f5c518
-    box-shadow 3px 3px 0 #000
-    color #e2e8f0
+    background #0f172a
+    border-color #1e293b
+    color #f8fafc
 
 .pool-header
-  padding-bottom 0.65rem
+  padding-bottom 0.75rem
   margin-bottom 0.75rem
-  border-bottom 2px solid
+  border-bottom 1px solid
   display flex
   justify-content space-between
   align-items center
 
   .pool-light &
-    border-color #1c1917
+    border-color #e2e8f0
 
   .pool-dark &
     border-color #1e293b
 
 .pool-title
-  font-size 0.75rem
+  font-size 0.8rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
-  font-family 'Chakra Petch', sans-serif
+  letter-spacing 0.03em
+  font-family var(--font-body)
   margin 0
 
   .pool-light &
-    color #92400e
+    color #0f172a
 
   .pool-dark &
-    color #f5c518
+    color #f8fafc
 
 .pool-counter
-  font-size 0.85rem
-  padding 0.15rem 0.5rem
-  border-radius 0px
-  font-family 'VT323', monospace
+  font-size 0.75rem
+  padding 0.2rem 0.6rem
+  border-radius var(--radius-full, 9999px)
+  font-family monospace
   font-weight 700
-  border 2px solid #1c1917
+  border 1px solid
 
   .pool-light &
-    background #fef3c7
-    color #92400e
-    box-shadow 2px 2px 0 #1c1917
+    background #eff6ff
+    color #2563eb
+    border-color #bfdbfe
 
   .pool-dark &
-    background #172439
-    color #f5c518
-    border-color #f5c518
-    box-shadow 2px 2px 0 #000
+    background rgba(37, 99, 235, 0.2)
+    color #93c5fd
+    border-color rgba(59, 130, 246, 0.4)
 
 .search-box
   position relative
@@ -239,31 +237,38 @@ const onDropToPool = (evt) => {
 .search-input
   width 100%
   font-size 0.75rem
-  padding 0.5rem 0.75rem
-  border-radius 0px
-  border 2px solid #1c1917
-  box-shadow 2px 2px 0 #1c1917
+  padding 0.45rem 0.75rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid
   outline none
   box-sizing border-box
-  font-family 'Be Vietnam Pro', sans-serif
+  font-family var(--font-body)
+  transition all 0.2s ease
 
   .pool-light &
-    background #ffffff
-    color #1c1917
+    background #f8fafc
+    border-color #e2e8f0
+    color #0f172a
     &::placeholder
       color #94a3b8
+    &:focus
+      border-color #3b82f6
+      box-shadow 0 0 0 3px rgba(59, 130, 246, 0.15)
 
   .pool-dark &
-    background #172439
-    border-color #38bdf8
+    background #141f32
+    border-color #1e293b
     color #ffffff
     &::placeholder
-      color #94a3b8
+      color #64748b
+    &:focus
+      border-color #60a5fa
+      box-shadow 0 0 0 3px rgba(96, 165, 250, 0.15)
 
 .clear-search-btn
   position absolute
   right 0.5rem
-  top 0.4rem
+  top 0.45rem
   font-size 0.75rem
   background none
   border none
@@ -288,21 +293,26 @@ const onDropToPool = (evt) => {
 .filter-select
   width 100%
   border 1px solid
-  font-size 0.65rem
-  border-radius 0.25rem
-  padding 0.25rem 0.4rem
+  font-size 0.7rem
+  border-radius var(--radius-sm, 8px)
+  padding 0.35rem 0.5rem
   outline none
   cursor pointer
+  transition border-color 0.2s ease
 
   .pool-light &
     background #ffffff
-    border-color #cbd5e1
+    border-color #e2e8f0
     color #0f172a
+    &:focus
+      border-color #3b82f6
 
   .pool-dark &
-    background #060a12
+    background #141f32
     border-color #1e293b
     color #cbd5e1
+    &:focus
+      border-color #60a5fa
 
 .active-filter-row
   margin-bottom 0.5rem
@@ -314,7 +324,7 @@ const onDropToPool = (evt) => {
 
 .reset-filter-btn
   font-weight 600
-  color #ef5757
+  color #ef4444
   background none
   border none
   cursor pointer
@@ -332,14 +342,15 @@ const onDropToPool = (evt) => {
 
 .pool-item
   cursor grab
-  transition filter 0.15s ease
-  border-radius 0.25rem
+  transition all 0.2s ease
+  border-radius var(--radius-sm, 8px)
 
   &:active
     cursor grabbing
 
   &:hover
-    filter brightness(1.15)
+    transform translateY(-1px)
+    filter brightness(1.05)
 
 .empty-pool-text
   padding 2rem 0
@@ -351,5 +362,5 @@ const onDropToPool = (evt) => {
     color #64748b
 
   .pool-dark &
-    color #475569
+    color #64748b
 </style>

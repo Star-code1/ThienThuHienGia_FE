@@ -58,8 +58,8 @@ const handleLogin = () => {
   position relative
   width 100%
   max-width 28rem
-  border-radius var(--radius-lg, 4px)
-  padding 1.5rem
+  border-radius var(--radius-xl, 20px)
+  padding 1.75rem
   text-align center
   display flex
   flex-direction column
@@ -67,21 +67,21 @@ const handleLogin = () => {
   font-family var(--font-body)
   background var(--color-surface)
   color var(--color-text)
-  border 2px solid var(--color-border)
-  box-shadow 4px 4px 0px var(--color-border)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-modal)
 
 .icon-circle
-  width 4rem
-  height 4rem
-  border-radius var(--radius, 2px)
+  width 4.25rem
+  height 4.25rem
+  border-radius var(--radius-full, 9999px)
   display flex
   align-items center
   justify-content center
   font-size 2rem
   margin 0 auto
-  background var(--color-bg-subtle)
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
+  background var(--color-brand-subtle)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
 
 .modal-body
   display flex
@@ -91,23 +91,23 @@ const handleLogin = () => {
 .modal-tag
   font-size 0.65rem
   font-weight 700
-  letter-spacing 0.15em
+  letter-spacing 0.12em
   text-transform uppercase
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
   color var(--color-brand)
   display block
 
 .modal-title
-  font-size 1.15rem
-  font-weight 700
+  font-size 1.2rem
+  font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   font-family var(--font-heading)
   color var(--color-text)
   margin 0
 
 .modal-desc
-  font-size 0.75rem
+  font-size 0.8rem
   line-height 1.6
   margin-top 0.5rem
 
@@ -121,10 +121,10 @@ const handleLogin = () => {
   font-weight 700
 
   .modal-light &
-    color #b45309
+    color #2563eb
 
   .modal-dark &
-    color #f5c518
+    color #60a5fa
 
 .modal-actions
   display flex
@@ -133,35 +133,34 @@ const handleLogin = () => {
 
 .discord-btn
   width 100%
-  padding 0.75rem
-  border-radius 0px
+  padding 0.75rem 1rem
+  border-radius var(--radius-md, 12px)
   font-weight 700
-  font-size 0.75rem
-  font-family 'Silkscreen', monospace
+  font-size 0.8rem
+  font-family var(--font-body)
   background #5865F2
   color #ffffff
-  border 2px solid #1c1917
-  box-shadow 3px 3px 0 #1c1917
+  border 1px solid transparent
+  box-shadow var(--shadow-sm)
   cursor pointer
   display flex
   align-items center
   justify-content center
   gap 0.5rem
-  transition all 0.15s ease
+  transition all 0.2s ease
 
   &:hover
-    filter brightness(1.1)
-    transform translate(-1px, -1px)
-    box-shadow 4px 4px 0 #1c1917
+    background #4752c4
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
 
   &:active
-    transform translate(1px, 1px)
-    box-shadow 1px 1px 0 #1c1917
+    transform translateY(0)
 
 .close-btn
   width 100%
   padding 0.65rem
-  border-radius 0.75rem
+  border-radius var(--radius-md, 12px)
   font-weight 600
   font-size 0.75rem
   cursor pointer

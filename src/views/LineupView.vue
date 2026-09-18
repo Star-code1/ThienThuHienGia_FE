@@ -72,7 +72,7 @@
 
   //- Thanh Legend Phái
   .sect-legend-bar
-    span.legend-label Bát Đại Võ Phái
+    span.legend-label Thất Đại Võ Phái
     .legend-item(v-for="c in CLASS_LIST" :key="c.name")
       img.legend-icon(v-if="c.icon" :src="c.icon" :alt="c.name")
       span.legend-dot(v-else :style="{ backgroundColor: c.hex, boxShadow: `0 0 6px ${c.hex}` }")
@@ -315,8 +315,8 @@ const captureScreenshot = async () => {
   flex-wrap wrap
   justify-content space-between
   align-items center
-  padding 0.75rem 1.25rem
-  border-bottom 2px solid
+  padding 0.75rem 1.5rem
+  border-bottom 1px solid
   gap 0.75rem
   position sticky
   top 0
@@ -324,17 +324,19 @@ const captureScreenshot = async () => {
   backdrop-filter blur(12px)
 
   .lineup-light &
-    background rgba(255, 255, 255, 0.9)
-    border-color #cbd5e1
+    background rgba(255, 255, 255, 0.85)
+    border-color #e2e8f0
+    box-shadow var(--shadow-sm)
 
   .lineup-dark &
-    background rgba(11, 17, 32, 0.9)
+    background rgba(11, 17, 32, 0.85)
     border-color #1e293b
+    box-shadow var(--shadow-sm)
 
 .toolbar-left
   display flex
   align-items center
-  gap 0.65rem
+  gap 0.75rem
 
 .toolbar-icon
   font-size 1.5rem
@@ -344,10 +346,10 @@ const captureScreenshot = async () => {
   flex-direction column
 
 .toolbar-title
-  font-family 'Chakra Petch', 'Cinzel', serif
+  font-family var(--font-heading)
   font-size 1.15rem
   font-weight 800
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   margin 0
 
   .lineup-light &
@@ -358,10 +360,11 @@ const captureScreenshot = async () => {
 
 .toolbar-subtitle
   font-size 0.75rem
-  color #0284c7
+  font-weight 600
+  color #3b82f6
 
   .lineup-dark &
-    color #38bdf8
+    color #60a5fa
 
 .toolbar-actions
   display flex
@@ -370,82 +373,98 @@ const captureScreenshot = async () => {
   gap 0.5rem
 
 .btn-action
-  padding 0.4rem 0.85rem
-  border-radius 0.25rem
-  font-family 'Chakra Petch', sans-serif
+  padding 0.45rem 0.85rem
+  border-radius var(--radius-md, 12px)
+  font-family var(--font-body)
   font-size 0.8rem
-  font-weight 700
-  border 1.5px solid
+  font-weight 600
+  border 1px solid
   cursor pointer
   display flex
   align-items center
   gap 0.35rem
-  transition all 0.15s ease
+  box-shadow var(--shadow-sm)
+  transition all 0.2s ease
 
   &:hover
     transform translateY(-1px)
+    box-shadow var(--shadow-md)
 
   &.btn-add-division
-    background rgba(34, 197, 94, 0.15)
-    border-color #22c55e
+    background #f0fdf4
+    border-color #bbf7d0
     color #16a34a
     .lineup-dark &
+      background rgba(34, 197, 94, 0.15)
+      border-color rgba(34, 197, 94, 0.3)
       color #4ade80
     &:hover
       background #22c55e
       color #ffffff
 
   &.btn-manage-skills
-    background rgba(234, 179, 8, 0.15)
-    border-color #eab308
+    background #fefce8
+    border-color #fef08a
     color #ca8a04
     .lineup-dark &
+      background rgba(234, 179, 8, 0.15)
+      border-color rgba(234, 179, 8, 0.3)
       color #fde047
     &:hover
       background #eab308
-      color #0f172a
+      color #ffffff
 
   &.btn-mode
     &.mode-edit
-      background #2563eb
-      border-color #2563eb
-      color #ffffff
+      background #eff6ff
+      border-color #bfdbfe
+      color #2563eb
+      .lineup-dark &
+        background rgba(37, 99, 235, 0.2)
+        border-color rgba(59, 130, 246, 0.4)
+        color #93c5fd
     &.mode-view
-      background transparent
-      border-color #64748b
-      color inherit
+      background var(--color-bg-subtle)
+      border-color var(--color-border)
+      color var(--color-text)
 
   &.btn-add-member
-    background rgba(56, 189, 248, 0.15)
-    border-color #38bdf8
+    background #f0f9ff
+    border-color #bae6fd
     color #0284c7
     .lineup-dark &
+      background rgba(56, 189, 248, 0.15)
+      border-color rgba(56, 189, 248, 0.3)
       color #38bdf8
 
   &.btn-capture
-    background rgba(168, 85, 247, 0.15)
-    border-color #a855f7
+    background #faf5ff
+    border-color #e9d5ff
     color #9333ea
     .lineup-dark &
+      background rgba(168, 85, 247, 0.15)
+      border-color rgba(168, 85, 247, 0.3)
       color #c084fc
 
   &.btn-save
-    background linear-gradient(135deg, #e0b854, #d97706)
-    border-color #d97706
+    background #3b82f6
+    border-color #2563eb
     color #ffffff
-    box-shadow 0 0 10px rgba(224, 184, 84, 0.3)
+    box-shadow 0 2px 8px rgba(59, 130, 246, 0.3)
+    &:hover
+      background #2563eb
 
 .select-event-box
   display flex
   align-items center
 
 .event-select
-  padding 0.4rem 0.75rem
-  border-radius 0.25rem
-  border 1.5px solid #64748b
+  padding 0.45rem 0.75rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
   font-size 0.8rem
   outline none
-  background transparent
+  background var(--color-surface)
   color inherit
 
 .sect-legend-bar
@@ -454,7 +473,7 @@ const captureScreenshot = async () => {
   align-items center
   justify-content center
   gap 1rem
-  padding 0.4rem 1rem
+  padding 0.5rem 1rem
   border-bottom 1px solid
   font-size 0.75rem
 
@@ -501,27 +520,27 @@ const captureScreenshot = async () => {
   overflow-x hidden
 
 .attendance-pool-col
-  width 260px
+  width 270px
   flex-shrink 0
 
 .lineup-matrix-box
   flex 1
   min-width 0
-  border-radius 0.5rem
-  border 1.5px solid
-  padding 0.85rem
-  box-shadow 0 4px 20px rgba(0, 0, 0, 0.08)
+  border-radius var(--radius-lg, 16px)
+  border 1px solid
+  padding 1rem
+  box-shadow var(--shadow-md)
 
   &.matrix-light
     background #ffffff
-    border-color #cbd5e1
+    border-color #e2e8f0
 
   &.matrix-dark
-    background #0a0e1a
+    background #0f172a
     border-color #1e293b
 
 .divisions-list-container
   display flex
   flex-direction column
-  gap 0.5rem
+  gap 0.75rem
 </style>

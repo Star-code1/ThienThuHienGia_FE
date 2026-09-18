@@ -101,7 +101,10 @@ export const useAuthStore = defineStore('auth', {
     /**
      * Fetch all members having Bang Chúng role in Discord Server
      */
-    async fetchGuildStats() {
+    async fetchGuildStats(force = false) {
+      if (!force && this.guildMembers && this.guildMembers.length > 0) {
+        return;
+      }
       try {
         const res = await apiClient.get('/guild/members');
         if (res.data && res.data.success) {

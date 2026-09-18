@@ -27,7 +27,7 @@
 
       .available-skills-section
         span.section-label Chọn kỹ năng từ Database:
-        .skills-grid
+        .skills-grid(v-if="skillStore.allSkills.length > 0")
           .skill-pick-card(
             v-for="skill in skillStore.allSkills"
             :key="skill._id || skill.id"
@@ -40,6 +40,11 @@
                 span.skill-pick-name {{ skill.name }}
                 span.skill-pick-desc(v-if="skill.category") {{ skill.category }}
             .check-indicator(v-if="isSelected(skill)") ✓
+
+        .empty-assign-box(v-else)
+          span.empty-icon 📜
+          p.empty-text Chưa có kỹ năng nào trong Database.
+          button.btn-add-prompt(@click="$emit('openSkillManager')") ➕ Thêm kỹ năng mới ngay
 
     .modal-footer
       button.btn-manage-skills(@click="$emit('openSkillManager')") ⚙️ Quản lý danh mục kỹ năng
@@ -91,30 +96,30 @@ const handleToggle = (skill) => {
   width 100%
   max-width 560px
   max-height 85vh
-  border-radius 0.5rem
-  border 2px solid
+  border-radius var(--radius-xl, 20px)
+  border 1px solid
   display flex
   flex-direction column
   overflow hidden
-  box-shadow 0 15px 35px rgba(0, 0, 0, 0.4)
+  box-shadow var(--shadow-modal)
 
   &.modal-light
     background #ffffff
-    border-color #0284c7
+    border-color #e2e8f0
     color #0f172a
 
   &.modal-dark
     background #0f172a
-    border-color #38bdf8
+    border-color #1e293b
     color #f8fafc
 
 .modal-header
   display flex
   justify-content space-between
   align-items center
-  padding 0.85rem 1.15rem
-  border-bottom 2px solid
-  background rgba(56, 189, 248, 0.08)
+  padding 1rem 1.25rem
+  border-bottom 1px solid
+  background var(--color-bg-subtle)
 
   .modal-light &
     border-color #e2e8f0
@@ -131,17 +136,18 @@ const handleToggle = (skill) => {
   font-size 1.25rem
 
 .modal-title
-  font-family 'Chakra Petch', sans-serif
+  font-family var(--font-heading)
   font-size 1rem
-  font-weight 700
+  font-weight 800
   margin 0
 
 .modal-subtitle
   font-size 0.75rem
-  color #0284c7
+  font-weight 600
+  color #3b82f6
 
   .modal-dark &
-    color #38bdf8
+    color #60a5fa
 
 .btn-close
   background none
@@ -150,14 +156,15 @@ const handleToggle = (skill) => {
   cursor pointer
   color inherit
   padding 0.2rem 0.4rem
-  border-radius 0.25rem
+  border-radius 50%
+  transition all 0.2s ease
 
   &:hover
-    background rgba(239, 68, 68, 0.2)
+    background rgba(239, 68, 68, 0.15)
     color #ef4444
 
 .modal-body
-  padding 1.15rem
+  padding 1.25rem
   overflow-y auto
   display flex
   flex-direction column
@@ -167,10 +174,10 @@ const handleToggle = (skill) => {
   font-size 0.75rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   margin-bottom 0.4rem
   display block
-  color #64748b
+  color var(--color-muted)
 
 .selected-skills-row
   display flex
@@ -181,16 +188,23 @@ const handleToggle = (skill) => {
   display flex
   align-items center
   gap 0.35rem
-  padding 0.25rem 0.5rem
-  border-radius 1rem
-  background rgba(2, 132, 199, 0.15)
-  border 1px solid #0284c7
+  padding 0.3rem 0.65rem
+  border-radius var(--radius-full, 9999px)
+  background #eff6ff
+  border 1px solid #bfdbfe
+  color #2563eb
   cursor pointer
   transition all 0.15s ease
 
+  .modal-dark &
+    background rgba(37, 99, 235, 0.2)
+    border-color rgba(59, 130, 246, 0.4)
+    color #93c5fd
+
   &:hover
-    background rgba(239, 68, 68, 0.15)
-    border-color #ef4444
+    background #fef2f2
+    border-color #fecaca
+    color #ef4444
     .chip-remove
       color #ef4444
 
@@ -218,35 +232,35 @@ const handleToggle = (skill) => {
   display flex
   align-items center
   justify-content space-between
-  padding 0.5rem 0.65rem
-  border-radius 0.375rem
+  padding 0.5rem 0.75rem
+  border-radius var(--radius-md, 12px)
   border 1px solid
   cursor pointer
-  transition all 0.15s ease
+  transition all 0.2s ease
 
   .modal-light &
     background #f8fafc
-    border-color #cbd5e1
+    border-color #e2e8f0
 
     &:hover
-      background #f1f5f9
-      border-color #0284c7
+      background #ffffff
+      border-color #3b82f6
 
     &.is-selected
-      background #e0f2fe
-      border-color #0284c7
+      background #eff6ff
+      border-color #3b82f6
 
   .modal-dark &
-    background #1e293b
-    border-color #334155
+    background #141f32
+    border-color #1e293b
 
     &:hover
-      background #273549
-      border-color #38bdf8
+      background #1e293b
+      border-color #60a5fa
 
     &.is-selected
-      background rgba(56, 189, 248, 0.18)
-      border-color #38bdf8
+      background rgba(37, 99, 235, 0.2)
+      border-color #60a5fa
 
 .pick-card-left
   display flex
@@ -257,9 +271,9 @@ const handleToggle = (skill) => {
 .skill-pick-img
   width 28px
   height 28px
-  border-radius 0.25rem
+  border-radius var(--radius-xs, 4px)
   object-fit cover
-  border 1px solid #38bdf8
+  border 1px solid rgba(56, 189, 248, 0.4)
   flex-shrink 0
 
 .skill-pick-info
@@ -276,18 +290,18 @@ const handleToggle = (skill) => {
 
 .skill-pick-desc
   font-size 0.65rem
-  color #94a3b8
+  color var(--color-muted)
 
 .check-indicator
   font-size 0.85rem
   font-weight 900
-  color #0284c7
+  color #3b82f6
 
   .modal-dark &
-    color #38bdf8
+    color #60a5fa
 
 .modal-footer
-  padding 0.75rem 1.15rem
+  padding 0.75rem 1.25rem
   border-top 1px solid
   display flex
   justify-content space-between
@@ -302,29 +316,64 @@ const handleToggle = (skill) => {
 .btn-manage-skills
   background none
   border none
-  color #0284c7
+  color #3b82f6
   font-size 0.75rem
   font-weight 600
   cursor pointer
   padding 0.3rem 0.5rem
 
   .modal-dark &
-    color #38bdf8
+    color #60a5fa
 
   &:hover
     text-decoration underline
 
 .btn-done
-  padding 0.4rem 1.15rem
-  border-radius 0.25rem
-  background #0284c7
+  padding 0.45rem 1.25rem
+  border-radius var(--radius-md, 12px)
+  background #3b82f6
   color #ffffff
   border none
-  font-family 'Chakra Petch', sans-serif
-  font-size 0.85rem
-  font-weight 700
+  font-family var(--font-body)
+  font-size 0.8rem
+  font-weight 600
   cursor pointer
+  transition all 0.2s ease
+  box-shadow var(--shadow-sm)
 
   &:hover
-    background #0369a1
+    background #2563eb
+
+.empty-assign-box
+  padding 2rem 1rem
+  text-align center
+  border 1px dashed var(--color-border)
+  border-radius var(--radius-md, 12px)
+  background var(--color-bg-subtle)
+  display flex
+  flex-direction column
+  align-items center
+  gap 0.5rem
+
+.empty-icon
+  font-size 2rem
+
+.empty-text
+  font-size 0.85rem
+  color var(--color-text-muted)
+  margin 0
+
+.btn-add-prompt
+  padding 0.4rem 0.85rem
+  border-radius var(--radius-sm, 8px)
+  background #3b82f6
+  color #ffffff
+  border none
+  font-size 0.75rem
+  font-weight 600
+  cursor pointer
+  transition all 0.2s ease
+
+  &:hover
+    background #2563eb
 </style>

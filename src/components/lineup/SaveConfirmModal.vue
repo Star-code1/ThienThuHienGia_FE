@@ -56,116 +56,103 @@ const themeStore = useThemeStore();
 
 .confirm-card
   width 100%
-  max-width 22.5rem
-  border-radius 0.75rem
-  box-shadow 0 25px 50px -12px rgba(0, 0, 0, 0.5)
+  max-width 24rem
+  border-radius var(--radius-xl, 20px)
+  box-shadow var(--shadow-modal)
   overflow hidden
 
   &.card-light
     background #ffffff
-    border 1px solid #cbd5e1
+    border 1px solid #e2e8f0
     color #0f172a
 
   &.card-dark
-    background #0d1017
-    border 1px solid #2a3140
-    color #e2e8f0
+    background #0f172a
+    border 1px solid #1e293b
+    color #f8fafc
 
 .top-gold-bar
-  height 4px
-  background linear-gradient(to right, #f3d78a, #d4af37, #a8792f)
+  height 3px
+  background linear-gradient(to right, #60a5fa, #3b82f6)
 
 .card-body
-  padding 1.25rem
+  padding 1.5rem
 
 .title-row
   display flex
   align-items center
   gap 0.5rem
-  margin-bottom 0.375rem
+  margin-bottom 0.5rem
 
 .check-badge
-  width 1.5rem
-  height 1.5rem
-  border-radius 9999px
-  background rgba(52, 211, 153, 0.15)
-  border 1px solid rgba(52, 211, 153, 0.4)
-  color #34d399
+  width 1.75rem
+  height 1.75rem
+  border-radius var(--radius-full, 9999px)
+  background #ecfdf5
+  border 1px solid #a7f3d0
+  color #10b981
   display flex
   align-items center
   justify-content center
-  font-size 0.75rem
+  font-size 0.85rem
   font-weight 700
+
+  .card-dark &
+    background rgba(16, 185, 129, 0.2)
+    border-color rgba(52, 211, 153, 0.4)
+    color #34d399
 
 .confirm-title
-  font-size 1rem
-  font-weight 700
+  font-size 1.05rem
+  font-weight 800
   margin 0
-
-  .card-light &
-    color #b45309
-
-  .card-dark &
-    color #e0b854
+  color var(--color-text)
 
 .confirm-desc
-  font-size 0.875rem
+  font-size 0.85rem
   line-height 1.6
-  margin-bottom 1rem
-
-  .card-light &
-    color #475569
-
-  .card-dark &
-    color #9aa1b8
+  margin-bottom 1.25rem
+  color var(--color-text-secondary)
 
 .actions-row
   display flex
   justify-content flex-end
-  gap 0.5rem
+  gap 0.65rem
 
 .btn-cancel
-  padding 0.375rem 0.875rem
-  border-radius 0.5rem
-  font-size 0.875rem
+  padding 0.45rem 1rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.8rem
+  font-weight 600
   cursor pointer
-  transition all 0.15s ease
+  transition all 0.2s ease
+  background var(--color-bg-subtle)
+  border 1px solid var(--color-border)
+  color var(--color-text)
 
-  .card-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #475569
-    &:hover
-      background #e2e8f0
-      color #0f172a
-
-  .card-dark &
-    background transparent
-    border 1px solid #2a3140
-    color #9aa1b8
-    &:hover
-      background #171c26
-      color #ffffff
+  &:hover
+    border-color var(--color-brand)
 
   &:disabled
     opacity 0.5
 
 .btn-confirm
-  padding 0.375rem 0.875rem
-  border-radius 0.5rem
-  font-size 0.875rem
+  padding 0.45rem 1.15rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.8rem
   font-weight 600
   color #ffffff
-  background linear-gradient(to bottom, #3a7bd5, #2f63ac)
+  background #3b82f6
   border none
   cursor pointer
   display flex
   align-items center
   gap 0.375rem
-  transition all 0.15s ease
+  transition all 0.2s ease
+  box-shadow var(--shadow-sm)
 
   &:hover
-    filter brightness(1.1)
+    background #2563eb
 
   &:disabled
     opacity 0.6

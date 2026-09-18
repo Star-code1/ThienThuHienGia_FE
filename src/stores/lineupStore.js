@@ -262,13 +262,16 @@ export const useLineupStore = defineStore('lineup', {
       this.loading = true;
       this.eventId = eventId;
       try {
-        const attRes = await api.getAttendance(eventId);
+        const [attRes, lineupRes] = await Promise.all([
+          api.getAttendance(eventId),
+          api.getLineup(eventId)
+        ]);
+
         const attendances = attRes.data || [];
 
         // Store absent users
         this.absentUsers = attendances.filter((item) => item.status === 'absent');
 
-        const lineupRes = await api.getLineup(eventId);
         if (lineupRes.data && lineupRes.data.divisions && lineupRes.data.divisions.length > 0) {
           this.title = lineupRes.data.title || 'ĐỘI HÌNH BANG CHIẾN';
           this.divisions = lineupRes.data.divisions;

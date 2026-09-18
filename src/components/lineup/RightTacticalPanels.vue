@@ -226,42 +226,42 @@ const dashOffset = computed(() => {
   font-family 'Be Vietnam Pro', sans-serif
 
 .panel-box
-  border-radius 0px
-  padding 0.85rem
+  border-radius var(--radius-md, 12px)
+  padding 0.95rem
   position relative
-  border 2px solid
+  border 1px solid
   user-select none
+  box-shadow var(--shadow-sm)
 
   &.panel-light
-    background #fdfbf7
-    border-color #1c1917
-    box-shadow 3px 3px 0 #1c1917
+    background #ffffff
+    border-color #e2e8f0
 
   &.panel-dark
-    background #0b1120
+    background #0f172a
     border-color #1e293b
-    box-shadow 3px 3px 0 #000
+    box-shadow var(--shadow-md)
 
   &.drag-over-ring
-    border-color #f5c518
+    border-color #3b82f6
     background #141e33
 
 .panel-header-title
   font-size 0.75rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
-  font-family 'Chakra Petch', sans-serif
+  letter-spacing 0.03em
+  font-family var(--font-body)
   padding-bottom 0.5rem
   margin-bottom 0.75rem
-  border-bottom 2px solid
+  border-bottom 1px solid
 
   .panel-light &
-    color #92400e
-    border-color #1c1917
+    color #0f172a
+    border-color #e2e8f0
 
   .panel-dark &
-    color #f5c518
+    color #f8fafc
     border-color #1e293b
 
   &.title-red

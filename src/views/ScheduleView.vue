@@ -319,9 +319,9 @@ onUnmounted(() => {
   position relative
   z-index 10
   padding 1.25rem 1.5rem
-  border-radius var(--radius-lg, 4px)
-  border 2px solid var(--color-border)
-  box-shadow 3px 3px 0px var(--color-border)
+  border-radius var(--radius-lg, 16px)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
   background var(--color-surface)
   display flex
   flex-direction column
@@ -343,48 +343,48 @@ onUnmounted(() => {
 
 .banner-main-title
   font-size 1.15rem
-  font-weight 700
+  font-weight 800
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   font-family var(--font-heading)
   color var(--color-text)
   margin 0
 
 .banner-sub-desc
   font-size 0.7rem
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
   color var(--color-brand)
   margin-top 0.15rem
 
 .btn-lineup-nav
-  padding 0.65rem 1.25rem
-  border-radius var(--radius, 2px)
-  font-size 0.75rem
+  padding 0.55rem 1.25rem
+  border-radius var(--radius-md, 12px)
+  font-size 0.8rem
   font-weight 700
-  font-family var(--font-mono, monospace)
+  font-family var(--font-body)
   color #ffffff
-  background var(--color-brand)
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
+  background #3b82f6
+  border 1px solid transparent
+  box-shadow var(--shadow-sm)
   text-decoration none
   display flex
   align-items center
   justify-content center
   gap 0.5rem
-  transition transform 0.1s ease, box-shadow 0.1s ease
+  transition all 0.2s ease
 
   &:hover
-    background var(--color-brand-hover)
-    transform translate(-1px, -1px)
-    box-shadow 3px 3px 0px var(--color-border)
+    background #2563eb
+    transform translateY(-1px)
+    box-shadow var(--shadow-md)
 
 .hero-countdown-box
   position relative
   z-index 10
   padding 1.5rem
-  border-radius var(--radius-lg, 4px)
-  border 2px solid var(--color-border)
-  box-shadow 3px 3px 0px var(--color-border)
+  border-radius var(--radius-xl, 20px)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-md)
   background var(--color-surface)
   color var(--color-text)
   display flex
@@ -397,14 +397,8 @@ onUnmounted(() => {
   justify-content space-between
   flex-wrap wrap
   gap 0.75rem
-  border-bottom 2px solid
+  border-bottom 1px solid var(--color-border)
   padding-bottom 0.75rem
-
-  .sched-light &
-    border-color #1c1917
-
-  .sched-dark &
-    border-color #1e293b
 
 .countdown-tag-left
   display flex
@@ -414,21 +408,17 @@ onUnmounted(() => {
 .ping-dot
   width 0.5rem
   height 0.5rem
+  border-radius 50%
   background #ef4444
   box-shadow 0 0 6px #ef4444
 
 .tag-title
-  font-size 0.7rem
+  font-size 0.75rem
   font-weight 700
-  letter-spacing 0.1em
+  letter-spacing 0.05em
   text-transform uppercase
-  font-family 'Silkscreen', monospace
-
-  .sched-light &
-    color #92400e
-
-  .sched-dark &
-    color #f5c518
+  font-family var(--font-body)
+  color var(--color-brand)
 
 .countdown-tag-right
   display flex
@@ -436,43 +426,36 @@ onUnmounted(() => {
   gap 0.5rem
 
 .date-formatted
-  font-size 0.75rem
-  font-family 'Share Tech Mono', monospace
+  font-size 0.8rem
+  font-family monospace
   font-weight 700
-
-  .sched-light &
-    color #1c1917
-
-  .sched-dark &
-    color #38bdf8
+  color var(--color-text-secondary)
 
 .cycle-pill
   padding 0.25rem 0.65rem
-  border-radius 0px
-  font-size 0.65rem
+  border-radius var(--radius-full, 9999px)
+  font-size 0.7rem
   font-weight 700
-  font-family 'Silkscreen', monospace
-  border 2px solid #1c1917
+  font-family var(--font-body)
+  border 1px solid
 
   &.pill-gold
     background #fef3c7
     color #92400e
-    box-shadow 2px 2px 0 #1c1917
+    border-color #fde68a
     .sched-dark &
-      background #172439
+      background rgba(245, 197, 24, 0.2)
       color #f5c518
-      border-color #f5c518
-      box-shadow 2px 2px 0 #000
+      border-color rgba(245, 197, 24, 0.4)
 
   &.pill-blue
     background #e0f2fe
     color #0284c7
-    box-shadow 2px 2px 0 #1c1917
+    border-color #bae6fd
     .sched-dark &
-      background #0c203b
+      background rgba(56, 189, 248, 0.2)
       color #38bdf8
-      border-color #38bdf8
-      box-shadow 2px 2px 0 #000
+      border-color rgba(56, 189, 248, 0.4)
 
 .countdown-body-row
   display flex
@@ -491,10 +474,10 @@ onUnmounted(() => {
   gap 0.5rem
 
 .timer-main-title
-  font-size 1.1rem
-  font-weight 700
+  font-size 1.15rem
+  font-weight 800
   text-transform uppercase
-  font-family 'Silkscreen', monospace
+  font-family var(--font-heading)
   margin 0
 
   .sched-light &

@@ -214,20 +214,19 @@ const isActive = (path) => {
   font-family var(--font-body)
   background var(--color-surface)
   color var(--color-text)
+  box-shadow var(--shadow-lg)
 
   &.pos-left
     left 0
-    border-right 2px solid var(--color-border)
-    box-shadow 4px 0 0px var(--color-border)
+    border-right 1px solid var(--color-border)
 
   &.pos-right
     right 0
-    border-left 2px solid var(--color-border)
-    box-shadow -4px 0 0px var(--color-border)
+    border-left 1px solid var(--color-border)
 
 .drawer-header
   padding 1.25rem
-  border-bottom 2px solid var(--color-border)
+  border-bottom 1px solid var(--color-border)
   background var(--color-bg-subtle)
   display flex
   align-items center
@@ -241,14 +240,14 @@ const isActive = (path) => {
 .brand-logo
   width 2.5rem
   height 2.5rem
-  border-radius var(--radius, 2px)
+  border-radius var(--radius-md, 12px)
   display flex
   align-items center
   justify-content center
   font-size 1.25rem
   background var(--color-surface)
-  border 2px solid var(--color-border)
-  box-shadow 2px 2px 0px var(--color-border)
+  border 1px solid var(--color-border)
+  box-shadow var(--shadow-sm)
 
 .brand-title
   font-size 1.05rem
@@ -260,18 +259,13 @@ const isActive = (path) => {
   margin 0
 
 .brand-subtitle
-  font-size 0.6rem
-  letter-spacing 0.15em
+  font-size 0.65rem
+  letter-spacing 0.05em
   text-transform uppercase
-  font-family 'Share Tech Mono', monospace
+  font-family var(--font-heading)
   display block
   margin-top 0.1rem
-
-  .drawer-light &
-    color #78350f
-
-  .drawer-dark &
-    color #38bdf8
+  color var(--color-brand)
 
 .close-btn
   width 2rem

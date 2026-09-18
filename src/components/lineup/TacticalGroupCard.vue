@@ -15,11 +15,6 @@
         )
 
     .header-actions
-      button.btn-header-action.btn-drag(
-        v-if="isEditMode"
-        title="Kéo thả vị trí Team"
-      ) ⠿ Kéo
-
       button.btn-header-action.btn-clear(
         v-if="isEditMode"
         @click="handleClearTeam"
@@ -149,39 +144,39 @@ const handleClearTeam = async () => {
 
 <style lang="stylus" scoped>
 .tactical-group-card
-  border-radius 0.375rem
-  border 2px solid
+  border-radius var(--radius-md, 12px)
+  border 1px solid
   display flex
   flex-direction column
   overflow hidden
-  min-width 190px
+  min-width 205px
   flex 1
   transition all 0.2s ease
-  box-shadow 0 3px 10px rgba(0, 0, 0, 0.06)
+  box-shadow var(--shadow-sm)
 
   &.card-light
     background #ffffff
-    border-color #93c5fd
+    border-color #e2e8f0
 
   &.card-dark
     background #0b1120
-    border-color #1e3a8a
-    box-shadow 0 4px 15px rgba(0, 0, 0, 0.3)
+    border-color #1e293b
+    box-shadow var(--shadow-md)
 
 .team-card-header
   display flex
   align-items center
   justify-content space-between
-  padding 0.35rem 0.5rem
+  padding 0.4rem 0.65rem
   border-bottom 1px solid
   gap 0.35rem
 
   .card-light &
-    background #eff6ff
-    border-color #bfdbfe
+    background #f8fafc
+    border-color #e2e8f0
 
   .card-dark &
-    background #0f172a
+    background #141f32
     border-color #1e293b
 
 .header-left
@@ -198,30 +193,31 @@ const handleClearTeam = async () => {
   width 22px
   height 22px
   border-radius 50%
-  background rgba(234, 179, 8, 0.2)
-  border 1px solid #eab308
+  background rgba(234, 179, 8, 0.15)
+  border 1px solid rgba(234, 179, 8, 0.4)
   flex-shrink 0
 
 .team-title
-  font-family 'Chakra Petch', sans-serif
+  font-family var(--font-body)
   font-size 0.85rem
   font-weight 700
-  letter-spacing 0.03em
+  letter-spacing 0.02em
   margin 0
-  color #1e40af
+  color #2563eb
 
   .card-dark &
     color #60a5fa
 
 .team-name-input
-  font-family 'Chakra Petch', sans-serif
+  font-family var(--font-body)
   font-size 0.8rem
   font-weight 700
-  padding 0.15rem 0.35rem
-  border-radius 0.2rem
-  border 1px solid #93c5fd
+  padding 0.15rem 0.4rem
+  border-radius var(--radius-xs, 4px)
+  border 1px solid #bfdbfe
   width 90px
   outline none
+  background var(--color-surface)
 
   .card-dark &
     background #1e293b
@@ -235,26 +231,21 @@ const handleClearTeam = async () => {
   flex-shrink 0
 
 .btn-header-action
-  padding 0.15rem 0.35rem
+  padding 0.2rem 0.4rem
   font-size 0.65rem
   font-weight 600
-  border-radius 0.2rem
+  border-radius var(--radius-xs, 4px)
   border 1px solid
   cursor pointer
   transition all 0.15s ease
 
-  &.btn-drag
-    background rgba(59, 130, 246, 0.1)
-    border-color #93c5fd
-    color #2563eb
-    .card-dark &
-      border-color #3b82f6
-      color #93c5fd
-
   &.btn-clear
-    background rgba(239, 68, 68, 0.1)
-    border-color #fca5a5
+    background #fef2f2
+    border-color #fecaca
     color #ef4444
+    .card-dark &
+      background rgba(239, 68, 68, 0.15)
+      border-color rgba(239, 68, 68, 0.3)
     &:hover
       background #ef4444
       color #ffffff
@@ -262,7 +253,7 @@ const handleClearTeam = async () => {
   &.btn-del-team
     background transparent
     border-color transparent
-    color #64748b
+    color #94a3b8
     padding 0.1rem 0.25rem
     &:hover
       color #ef4444
@@ -270,30 +261,30 @@ const handleClearTeam = async () => {
 .team-table-header
   display flex
   align-items center
-  padding 0.25rem 0.5rem
+  padding 0.3rem 0.5rem
   font-size 0.7rem
   font-weight 700
   text-transform uppercase
-  letter-spacing 0.05em
+  letter-spacing 0.04em
   border-bottom 1px solid
 
   .card-light &
-    background #dbeafe
-    border-color #bfdbfe
-    color #1e40af
+    background #f1f5f9
+    border-color #e2e8f0
+    color #475569
 
   .card-dark &
     background #172554
-    border-color #1e3a8a
+    border-color #1e293b
     color #93c5fd
 
 .th-col
   &.th-ingame
-    flex 1.2
+    flex 1.4
     text-align center
 
   &.th-skills
-    flex 0.9
+    flex 0.8
     text-align center
 
 .slots-container
@@ -302,8 +293,8 @@ const handleClearTeam = async () => {
 
 .slot-row-wrapper
   &.drag-over
-    background rgba(59, 130, 246, 0.25)
-    outline 2px dashed #2563eb
+    background rgba(59, 130, 246, 0.15)
+    outline 2px dashed #3b82f6
 
 .slot-draggable
   &.is-draggable

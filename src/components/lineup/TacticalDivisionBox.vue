@@ -22,14 +22,8 @@
           placeholder="Tên Đoàn..."
         )
 
-    //- Right: Actions (Kéo Đoàn, + Team, Xóa Đoàn)
+    //- Right: Actions (+ Team, Xóa Đoàn)
     .bar-right
-      button.btn-bar-action.btn-reorder(
-        v-if="isEditMode"
-        title="Kéo thứ tự Đoàn"
-      )
-        span ⠿ Kéo Đoàn
-
       button.btn-bar-action.btn-add-team(
         v-if="isEditMode"
         @click="$emit('addTeam')"
@@ -113,20 +107,19 @@ const handleDeleteDivision = async () => {
   display flex
   align-items center
   justify-content space-between
-  padding 0.4rem 0.75rem
-  border-radius 0.375rem
-  border 1.5px solid
+  padding 0.5rem 1rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid
+  box-shadow var(--shadow-sm)
   transition all 0.2s ease
 
   .div-light &
-    background #f1f5f9
-    border-color #cbd5e1
-    box-shadow 0 2px 6px rgba(0, 0, 0, 0.04)
+    background #f8fafc
+    border-color #e2e8f0
 
   .div-dark &
-    background #0f172a
+    background #141f32
     border-color #1e293b
-    box-shadow 0 3px 10px rgba(0, 0, 0, 0.4)
 
 .bar-left
   display flex
@@ -135,17 +128,17 @@ const handleDeleteDivision = async () => {
 
 .btn-collapse-toggle
   background transparent
-  border 1px solid #94a3b8
-  border-radius 0.25rem
-  width 24px
-  height 24px
+  border 1px solid var(--color-border)
+  border-radius var(--radius-sm, 8px)
+  width 28px
+  height 28px
   display flex
   align-items center
   justify-content center
-  font-size 0.7rem
+  font-size 0.75rem
   cursor pointer
   color inherit
-  transition all 0.15s ease
+  transition all 0.2s ease
 
   &:hover
     border-color #3b82f6
@@ -156,10 +149,10 @@ const handleDeleteDivision = async () => {
   text-align center
 
 .division-title
-  font-family 'Lora', 'Cinzel', serif
-  font-size 1.2rem
+  font-family var(--font-heading)
+  font-size 1.15rem
   font-weight 800
-  letter-spacing 0.05em
+  letter-spacing 0.03em
   margin 0
 
   .div-light &
@@ -167,18 +160,17 @@ const handleDeleteDivision = async () => {
 
   .div-dark &
     color #f8fafc
-    text-shadow 0 0 10px rgba(56, 189, 248, 0.4)
 
 .division-title-input
-  font-family 'Lora', serif
+  font-family var(--font-heading)
   font-size 1.1rem
   font-weight 800
   text-align center
-  padding 0.2rem 0.5rem
-  border-radius 0.25rem
+  padding 0.25rem 0.65rem
+  border-radius var(--radius-sm, 8px)
   border 1px solid #3b82f6
   outline none
-  background transparent
+  background var(--color-surface)
   color inherit
 
 .bar-right
@@ -189,37 +181,37 @@ const handleDeleteDivision = async () => {
   gap 0.4rem
 
 .btn-bar-action
-  padding 0.25rem 0.5rem
-  border-radius 0.25rem
-  font-size 0.7rem
-  font-weight 700
-  font-family 'Chakra Petch', sans-serif
+  padding 0.35rem 0.65rem
+  border-radius var(--radius-sm, 8px)
+  font-size 0.75rem
+  font-weight 600
+  font-family var(--font-body)
   border 1px solid
   cursor pointer
-  transition all 0.15s ease
+  transition all 0.2s ease
   display flex
   align-items center
   gap 0.25rem
 
-  &.btn-reorder
-    background rgba(148, 163, 184, 0.15)
-    border-color #94a3b8
-    color inherit
-
   &.btn-add-team
-    background rgba(37, 99, 235, 0.15)
-    border-color #3b82f6
+    background #eff6ff
+    border-color #bfdbfe
     color #2563eb
     .div-dark &
-      color #60a5fa
+      background rgba(37, 99, 235, 0.2)
+      border-color rgba(59, 130, 246, 0.4)
+      color #93c5fd
     &:hover
-      background #2563eb
+      background #3b82f6
       color #ffffff
 
   &.btn-delete-div
-    background rgba(239, 68, 68, 0.15)
-    border-color #ef4444
+    background #fef2f2
+    border-color #fecaca
     color #ef4444
+    .div-dark &
+      background rgba(239, 68, 68, 0.15)
+      border-color rgba(239, 68, 68, 0.3)
     &:hover
       background #ef4444
       color #ffffff
@@ -227,7 +219,7 @@ const handleDeleteDivision = async () => {
 .division-teams-grid
   display grid
   grid-template-columns repeat(5, minmax(0, 1fr))
-  gap 0.65rem
+  gap 0.75rem
   overflow-x auto
   padding-bottom 0.25rem
 

@@ -41,6 +41,9 @@ export default {
   createSkill(data) {
     return apiClient.post('/skills', data);
   },
+  uploadSkillIcon(image) {
+    return apiClient.post('/skills/upload-icon', { image });
+  },
   deleteSkill(id) {
     return apiClient.delete(`/skills/${id}`);
   },
