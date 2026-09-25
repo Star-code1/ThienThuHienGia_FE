@@ -53,6 +53,8 @@ const success = ref(false);
 const errorMessage = ref('');
 const user = ref(null);
 
+const processing = ref(false);
+
 onMounted(async () => {
   const code = route.query.code;
   const error = route.query.error;
@@ -68,6 +70,12 @@ onMounted(async () => {
     errorMessage.value = 'Thiếu chứng thư xác thực quy nhập.';
     return;
   }
+
+  if (processing.value) return;
+  processing.value = true;
+
+  // Xóa query param '?code=...' trên thanh địa chỉ ngay lập tức để tránh người dùng F5 hoặc Vue mount 2 lần gửi lại code cũ
+  window.history.replaceState({}, document.title, window.location.pathname);
 
   const result = await authStore.handleCallback(code);
 
