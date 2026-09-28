@@ -42,6 +42,15 @@
         span 👤
         span Thêm Đệ Tử
 
+      //- Nút Kế Thừa Trận Đồ Từ Chiến Kỳ Trước
+      button.btn-action.btn-inherit(
+        v-if="store.viewMode === 'edit'"
+        @click="openInheritModal"
+        title="Kế thừa sơ đồ đội hình từ chiến kỳ đã xếp trước đó"
+      )
+        span 🔄
+        span Kế Thừa Trận Đồ
+
       //- Dropdown Chọn Event
       .select-event-box
         select.event-select(
@@ -137,11 +146,18 @@
     @confirm="captureScreenshot"
     @cancel="showScreenshotPrompt = false"
   )
+
+  //- Modal kế thừa trận đồ từ chiến kỳ trước
+  InheritLineupModal(
+    :visible="showInheritModal"
+    @close="showInheritModal = false"
+  )
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { toPng } from 'html-to-image';
+import Swal from 'sweetalert2';
 import { useLineupStore } from '../stores/lineupStore';
 import { useSkillStore } from '../stores/skillStore';
 import { useThemeStore } from '../stores/themeStore';
@@ -151,6 +167,7 @@ import SaveConfirmModal from '../components/lineup/SaveConfirmModal.vue';
 import AddMemberModal from '../components/lineup/AddMemberModal.vue';
 import SkillManageModal from '../components/lineup/SkillManageModal.vue';
 import SkillAssignModal from '../components/lineup/SkillAssignModal.vue';
+import InheritLineupModal from '../components/lineup/InheritLineupModal.vue';
 import { CLASS_LIST } from '../theme/classColors';
 
 const store = useLineupStore();
@@ -166,8 +183,25 @@ const showScreenshotPrompt = ref(false);
 const showAddMemberModal = ref(false);
 const showSkillManageModal = ref(false);
 const showSkillAssignModal = ref(false);
+const showInheritModal = ref(false);
 const targetSlotInfo = ref(null);
 const targetSkillSlotInfo = ref(null);
+
+const openInheritModal = () => {
+  if (!selectedMessageId.value) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Chưa chọn chiến kỳ!',
+      text: 'Vui lòng chọn chiến kỳ hiện tại (Trận B) ở thanh công cụ trước khi kế thừa sơ đồ đội hình.',
+      confirmButtonColor: '#3b82f6',
+      confirmButtonText: 'Đã hiểu',
+      background: '#12161f',
+      color: '#ffffff',
+    });
+    return;
+  }
+  showInheritModal.value = true;
+};
 
 onMounted(async () => {
   await store.fetchEventsList();
@@ -436,6 +470,18 @@ const captureScreenshot = async () => {
       background rgba(56, 189, 248, 0.15)
       border-color rgba(56, 189, 248, 0.3)
       color #38bdf8
+
+  &.btn-inherit
+    background #fdf4ff
+    border-color #f5d0fe
+    color #c026d3
+    .lineup-dark &
+      background rgba(217, 70, 239, 0.15)
+      border-color rgba(217, 70, 239, 0.3)
+      color #e879f9
+    &:hover
+      background #d946ef
+      color #ffffff
 
   &.btn-capture
     background #faf5ff
