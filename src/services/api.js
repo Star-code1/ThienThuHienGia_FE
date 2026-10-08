@@ -25,6 +25,14 @@ export default {
   getAttendance(eventId) {
     return apiClient.get(`/attendance/${eventId}`);
   },
+  // Đánh dấu thành viên Vote mà không đánh (No-Show)
+  toggleNoShow(eventId, data) {
+    return apiClient.put(`/attendance/${eventId}/toggle-no-show`, data);
+  },
+  // Lấy bảng xếp hạng thành viên vắng mặt & điểm công tội
+  getAbsentRankings(params = {}) {
+    return apiClient.get('/attendance/rankings/absent', { params });
+  },
   // Lấy sơ đồ đội hình đã lưu
   getLineup(eventId) {
     return apiClient.get(`/lineup/${eventId}`);

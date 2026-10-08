@@ -182,8 +182,8 @@ const menuItems = [
     name: 'Uy Danh Thống Kê',
     path: '/stats',
     icon: '📊',
-    desc: 'Uy danh điểm danh & báo bận',
-    badge: null
+    desc: 'Bảng phong thần vắng mặt & hiệu suất',
+    badge: 'MỚI'
   }
 ];
 
