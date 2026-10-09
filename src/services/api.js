@@ -25,6 +25,10 @@ export default {
   getAttendance(eventId) {
     return apiClient.get(`/attendance/${eventId}`);
   },
+  // Lấy danh sách thành viên sở hữu role chưa vote cho sự kiện
+  getUnvotedMembers(eventId, roleId = '1438967271149146302') {
+    return apiClient.get(`/attendance/${eventId}/unvoted`, { params: { roleId } });
+  },
   // Đánh dấu thành viên Vote mà không đánh (No-Show)
   toggleNoShow(eventId, data) {
     return apiClient.put(`/attendance/${eventId}/toggle-no-show`, data);

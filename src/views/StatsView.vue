@@ -59,6 +59,11 @@
         span.metric-sub.sub-red Danh sách đệ tử không thể xuất trận
 
       .metric-card
+        span.metric-label Bang Chúng Chưa Vote Trận Này
+        .metric-val.val-amber {{ unvotedMembers.length }} đệ tử
+        span.metric-sub.sub-amber Role Bang Chúng (-2.0đ nếu không vote)
+
+      .metric-card
         span.metric-label Tỷ Lệ Lấp Đầy Trận Đồ
         .metric-val.val-blue {{ fillRatio }}%
         span.metric-sub.sub-blue Ma trận sẵn sàng nghênh chiến
@@ -74,6 +79,51 @@
           .absent-info
             span.absent-name {{ user.displayName || user.username }}
             span.absent-reason {{ user.reason || user.note || 'Cáo bận không thể tham chiến' }}
+
+    //- Unvoted Members Section (Role Bang Chúng ID: 1438967271149146302 Chưa Vote)
+    .unvoted-section
+      .unvoted-header
+        .unvoted-title-group
+          .unvoted-title-row
+            h3.unvoted-title ⏳ BANG CHÚNG CHƯA VOTE TRẬN NÀY ({{ unvotedMembers.length }} NGƯỜI)
+            span.role-badge Role ID: 1438967271149146302
+          p.unvoted-desc(v-if="unvotedMembers.length > 0") Danh sách thành viên sở hữu role Bang Chúng chưa tham gia vote cho trận này (sẽ bị trừ -2.0 điểm nếu không vote).
+          p.unvoted-desc(v-else) Tất cả bang chúng sở hữu role đã hoàn tất vote điểm danh cho sự kiện này.
+
+        .unvoted-controls(v-if="unvotedMembers.length > 0")
+          .search-box-small
+            span.search-icon 🔍
+            input.search-input-small(
+              v-model="unvotedSearchQuery"
+              type="text"
+              placeholder="Tìm tên bang chúng..."
+            )
+          select.filter-select-small(v-model="unvotedClassFilter")
+            option(value="all") Tất cả phái
+            option(v-for="c in CLASS_LIST" :key="c.name" :value="c.name") {{ c.name }}
+
+      .unvoted-loading(v-if="loadingUnvoted")
+        .spinner
+        span.loading-text Đang tải danh sách bang chúng chưa vote...
+
+      .unvoted-grid(v-else-if="filteredUnvotedMembers.length > 0")
+        .unvoted-card(v-for="user in filteredUnvotedMembers" :key="user.userId || user.discordId")
+          img.unvoted-avatar(:src="getMemberAvatarUrl(user)" :alt="user.displayName")
+          .unvoted-info
+            .unvoted-name-row
+              span.unvoted-name {{ user.displayName || user.username }}
+              span.unvoted-sub @{{ user.username }}
+            .unvoted-meta-row
+              span.class-pill(
+                :style="{ borderColor: getClassHex(user.className), color: getClassHex(user.className), backgroundColor: `${getClassHex(user.className)}15` }"
+              )
+                img.pill-icon(v-if="getClassIcon(user.className)" :src="getClassIcon(user.className)")
+                span {{ user.className || 'Chưa rõ' }}
+              span.unvoted-pill ⏳ Chưa vote (-2.0đ)
+
+      .unvoted-empty(v-else)
+        span.empty-check-icon 🎉
+        p.empty-check-text {{ unvotedMembers.length === 0 ? 'Tuyệt vời! Tất cả bang chúng sở hữu role đã hoàn tất vote cho sự kiện này.' : 'Không tìm thấy đệ tử nào khớp với bộ lọc tìm kiếm.' }}
 
     //- No-Show Management Section (Đánh Dấu Vote Mà Không Đánh -3 Điểm)
     .noshow-section
@@ -463,6 +513,12 @@ const rankingMode = ref('highToLow');
 // Event attendees for No-Show management
 const eventAttendees = ref([]);
 
+// Unvoted Members state (Role Bang Chúng 1438967271149146302)
+const unvotedMembers = ref([]);
+const loadingUnvoted = ref(false);
+const unvotedSearchQuery = ref('');
+const unvotedClassFilter = ref('all');
+
 // Leaderboard state
 const absentRankings = ref([]);
 const totalEventsRecorded = ref(0);
@@ -485,10 +541,30 @@ const noShowAttendeesCount = computed(() => {
   return activeAttendees.value.filter((a) => a.noShow).length;
 });
 
+const filteredUnvotedMembers = computed(() => {
+  let list = [...unvotedMembers.value];
+  if (unvotedSearchQuery.value.trim()) {
+    const q = unvotedSearchQuery.value.trim().toLowerCase();
+    list = list.filter(
+      (m) =>
+        (m.displayName && m.displayName.toLowerCase().includes(q)) ||
+        (m.username && m.username.toLowerCase().includes(q)) ||
+        (m.className && m.className.toLowerCase().includes(q))
+    );
+  }
+  if (unvotedClassFilter.value !== 'all') {
+    list = list.filter((m) => m.className === unvotedClassFilter.value);
+  }
+  return list;
+});
+
 const handleEventChange = async () => {
   if (selectedMessageId.value) {
     store.fetchEventData(selectedMessageId.value);
-    await fetchEventAttendees(selectedMessageId.value);
+    await Promise.all([
+      fetchEventAttendees(selectedMessageId.value),
+      fetchUnvotedMembers(selectedMessageId.value)
+    ]);
   }
 };
 
@@ -500,6 +576,20 @@ const fetchEventAttendees = async (eventId) => {
   } catch (err) {
     console.error('Lỗi khi tải danh sách điểm danh event:', err);
     eventAttendees.value = [];
+  }
+};
+
+const fetchUnvotedMembers = async (eventId) => {
+  if (!eventId) return;
+  loadingUnvoted.value = true;
+  try {
+    const res = await api.getUnvotedMembers(eventId);
+    unvotedMembers.value = res.data?.unvotedMembers || [];
+  } catch (err) {
+    console.error('Lỗi khi tải danh sách bang chúng chưa vote:', err);
+    unvotedMembers.value = [];
+  } finally {
+    loadingUnvoted.value = false;
   }
 };
 
@@ -586,7 +676,10 @@ onMounted(async () => {
   if (store.events && store.events.length > 0) {
     selectedMessageId.value = store.events[0].messageId;
     store.fetchEventData(selectedMessageId.value);
-    await fetchEventAttendees(selectedMessageId.value);
+    await Promise.all([
+      fetchEventAttendees(selectedMessageId.value),
+      fetchUnvotedMembers(selectedMessageId.value)
+    ]);
   }
 
   await fetchAbsentRankings();
@@ -991,7 +1084,11 @@ const getEvalText = (score, totalAbsent) => {
 
 @media (min-width: 640px)
   .metrics-grid
-    grid-template-columns repeat(3, minmax(0, 1fr))
+    grid-template-columns repeat(2, minmax(0, 1fr))
+
+@media (min-width: 1024px)
+  .metrics-grid
+    grid-template-columns repeat(4, minmax(0, 1fr))
 
 .metric-card
   padding 1.25rem
@@ -1016,6 +1113,8 @@ const getEvalText = (score, totalAbsent) => {
     color #f5c518
   &.val-red
     color #ef5757
+  &.val-amber
+    color #fbbf24
   &.val-blue
     color #60a5fa
 
@@ -1028,8 +1127,217 @@ const getEvalText = (score, totalAbsent) => {
     color #34d399
   &.sub-red
     color #ef5757
+  &.sub-amber
+    color #fbbf24
   &.sub-blue
     color #60a5fa
+
+// Unvoted Section
+.unvoted-section
+  padding 1.5rem
+  border-radius 1rem
+  border 1px solid rgba(245, 158, 11, 0.4)
+  background rgba(245, 158, 11, 0.04)
+  display flex
+  flex-direction column
+  gap 1.25rem
+
+.unvoted-header
+  display flex
+  flex-direction column
+  gap 0.75rem
+
+@media (min-width: 768px)
+  .unvoted-header
+    flex-direction row
+    align-items center
+    justify-content space-between
+
+.unvoted-title-group
+  display flex
+  flex-direction column
+  gap 0.35rem
+
+.unvoted-title-row
+  display flex
+  align-items center
+  gap 0.75rem
+  flex-wrap wrap
+
+.unvoted-title
+  font-size 0.85rem
+  font-weight 800
+  text-transform uppercase
+  letter-spacing 0.05em
+  color #f59e0b
+  margin 0
+
+.role-badge
+  padding 0.2rem 0.55rem
+  border-radius 9999px
+  background rgba(245, 158, 11, 0.15)
+  border 1px solid rgba(245, 158, 11, 0.4)
+  font-size 0.65rem
+  font-weight 800
+  font-family monospace
+  color #fbbf24
+
+.unvoted-desc
+  font-size 0.7rem
+  color var(--color-muted)
+  margin 0
+
+.unvoted-controls
+  display flex
+  align-items center
+  gap 0.5rem
+  flex-wrap wrap
+
+.search-box-small
+  position relative
+  display flex
+  align-items center
+
+.search-input-small
+  padding 0.4rem 0.75rem 0.4rem 1.85rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  color var(--color-text)
+  font-size 0.75rem
+  outline none
+  width 11rem
+  &:focus
+    border-color #f59e0b
+
+.search-box-small .search-icon
+  position absolute
+  left 0.6rem
+  font-size 0.75rem
+  color var(--color-muted)
+  pointer-events none
+
+.filter-select-small
+  padding 0.4rem 0.75rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  color var(--color-text)
+  font-size 0.75rem
+  font-weight 600
+  outline none
+  cursor pointer
+
+.unvoted-loading
+  padding 2rem 1rem
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  gap 0.75rem
+  color var(--color-muted)
+  font-size 0.75rem
+
+.unvoted-grid
+  display grid
+  grid-template-columns 1fr
+  gap 0.75rem
+
+@media (min-width: 640px)
+  .unvoted-grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+
+@media (min-width: 1024px)
+  .unvoted-grid
+    grid-template-columns repeat(3, minmax(0, 1fr))
+
+.unvoted-card
+  padding 0.75rem 1rem
+  border-radius 0.75rem
+  border 1px solid rgba(245, 158, 11, 0.25)
+  background rgba(0, 0, 0, 0.25)
+  display flex
+  align-items center
+  gap 0.75rem
+  transition all 0.2s ease
+  &:hover
+    border-color rgba(245, 158, 11, 0.5)
+    transform translateY(-1px)
+    background rgba(0, 0, 0, 0.35)
+
+.unvoted-avatar
+  width 2.25rem
+  height 2.25rem
+  border-radius 9999px
+  object-fit cover
+  border 1.5px solid rgba(245, 158, 11, 0.5)
+  background rgba(245, 158, 11, 0.1)
+  flex-shrink 0
+
+.unvoted-info
+  display flex
+  flex-direction column
+  gap 0.3rem
+  min-width 0
+  flex 1
+
+.unvoted-name-row
+  display flex
+  align-items baseline
+  gap 0.4rem
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.unvoted-name
+  font-size 0.8rem
+  font-weight 700
+  color var(--color-text)
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.unvoted-sub
+  font-size 0.65rem
+  color var(--color-muted)
+  flex-shrink 0
+
+.unvoted-meta-row
+  display flex
+  align-items center
+  gap 0.4rem
+  flex-wrap wrap
+
+.unvoted-pill
+  display inline-block
+  padding 0.15rem 0.45rem
+  border-radius 0.3rem
+  font-size 0.65rem
+  font-weight 700
+  background rgba(245, 158, 11, 0.18)
+  color #fbbf24
+  border 1px solid rgba(245, 158, 11, 0.4)
+
+.unvoted-empty
+  padding 2rem 1rem
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  text-align center
+  background rgba(0, 0, 0, 0.15)
+  border-radius 0.75rem
+  border 1px dashed rgba(245, 158, 11, 0.3)
+
+.empty-check-icon
+  font-size 2rem
+  margin-bottom 0.5rem
+
+.empty-check-text
+  font-size 0.8rem
+  font-weight 600
+  color var(--color-muted)
+  margin 0
 
 // No-Show Section
 .noshow-section
