@@ -22,7 +22,7 @@
           placeholder="Tên Đoàn..."
         )
 
-    //- Right: Actions (+ Team, Xóa Đoàn)
+    //- Right: Actions (+ Team, Ghi chú Toàn Đoàn)
     .bar-right
       button.btn-bar-action.btn-add-team(
         v-if="isEditMode"
@@ -31,12 +31,14 @@
       )
         span ➕ Team
 
-      button.btn-bar-action.btn-delete-div(
-        v-if="isEditMode"
-        @click="handleDeleteDivision"
-        title="Xoá toàn bộ Đoàn này"
+      button.btn-bar-action.btn-div-note(
+        @click="$emit('openDivisionNote', divisionIndex)"
+        :title="division.note ? `Ghi chú Đoàn: ${division.note}` : 'Ghi chú cho toàn đoàn'"
+        :class="{ 'has-note': !!division.note }"
       )
-        span 🗑️
+        span.note-icon 📝
+        span.note-text Ghi chú
+        span.note-dot(v-if="division.note")
 
   //- Teams Grid (Khi không bị thu gọn)
   .division-teams-grid(v-show="!division.isCollapsed")
@@ -50,6 +52,8 @@
       @toggleCheck="(sIdx) => $emit('toggleCheck', { tIdx, sIdx })"
       @removeSlot="(sIdx) => $emit('removeSlot', { tIdx, sIdx })"
       @clickSlot="(sIdx) => $emit('clickSlot', { tIdx, sIdx })"
+      @openNote="(sIdx) => $emit('openNote', { tIdx, sIdx })"
+      @openTeamNote="() => $emit('openTeamNote', { tIdx })"
       @openSkillAssign="(sIdx) => $emit('openSkillAssign', { tIdx, sIdx })"
       @deleteTeam="() => $emit('removeTeam', tIdx)"
     )
@@ -75,6 +79,9 @@ const emit = defineEmits([
   'addTeam',
   'removeTeam',
   'deleteDivision',
+  'openDivisionNote',
+  'openTeamNote',
+  'openNote',
 ]);
 
 const themeStore = useThemeStore();
@@ -205,16 +212,29 @@ const handleDeleteDivision = async () => {
       background #3b82f6
       color #ffffff
 
-  &.btn-delete-div
-    background #fef2f2
-    border-color #fecaca
-    color #ef4444
+  &.btn-div-note
+    background rgba(245, 158, 11, 0.12)
+    border-color rgba(245, 158, 11, 0.35)
+    color #d97706
     .div-dark &
-      background rgba(239, 68, 68, 0.15)
-      border-color rgba(239, 68, 68, 0.3)
+      background rgba(245, 158, 11, 0.18)
+      border-color rgba(245, 158, 11, 0.45)
+      color #fbbf24
     &:hover
-      background #ef4444
-      color #ffffff
+      background rgba(245, 158, 11, 0.28)
+      border-color #f59e0b
+      color #f59e0b
+
+    &.has-note
+      border-color #f59e0b
+      box-shadow 0 0 8px rgba(245, 158, 11, 0.3)
+
+    .note-dot
+      width 5px
+      height 5px
+      border-radius 50%
+      background #f59e0b
+      margin-left 0.1rem
 
 .division-teams-grid
   display grid

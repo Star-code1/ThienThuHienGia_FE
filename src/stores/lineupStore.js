@@ -97,11 +97,13 @@ export const useLineupStore = defineStore('lineup', {
       const createDefaultDivision = (divNumber) => ({
         id: `div_${Date.now()}_${divNumber}_${Math.random().toString(36).substr(2, 4)}`,
         divisionName: `Đoàn ${divNumber}`,
+        note: '',
         isCollapsed: false,
         teams: [1, 2, 3, 4, 5].map((tNum) => ({
           id: `team_${divNumber}_${tNum}_${Math.random().toString(36).substr(2, 4)}`,
           teamName: `Team ${tNum}`,
           teamTag: '',
+          note: '',
           slots: Array.from({ length: 6 }, (_, sIdx) => ({
             slotIndex: sIdx,
             userId: null,
@@ -128,11 +130,13 @@ export const useLineupStore = defineStore('lineup', {
       const newDiv = {
         id: `div_${Date.now()}_${newDivNumber}_${Math.random().toString(36).substr(2, 4)}`,
         divisionName: `Đoàn ${newDivNumber}`,
+        note: '',
         isCollapsed: false,
         teams: [1, 2, 3, 4, 5].map((tNum) => ({
           id: `team_${newDivNumber}_${tNum}_${Math.random().toString(36).substr(2, 4)}`,
           teamName: `Team ${tNum}`,
           teamTag: '',
+          note: '',
           slots: Array.from({ length: 6 }, (_, sIdx) => ({
             slotIndex: sIdx,
             userId: null,
@@ -193,6 +197,7 @@ export const useLineupStore = defineStore('lineup', {
         id: `team_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
         teamName: `Team ${nextTeamNum}`,
         teamTag: '',
+        note: '',
         slots: Array.from({ length: 6 }, (_, sIdx) => ({
           slotIndex: sIdx,
           userId: null,
@@ -538,6 +543,45 @@ export const useLineupStore = defineStore('lineup', {
       const slot = this.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
       if (slot) {
         slot.isChecked = !slot.isChecked;
+      }
+    },
+
+    setSlotNote(dIdx, tIdx, sIdx, note) {
+      const slot = this.divisions[dIdx]?.teams[tIdx]?.slots[sIdx];
+      if (slot) {
+        slot.note = note || '';
+      }
+    },
+
+    setTeamNote(dIdx, tIdx, note) {
+      const team = this.divisions[dIdx]?.teams[tIdx];
+      if (team) {
+        team.note = note || '';
+      }
+    },
+
+    setDivisionNote(dIdx, note) {
+      const div = this.divisions[dIdx];
+      if (div) {
+        div.note = note || '';
+      }
+    },
+
+    updateNotesBatch({ dIdx, tIdx, sIdx, memberNote, teamNote, divisionNote }) {
+      if (dIdx !== undefined && this.divisions[dIdx]) {
+        if (divisionNote !== undefined) {
+          this.divisions[dIdx].note = divisionNote;
+        }
+        if (tIdx !== undefined && this.divisions[dIdx].teams?.[tIdx]) {
+          if (teamNote !== undefined) {
+            this.divisions[dIdx].teams[tIdx].note = teamNote;
+          }
+          if (sIdx !== undefined && this.divisions[dIdx].teams[tIdx].slots?.[sIdx]) {
+            if (memberNote !== undefined) {
+              this.divisions[dIdx].teams[tIdx].slots[sIdx].note = memberNote;
+            }
+          }
+        }
       }
     },
 

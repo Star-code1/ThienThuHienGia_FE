@@ -5,7 +5,7 @@
   //- Cột Ingame (Chiếm ~55% bề rộng)
   .col-ingame(
     @click="onIngameClick"
-    :title="slot.userId ? `${slot.displayName} (${classInfo.name})` : 'Trống - Kéo thả hoặc click để xếp'"
+    :title="slot.userId ? `${slot.displayName} (${classInfo.name}) - Click để ghi chú cá nhân` : 'Trống - Kéo thả hoặc click để xếp'"
   )
     //- Member pill badge khi đã có người
     .member-pill(
@@ -16,6 +16,7 @@
       img.pill-class-icon(v-if="classInfo.icon" :src="classInfo.icon" :alt="classInfo.name")
       span.pill-name {{ slot.displayName || slot.username }}
       span.pill-ext-badge(v-if="isExternalMember" title="Ngoại bang") ⭐
+      span.pill-note-badge(v-if="slot.note" :title="`Ghi chú: ${slot.note}`") 📝
 
     //- Ô trống khi chưa xếp
     .empty-pill(v-else)
@@ -58,7 +59,7 @@ const props = defineProps({
   isEditMode: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['toggleCheck', 'remove', 'clickSlot', 'openSkillAssign', 'deleteExternal']);
+const emit = defineEmits(['toggleCheck', 'remove', 'clickSlot', 'openSkillAssign', 'deleteExternal', 'openNote']);
 const themeStore = useThemeStore();
 
 const isExternalMember = computed(() => {
@@ -89,10 +90,16 @@ const pillStyle = computed(() => {
 });
 
 const onIngameClick = () => {
-  if (props.isEditMode) {
-    emit('clickSlot', props.slot);
+  if (props.slot.userId) {
+    // Nhấn vào member đã được xếp vị trí -> mở modal ghi chú cá nhân
+    emit('openNote', props.slot);
   } else {
-    emit('toggleCheck', props.slot);
+    // Ô trống
+    if (props.isEditMode) {
+      emit('clickSlot', props.slot);
+    } else {
+      emit('toggleCheck', props.slot);
+    }
   }
 };
 
@@ -187,6 +194,12 @@ const onSkillsClick = () => {
 .pill-ext-badge
   font-size 0.65rem
   flex-shrink 0
+
+.pill-note-badge
+  font-size 0.7rem
+  margin-left auto
+  flex-shrink 0
+  filter drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4))
 
 .empty-pill
   width 100%

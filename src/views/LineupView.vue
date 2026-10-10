@@ -110,11 +110,22 @@
           @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(dIdx, tIdx, sIdx)"
           @removeSlot="({ tIdx, sIdx }) => store.clearSlot(dIdx, tIdx, sIdx)"
           @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx, tIdx, sIdx })"
+          @openNote="handleOpenMemberNote"
+          @openTeamNote="handleOpenTeamNote"
+          @openDivisionNote="handleOpenDivisionNote"
           @openSkillAssign="({ tIdx, sIdx }) => handleOpenSkillAssign({ dIdx, tIdx, sIdx })"
           @addTeam="store.addTeamToDivision(dIdx)"
           @removeTeam="(tIdx) => store.removeTeam(dIdx, tIdx)"
           @deleteDivision="(idx) => store.removeDivision(idx)"
         )
+
+  //- Modal Ghi Chú Cá Nhân / Team / Toàn Đoàn
+  LineupNoteModal(
+    :visible="showNoteModal"
+    :target="targetNoteInfo"
+    @close="showNoteModal = false"
+    @save="handleSaveNote"
+  )
 
   //- Modal Quản lý Kỹ Năng Database
   SkillManageModal(
@@ -163,6 +174,7 @@ import { useSkillStore } from '../stores/skillStore';
 import { useThemeStore } from '../stores/themeStore';
 import AttendancePool from '../components/lineup/AttendancePool.vue';
 import TacticalDivisionBox from '../components/lineup/TacticalDivisionBox.vue';
+import LineupNoteModal from '../components/lineup/LineupNoteModal.vue';
 import SaveConfirmModal from '../components/lineup/SaveConfirmModal.vue';
 import AddMemberModal from '../components/lineup/AddMemberModal.vue';
 import SkillManageModal from '../components/lineup/SkillManageModal.vue';
@@ -184,8 +196,81 @@ const showAddMemberModal = ref(false);
 const showSkillManageModal = ref(false);
 const showSkillAssignModal = ref(false);
 const showInheritModal = ref(false);
+const showNoteModal = ref(false);
+const targetNoteInfo = ref(null);
 const targetSlotInfo = ref(null);
 const targetSkillSlotInfo = ref(null);
+
+const handleOpenMemberNote = ({ dIdx, tIdx, sIdx }) => {
+  const div = store.divisions[dIdx];
+  const team = div?.teams[tIdx];
+  const slot = team?.slots[sIdx];
+  if (!slot) return;
+
+  targetNoteInfo.value = {
+    type: 'member',
+    dIdx,
+    tIdx,
+    sIdx,
+    divisionName: div?.divisionName || `Đoàn ${dIdx + 1}`,
+    divisionNote: div?.note || '',
+    teamName: team?.teamName || `Team ${tIdx + 1}`,
+    teamNote: team?.note || '',
+    memberName: slot.displayName || slot.username || 'Thành viên',
+    memberClassName: slot.className || slot.class || '',
+    memberRole: slot.roleName || slot.role || '',
+    memberNote: slot.note || '',
+  };
+  showNoteModal.value = true;
+};
+
+const handleOpenTeamNote = ({ dIdx, tIdx }) => {
+  const div = store.divisions[dIdx];
+  const team = div?.teams[tIdx];
+  if (!team) return;
+
+  targetNoteInfo.value = {
+    type: 'team',
+    dIdx,
+    tIdx,
+    divisionName: div?.divisionName || `Đoàn ${dIdx + 1}`,
+    divisionNote: div?.note || '',
+    teamName: team?.teamName || `Team ${tIdx + 1}`,
+    teamNote: team?.note || '',
+    memberNote: '',
+  };
+  showNoteModal.value = true;
+};
+
+const handleOpenDivisionNote = (dIdx) => {
+  const div = store.divisions[dIdx];
+  if (!div) return;
+
+  targetNoteInfo.value = {
+    type: 'division',
+    dIdx,
+    divisionName: div?.divisionName || `Đoàn ${dIdx + 1}`,
+    divisionNote: div?.note || '',
+    teamNote: '',
+    memberNote: '',
+  };
+  showNoteModal.value = true;
+};
+
+const handleSaveNote = (payload) => {
+  store.updateNotesBatch(payload);
+  showNoteModal.value = false;
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'success',
+    title: 'Đã lưu ghi chú!',
+    showConfirmButton: false,
+    timer: 1500,
+    background: '#12161f',
+    color: '#e0b854',
+  });
+};
 
 const openInheritModal = () => {
   if (!selectedMessageId.value) {
@@ -222,6 +307,12 @@ const handleSlotClick = ({ dIdx, tIdx, sIdx }) => {
   const div = store.divisions[dIdx];
   const team = div?.teams[tIdx];
   const slot = team?.slots[sIdx];
+
+  // Nếu slot đã có thành viên, mở modal ghi chú cá nhân
+  if (slot && slot.userId) {
+    handleOpenMemberNote({ dIdx, tIdx, sIdx });
+    return;
+  }
 
   const label = `${div?.divisionName || 'Đoàn'} — ${team?.teamName || 'Nhóm'} (Vị trí ${sIdx + 1})`;
 

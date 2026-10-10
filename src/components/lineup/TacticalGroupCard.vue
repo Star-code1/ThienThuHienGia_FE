@@ -15,17 +15,14 @@
         )
 
     .header-actions
-      button.btn-header-action.btn-clear(
-        v-if="isEditMode"
-        @click="handleClearTeam"
-        title="Xoá tất cả thành viên trong Team về Pool"
-      ) Xoá
-
-      button.btn-header-action.btn-del-team(
-        v-if="isEditMode"
-        @click="$emit('deleteTeam')"
-        title="Xoá luôn Team này"
-      ) ✕
+      button.btn-header-action.btn-team-note(
+        @click="$emit('openTeamNote', teamIndex)"
+        :title="team.note ? `Ghi chú Team: ${team.note}` : 'Ghi chú cho toàn đội'"
+        :class="{ 'has-note': !!team.note }"
+      )
+        span.note-icon 📝
+        span.note-text Ghi chú
+        span.note-dot(v-if="team.note")
 
   //- Table Column Headers (Ingame | Phân công)
   .team-table-header
@@ -53,6 +50,7 @@
           @toggleCheck="$emit('toggleCheck', sIdx)"
           @remove="$emit('removeSlot', sIdx)"
           @clickSlot="$emit('clickSlot', sIdx)"
+          @openNote="$emit('openNote', sIdx)"
           @openSkillAssign="$emit('openSkillAssign', sIdx)"
           @deleteExternal="store.deleteExternalMember(slot.userId)"
         )
@@ -72,7 +70,7 @@ const props = defineProps({
   isEditMode: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['toggleCheck', 'removeSlot', 'clickSlot', 'openSkillAssign', 'deleteTeam']);
+const emit = defineEmits(['toggleCheck', 'removeSlot', 'clickSlot', 'openSkillAssign', 'deleteTeam', 'openNote', 'openTeamNote']);
 
 const store = useLineupStore();
 const themeStore = useThemeStore();
@@ -239,24 +237,35 @@ const handleClearTeam = async () => {
   cursor pointer
   transition all 0.15s ease
 
-  &.btn-clear
-    background #fef2f2
-    border-color #fecaca
-    color #ef4444
+  &.btn-team-note
+    display inline-flex
+    align-items center
+    gap 0.25rem
+    background rgba(245, 158, 11, 0.12)
+    border-color rgba(245, 158, 11, 0.35)
+    color #d97706
+    padding 0.2rem 0.45rem
+    border-radius var(--radius-xs, 4px)
+    position relative
     .card-dark &
-      background rgba(239, 68, 68, 0.15)
-      border-color rgba(239, 68, 68, 0.3)
+      background rgba(245, 158, 11, 0.15)
+      border-color rgba(245, 158, 11, 0.4)
+      color #fbbf24
     &:hover
-      background #ef4444
-      color #ffffff
+      background rgba(245, 158, 11, 0.25)
+      border-color #f59e0b
+      color #f59e0b
 
-  &.btn-del-team
-    background transparent
-    border-color transparent
-    color #94a3b8
-    padding 0.1rem 0.25rem
-    &:hover
-      color #ef4444
+    &.has-note
+      border-color #f59e0b
+      box-shadow 0 0 6px rgba(245, 158, 11, 0.25)
+
+    .note-dot
+      width 5px
+      height 5px
+      border-radius 50%
+      background #f59e0b
+      margin-left 0.1rem
 
 .team-table-header
   display flex
