@@ -16,7 +16,8 @@
 
     .header-actions
       button.btn-header-action.btn-team-note(
-        @click="$emit('openTeamNote', teamIndex)"
+        type="button"
+        @click.stop="$emit('openTeamNote', { tIdx: teamIndex })"
         :title="team.note ? `Ghi chú Team: ${team.note}` : 'Ghi chú cho toàn đội'"
         :class="{ 'has-note': !!team.note }"
       )
@@ -50,7 +51,7 @@
           @toggleCheck="$emit('toggleCheck', sIdx)"
           @remove="$emit('removeSlot', sIdx)"
           @clickSlot="$emit('clickSlot', sIdx)"
-          @openNote="$emit('openNote', sIdx)"
+          @openNote="() => $emit('openNote', { tIdx: teamIndex, sIdx })"
           @openSkillAssign="$emit('openSkillAssign', sIdx)"
           @deleteExternal="store.deleteExternalMember(slot.userId)"
         )

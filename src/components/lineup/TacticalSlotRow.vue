@@ -4,7 +4,7 @@
 )
   //- Cột Ingame (Chiếm ~55% bề rộng)
   .col-ingame(
-    @click="onIngameClick"
+    @click.stop="onIngameClick"
     :title="slot.userId ? `${slot.displayName} (${classInfo.name}) - Click để ghi chú cá nhân` : 'Trống - Kéo thả hoặc click để xếp'"
   )
     //- Member pill badge khi đã có người

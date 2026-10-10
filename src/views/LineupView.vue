@@ -110,9 +110,9 @@
           @toggleCheck="({ tIdx, sIdx }) => store.toggleSlotCheck(dIdx, tIdx, sIdx)"
           @removeSlot="({ tIdx, sIdx }) => store.clearSlot(dIdx, tIdx, sIdx)"
           @clickSlot="({ tIdx, sIdx }) => handleSlotClick({ dIdx, tIdx, sIdx })"
-          @openNote="handleOpenMemberNote"
-          @openTeamNote="handleOpenTeamNote"
-          @openDivisionNote="handleOpenDivisionNote"
+          @openNote="(payload) => handleOpenMemberNote({ dIdx, ...payload })"
+          @openTeamNote="(payload) => handleOpenTeamNote({ dIdx, ...payload })"
+          @openDivisionNote="() => handleOpenDivisionNote(dIdx)"
           @openSkillAssign="({ tIdx, sIdx }) => handleOpenSkillAssign({ dIdx, tIdx, sIdx })"
           @addTeam="store.addTeamToDivision(dIdx)"
           @removeTeam="(tIdx) => store.removeTeam(dIdx, tIdx)"
@@ -201,10 +201,15 @@ const targetNoteInfo = ref(null);
 const targetSlotInfo = ref(null);
 const targetSkillSlotInfo = ref(null);
 
-const handleOpenMemberNote = ({ dIdx, tIdx, sIdx }) => {
+const handleOpenMemberNote = (payload) => {
+  const dIdx = payload?.dIdx;
+  const tIdx = payload?.tIdx;
+  const sIdx = payload?.sIdx;
+  if (dIdx === undefined || tIdx === undefined || sIdx === undefined) return;
+
   const div = store.divisions[dIdx];
-  const team = div?.teams[tIdx];
-  const slot = team?.slots[sIdx];
+  const team = div?.teams?.[tIdx];
+  const slot = team?.slots?.[sIdx];
   if (!slot) return;
 
   targetNoteInfo.value = {
@@ -224,9 +229,13 @@ const handleOpenMemberNote = ({ dIdx, tIdx, sIdx }) => {
   showNoteModal.value = true;
 };
 
-const handleOpenTeamNote = ({ dIdx, tIdx }) => {
+const handleOpenTeamNote = (payload) => {
+  const dIdx = payload?.dIdx;
+  const tIdx = payload?.tIdx;
+  if (dIdx === undefined || tIdx === undefined) return;
+
   const div = store.divisions[dIdx];
-  const team = div?.teams[tIdx];
+  const team = div?.teams?.[tIdx];
   if (!team) return;
 
   targetNoteInfo.value = {

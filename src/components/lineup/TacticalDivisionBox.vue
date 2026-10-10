@@ -32,7 +32,8 @@
         span ➕ Team
 
       button.btn-bar-action.btn-div-note(
-        @click="$emit('openDivisionNote', divisionIndex)"
+        type="button"
+        @click.stop="$emit('openDivisionNote', divisionIndex)"
         :title="division.note ? `Ghi chú Đoàn: ${division.note}` : 'Ghi chú cho toàn đoàn'"
         :class="{ 'has-note': !!division.note }"
       )
@@ -52,8 +53,8 @@
       @toggleCheck="(sIdx) => $emit('toggleCheck', { tIdx, sIdx })"
       @removeSlot="(sIdx) => $emit('removeSlot', { tIdx, sIdx })"
       @clickSlot="(sIdx) => $emit('clickSlot', { tIdx, sIdx })"
-      @openNote="(sIdx) => $emit('openNote', { tIdx, sIdx })"
-      @openTeamNote="() => $emit('openTeamNote', { tIdx })"
+      @openNote="(payload) => $emit('openNote', { dIdx: divisionIndex, ...payload })"
+      @openTeamNote="(payload) => $emit('openTeamNote', { dIdx: divisionIndex, ...payload })"
       @openSkillAssign="(sIdx) => $emit('openSkillAssign', { tIdx, sIdx })"
       @deleteTeam="() => $emit('removeTeam', tIdx)"
     )
