@@ -41,9 +41,13 @@ export default {
   getLineup(eventId) {
     return apiClient.get(`/lineup/${eventId}`);
   },
-  // Lưu sơ đồ đội hình mới
+  // Lưu sơ đồ đội hình mới (Chỉ lưu vào DB)
   saveLineup(eventId, lineupData) {
     return apiClient.post(`/lineup/${eventId}`, lineupData);
+  },
+  // Kích hoạt gửi thông báo đội hình đến thành viên qua Discord DM
+  notifyLineup(eventId) {
+    return apiClient.post(`/lineup/${eventId}/notify`);
   },
 
   // ===== QUẢN LÝ KỸ NĂNG / PHÂN CÔNG =====

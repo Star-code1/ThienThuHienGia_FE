@@ -79,6 +79,15 @@
         :disabled="isSaving"
       ) {{ isSaving ? 'Đang Khắc Đồ...' : '💾 Lưu Trận Đồ' }}
 
+      //- Nút Riêng Biệt: Truyền Tin Đội Hình (Gửi DM Discord)
+      button.btn-action.btn-notify(
+        @click="handleSendNotification"
+        :disabled="isNotifying || !store.eventId"
+        title="Gửi tin nhắn riêng (DM Discord) thông báo vị trí trận đồ đến tất cả thành viên"
+      )
+        span 📢
+        span {{ isNotifying ? 'Đang Truyền Tin...' : 'Truyền Tin Đội Hình' }}
+
   //- Thanh Legend Phái
   .sect-legend-bar
     span.legend-label Thất Đại Võ Phái
@@ -190,6 +199,7 @@ const selectedMessageId = ref('');
 const lineupCaptureRef = ref(null);
 
 const isSaving = ref(false);
+const isNotifying = ref(false);
 const isCapturing = ref(false);
 const showScreenshotPrompt = ref(false);
 const showAddMemberModal = ref(false);
@@ -397,6 +407,47 @@ const handleSave = async () => {
   }
 };
 
+const handleSendNotification = async () => {
+  if (!store.eventId) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Chưa chọn chiến kỳ',
+      text: 'Vui lòng chọn một chiến kỳ trước khi truyền tin đội hình!',
+      confirmButtonColor: '#e0b854',
+      background: '#12161f',
+      color: '#ffffff',
+    });
+    return;
+  }
+
+  const result = await Swal.fire({
+    title: 'Truyền Tin Trận Đồ?',
+    text: 'Bạn có chắc chắn muốn gửi thông báo vị trí và kỹ năng qua tin nhắn riêng (Discord DM) đến tất cả thành viên trong trận đồ này? (Hệ thống sẽ tự động lưu trận đồ hiện tại trước khi truyền tin)',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: '📢 Xác nhận truyền tin',
+    cancelButtonText: 'Hủy bỏ',
+    confirmButtonColor: '#eab308',
+    cancelButtonColor: '#64748b',
+    background: '#12161f',
+    color: '#ffffff',
+  });
+
+  if (!result.isConfirmed) return;
+
+  isNotifying.value = true;
+  try {
+    // 1. Tự động lưu sơ đồ trước khi gửi (suppressAlert = true để không hiện popup lưu trùng)
+    const saved = await store.saveCurrentLineup(true);
+    if (!saved) return;
+
+    // 2. Kích hoạt gửi thông báo qua Discord DM
+    await store.sendLineupNotification();
+  } finally {
+    isNotifying.value = false;
+  }
+};
+
 const captureScreenshot = async () => {
   if (!lineupCaptureRef.value) {
     showScreenshotPrompt.value = false;
@@ -599,6 +650,25 @@ const captureScreenshot = async () => {
     box-shadow 0 2px 8px rgba(59, 130, 246, 0.3)
     &:hover
       background #2563eb
+
+  &.btn-notify
+    background #eab308
+    border-color #ca8a04
+    color #ffffff
+    font-weight 700
+    box-shadow 0 2px 8px rgba(234, 179, 8, 0.35)
+    .lineup-dark &
+      background #d97706
+      border-color #b45309
+      color #ffffff
+      box-shadow 0 2px 10px rgba(217, 119, 6, 0.4)
+    &:hover:not(:disabled)
+      background #ca8a04
+      transform translateY(-1px)
+    &:disabled
+      opacity 0.5
+      cursor not-allowed
+      transform none
 
 .select-event-box
   display flex

@@ -585,22 +585,25 @@ export const useLineupStore = defineStore('lineup', {
       }
     },
 
-    async saveCurrentLineup() {
+    async saveCurrentLineup(suppressAlert = false) {
       try {
         await api.saveLineup(this.eventId, {
           title: this.title,
           divisions: this.divisions,
         });
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Thành công!',
-          text: 'Đã lưu sơ đồ đội hình vào database.',
-          timer: 1800,
-          showConfirmButton: false,
-          background: '#12161f',
-          color: '#e0b854',
-        });
+        if (!suppressAlert) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Thành công!',
+            text: 'Đã lưu sơ đồ đội hình vào database.',
+            timer: 1800,
+            showConfirmButton: false,
+            background: '#12161f',
+            color: '#e0b854',
+          });
+        }
+        return true;
       } catch (error) {
         Swal.fire({
           icon: 'error',
@@ -611,6 +614,46 @@ export const useLineupStore = defineStore('lineup', {
           background: '#12161f',
           color: '#ffffff',
         });
+        return false;
+      }
+    },
+
+    async sendLineupNotification() {
+      if (!this.eventId) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Chưa chọn chiến kỳ',
+          text: 'Vui lòng chọn một chiến kỳ trước khi truyền tin đội hình!',
+          confirmButtonColor: '#e0b854',
+          background: '#12161f',
+          color: '#ffffff',
+        });
+        return false;
+      }
+
+      try {
+        const res = await api.notifyLineup(this.eventId);
+        Swal.fire({
+          icon: 'success',
+          title: 'Đã truyền tin thành công!',
+          text: res.data?.message || 'Đã gửi thông báo đội hình đến các thành viên qua Discord DM.',
+          timer: 2500,
+          showConfirmButton: false,
+          background: '#12161f',
+          color: '#e0b854',
+        });
+        return true;
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Truyền tin thất bại',
+          text: error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi truyền tin.',
+          confirmButtonText: 'Đóng',
+          confirmButtonColor: '#ef5757',
+          background: '#12161f',
+          color: '#ffffff',
+        });
+        return false;
       }
     },
 
