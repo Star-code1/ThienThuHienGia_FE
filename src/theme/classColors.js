@@ -1,5 +1,6 @@
 // src/theme/classColors.js
 import cuulinhImg from '../assets/cuulinh.webp';
+import huyencoImg from '../assets/huyenco.png';
 import huyethaImg from '../assets/huyetha.webp';
 import longngamImg from '../assets/longngam.png';
 import thantuongImg from '../assets/thantuong.webp';
@@ -8,6 +9,7 @@ import toaimongImg from '../assets/toaimong.png';
 import tovanImg from '../assets/tovan.webp';
 
 export const CLASS_LIST = [
+  { name: 'Huyền Cơ', hex: '#c084fc', short: 'HC', icon: huyencoImg },
   { name: 'Tố Vấn',   hex: '#ec6a9e', short: 'TV', icon: tovanImg },
   { name: 'Huyết Hà', hex: '#ef5757', short: 'HH', icon: huyethaImg },
   { name: 'Thần Tương', hex: '#4d8fea', short: 'TT', icon: thantuongImg },

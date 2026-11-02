@@ -1,5 +1,6 @@
 // src/utils/tacticalMap/tacticalConfig.js
 import cuulinhImg from '../../assets/cuulinh.webp';
+import huyencoImg from '../../assets/huyenco.png';
 import huyethaImg from '../../assets/huyetha.webp';
 import longngamImg from '../../assets/longngam.png';
 import thantuongImg from '../../assets/thantuong.webp';
@@ -160,6 +161,15 @@ export const ICONS = [
   },
 
   // Môn Phái
+  {
+    group: 'Môn Phái',
+    id: 'huyen-co',
+    label: 'Huyền Cơ',
+    accent: '#c084fc',
+    image: huyencoImg,
+    glyph: '<path d="M12 3.5 L14.5 9.5 L20.5 12 L14.5 14.5 L12 20.5 L9.5 14.5 L3.5 12 L9.5 9.5 Z" />' +
+           '<circle cx="12" cy="12" r="2" />'
+  },
   {
     group: 'Môn Phái',
     id: 'thiet-y',

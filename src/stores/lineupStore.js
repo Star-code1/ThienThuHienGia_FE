@@ -25,6 +25,7 @@ export const useLineupStore = defineStore('lineup', {
   getters: {
     classCounts: (state) => {
       const counts = {
+        'Huyền Cơ': 0,
         'Long Ngâm': 0,
         'Thiết Y': 0,
         'Tố Vấn': 0,
