@@ -209,7 +209,7 @@ const handleDeleteSkill = async (id, name) => {
 .modal-overlay
   position fixed
   inset 0
-  background rgba(0, 0, 0, 0.75)
+  background var(--shade-2)
   backdrop-filter blur(6px)
   z-index 9999
   display flex

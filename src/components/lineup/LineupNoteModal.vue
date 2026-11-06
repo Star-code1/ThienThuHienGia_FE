@@ -201,7 +201,7 @@ const handleSave = () => {
 .note-modal-overlay
   position fixed
   inset 0
-  background rgba(0, 0, 0, 0.75)
+  background var(--shade-2)
   backdrop-filter blur(6px)
   display flex
   align-items center

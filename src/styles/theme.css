@@ -57,6 +57,8 @@
   --color-brand-hover: var(--color-brand-hover-light);
   --color-brand-subtle: var(--color-brand-subtle-light);
   --color-on-brand: #fffaf0;
+  --shade-1: rgba(120, 80, 40, 0.07);
+  --shade-2: rgba(120, 80, 40, 0.13);
   --color-crimson: #9b1c31;
   --color-gold-leaf: #e2b857;
 
@@ -97,6 +99,8 @@
   --color-brand-hover: var(--color-brand-hover-dark);
   --color-brand-subtle: var(--color-brand-subtle-dark);
   --color-on-brand: #2a1208;
+  --shade-1: rgba(0, 0, 0, 0.2);
+  --shade-2: rgba(0, 0, 0, 0.3);
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);

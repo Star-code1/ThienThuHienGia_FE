@@ -84,7 +84,7 @@ const handleToggle = (skill) => {
 .assign-modal-overlay
   position fixed
   inset 0
-  background rgba(0, 0, 0, 0.7)
+  background var(--shade-2)
   backdrop-filter blur(4px)
   z-index 9999
   display flex

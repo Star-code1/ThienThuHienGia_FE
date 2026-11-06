@@ -377,7 +377,8 @@ const currentSide = ref('red');
 const pendingIcon = ref(null);
 const selectedMarker = ref(null);
 const inspectorLabel = ref('');
-const isSidebarHidden = ref(false);
+// Mobile: ẩn bảng biểu tượng mặc định để thấy bản đồ
+const isSidebarHidden = ref(typeof window !== 'undefined' && window.innerWidth < 768);
 const currentZoom = ref(1);
 const markerCount = ref(0);
 const mapName = ref(DEFAULTS.mapName);
@@ -912,20 +913,20 @@ onUnmounted(() => {
 .tactical-container.tactical-light {
   --tm-bg: #f8fafc;
   --tm-surface: #ffffff;
-  --tm-subtle: #f1f5f9;
-  --tm-border: #e2e8f0;
+  --tm-subtle: #efe4cf;
+  --tm-border: #e0d0b0;
   --tm-text: #2a191c;
   --tm-text-secondary: #693f45;
   --tm-muted: #8b535c;
-  --tm-brand: #3b82f6;
-  --tm-brand-hover: #2563eb;
-  --tm-panel-bg: rgba(255, 255, 255, 0.95);
-  --tm-dock-bg: rgba(255, 255, 255, 0.92);
+  --tm-brand: #9b1c31;
+  --tm-brand-hover: #7a1426;
+  --tm-panel-bg: rgba(255, 250, 240, 0.95);
+  --tm-dock-bg: rgba(255, 250, 240, 0.92);
   --tm-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   --tm-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --tm-active-btn: #3b82f6;
-  --tm-active-text: #ffffff;
-  --tm-stage-bg: #f1f5f9;
+  --tm-active-btn: #9b1c31;
+  --tm-active-text: #fffaf0;
+  --tm-stage-bg: #efe4cf;
   color: var(--tm-text);
   background: var(--tm-bg);
 }
@@ -939,14 +940,14 @@ onUnmounted(() => {
   --tm-text: #f8fafc;
   --tm-text-secondary: #94a3b8;
   --tm-muted: #8b535c;
-  --tm-brand: #60a5fa;
-  --tm-brand-hover: #93c5fd;
+  --tm-brand: #e2b857;
+  --tm-brand-hover: #f0cd7c;
   --tm-panel-bg: rgba(18, 10, 13, 0.95);
   --tm-dock-bg: rgba(18, 10, 13, 0.92);
   --tm-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   --tm-shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
-  --tm-active-btn: #3b82f6;
-  --tm-active-text: #ffffff;
+  --tm-active-btn: #e2b857;
+  --tm-active-text: #2a1208;
   --tm-stage-bg: #110a0b;
   color: var(--tm-text);
   background: var(--tm-bg);

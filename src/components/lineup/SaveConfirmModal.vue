@@ -49,7 +49,7 @@ const themeStore = useThemeStore();
   display flex
   align-items center
   justify-content center
-  background rgba(0, 0, 0, 0.6)
+  background var(--shade-2)
   backdrop-filter blur(4px)
   padding 1rem
   font-family 'Lora', serif

@@ -915,7 +915,7 @@ const getEvalText = (score, totalAbsent) => {
 
 .view-tabs
   display flex
-  background rgba(0, 0, 0, 0.2)
+  background var(--shade-1)
   padding 0.25rem
   border-radius var(--radius-md, 12px)
   border 1px solid var(--color-border)
@@ -975,7 +975,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 1rem 1.25rem
   border-radius 0.75rem
   border 1px solid transparent
-  background rgba(0, 0, 0, 0.15)
+  background var(--shade-1)
   display flex
   align-items center
   gap 1rem
@@ -984,7 +984,7 @@ const getEvalText = (score, totalAbsent) => {
   text-align left
 
   &:hover
-    background rgba(0, 0, 0, 0.3)
+    background var(--shade-2)
     transform translateY(-1px)
 
   &.btn-vinh-danh.active
@@ -1281,7 +1281,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.75rem 1rem
   border-radius 0.75rem
   border 1px solid rgba(245, 158, 11, 0.25)
-  background rgba(0, 0, 0, 0.25)
+  background var(--shade-2)
   display flex
   align-items center
   gap 0.75rem
@@ -1289,8 +1289,7 @@ const getEvalText = (score, totalAbsent) => {
   &:hover
     border-color rgba(245, 158, 11, 0.5)
     transform translateY(-1px)
-    background rgba(0, 0, 0, 0.35)
-
+    background var(--shade-2)
 .unvoted-avatar
   width 2.25rem
   height 2.25rem
@@ -1351,7 +1350,7 @@ const getEvalText = (score, totalAbsent) => {
   align-items center
   justify-content center
   text-align center
-  background rgba(0, 0, 0, 0.15)
+  background var(--shade-1)
   border-radius 0.75rem
   border 1px dashed rgba(245, 158, 11, 0.3)
 
@@ -1419,8 +1418,7 @@ const getEvalText = (score, totalAbsent) => {
   overflow-x auto
   border-radius 0.75rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.2)
-
+  background var(--shade-1)
 .attendees-table
   width 100%
   border-collapse collapse
@@ -1433,8 +1431,7 @@ const getEvalText = (score, totalAbsent) => {
     text-transform uppercase
     color var(--color-muted)
     border-bottom 1px solid var(--color-border)
-    background rgba(0, 0, 0, 0.2)
-
+    background var(--shade-1)
   td
     padding 0.75rem 1rem
     font-size 0.8rem
@@ -1563,7 +1560,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.75rem
   border-radius 0.75rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.2)
+  background var(--shade-1)
   display flex
   align-items center
   gap 0.75rem
@@ -1666,7 +1663,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.75rem
   border-radius 0.75rem
   border 1px solid rgba(239, 68, 68, 0.3)
-  background rgba(0, 0, 0, 0.3)
+  background var(--shade-2)
   display flex
   align-items center
   gap 0.75rem
@@ -1745,7 +1742,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 1rem
   border-radius 0.75rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.2)
+  background var(--shade-1)
   display flex
   flex-direction column
   align-items center
@@ -1815,7 +1812,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.5rem 0.75rem
   border-radius 0.5rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.15)
+  background var(--shade-1)
   display flex
   align-items center
   justify-content space-between
@@ -1970,7 +1967,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 1.5rem 1rem
   border-radius 1rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.3)
+  background var(--shade-2)
   display flex
   flex-direction column
   align-items center
@@ -2111,8 +2108,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.4rem 0.75rem
   border-radius 0.5rem
   border 1px solid var(--color-border)
-  background rgba(0, 0, 0, 0.2)
-
+  background var(--shade-1)
 .search-icon
   font-size 0.85rem
 
@@ -2222,8 +2218,7 @@ const getEvalText = (score, totalAbsent) => {
     letter-spacing 0.05em
     color var(--color-muted)
     border-bottom 1px solid var(--color-border)
-    background rgba(0, 0, 0, 0.15)
-
+    background var(--shade-1)
   td
     padding 0.85rem 1rem
     font-size 0.8rem

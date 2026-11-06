@@ -106,7 +106,7 @@ const handleSubmit = () => {
   position fixed
   inset 0
   z-index 50
-  background rgba(0, 0, 0, 0.8)
+  background var(--shade-2)
   backdrop-filter blur(4px)
   display flex
   align-items center

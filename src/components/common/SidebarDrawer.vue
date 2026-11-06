@@ -198,7 +198,7 @@ const isActive = (path) => {
   position fixed
   inset 0
   z-index 50
-  background rgba(0, 0, 0, 0.7)
+  background var(--shade-2)
   backdrop-filter blur(4px)
 
 .drawer-box

@@ -50,7 +50,7 @@ const handleLogin = () => {
   align-items center
   justify-content center
   padding 1rem
-  background rgba(0, 0, 0, 0.75)
+  background var(--shade-2)
   backdrop-filter blur(6px)
   user-select none
 

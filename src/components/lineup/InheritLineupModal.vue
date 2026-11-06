@@ -259,7 +259,7 @@ const handleApply = async () => {
   display flex
   align-items center
   justify-content center
-  background rgba(0, 0, 0, 0.7)
+  background var(--shade-2)
   backdrop-filter blur(6px)
   padding 1rem
   font-family 'Be Vietnam Pro', sans-serif
@@ -594,8 +594,7 @@ const handleApply = async () => {
     font-size 0.65rem
     padding 0.1rem 0.35rem
     border-radius 4px
-    background rgba(0, 0, 0, 0.15)
-
+    background var(--shade-1)
   &.chip-matched
     background rgba(34, 197, 94, 0.18)
     color #22c55e
