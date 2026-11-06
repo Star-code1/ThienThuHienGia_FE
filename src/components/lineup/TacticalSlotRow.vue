@@ -78,7 +78,7 @@ const pillStyle = computed(() => {
   const hex = classInfo.value.hex || '#3b82f6';
   
   // Tùy chỉnh màu chữ để tương phản cao nhất
-  // Thiết Y (vàng), Toái Mộng (cyan) dùng chữ đậm
+  // Huyền Cơ (vàng), Toái Mộng (cyan) dùng chữ đậm
   const isYellowOrCyan = hex === '#f5c518' || hex === '#22d3ee' || hex === '#eab308';
   const textColor = isYellowOrCyan ? '#0f172a' : '#ffffff';
 

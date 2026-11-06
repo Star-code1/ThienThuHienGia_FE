@@ -90,7 +90,7 @@
 
   //- Thanh Legend Phái
   .sect-legend-bar
-    span.legend-label Thất Đại Võ Phái
+    span.legend-label Bát Đại Võ Phái
     .legend-item(v-for="c in CLASS_LIST" :key="c.name")
       img.legend-icon(v-if="c.icon" :src="c.icon" :alt="c.name")
       span.legend-dot(v-else :style="{ backgroundColor: c.hex, boxShadow: `0 0 6px ${c.hex}` }")

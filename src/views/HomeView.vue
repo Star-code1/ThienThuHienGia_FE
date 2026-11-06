@@ -129,7 +129,7 @@
           .icon-box.icon-purple 📊
           h3.card-title Uy Danh Thống Kê
           p.card-desc
-            | Uy danh điểm danh, tổng hợp đệ tử xuất trận, theo dõi số lượng báo bận và phân bổ lực lượng Thất Đại Võ Phái theo từng sự kiện.
+            | Uy danh điểm danh, tổng hợp đệ tử xuất trận, theo dõi số lượng báo bận và phân bổ lực lượng Bát Đại Võ Phái theo từng sự kiện.
         .card-footer
           span.footer-tag.tag-purple Uy Danh Bảng
           RouterLink.footer-link.link-purple(to="/stats")

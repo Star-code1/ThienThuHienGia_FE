@@ -165,7 +165,7 @@ export const ICONS = [
     group: 'Môn Phái',
     id: 'huyen-co',
     label: 'Huyền Cơ',
-    accent: '#c084fc',
+    accent: '#f5c518',
     image: huyencoImg,
     glyph: '<path d="M12 3.5 L14.5 9.5 L20.5 12 L14.5 14.5 L12 20.5 L9.5 14.5 L3.5 12 L9.5 9.5 Z" />' +
            '<circle cx="12" cy="12" r="2" />'
@@ -174,7 +174,7 @@ export const ICONS = [
     group: 'Môn Phái',
     id: 'thiet-y',
     label: 'Thiết Y',
-    accent: '#f0b64a',
+    accent: '#f97316',
     image: thietyImg,
     glyph: '<path d="M12 3 L20 6 V12 C20 16.5 16.6 19.8 12 21.5 C7.4 19.8 4 16.5 4 12 V6 Z" />' +
            '<path d="M12 7.5 V16.5 M8.5 11 H15.5" />'

@@ -9,12 +9,12 @@ import toaimongImg from '../assets/toaimong.png';
 import tovanImg from '../assets/tovan.webp';
 
 export const CLASS_LIST = [
-  { name: 'Huyền Cơ', hex: '#c084fc', short: 'HC', icon: huyencoImg },
+  { name: 'Huyền Cơ', hex: '#f5c518', short: 'HC', icon: huyencoImg },
   { name: 'Tố Vấn',   hex: '#ec6a9e', short: 'TV', icon: tovanImg },
   { name: 'Huyết Hà', hex: '#ef5757', short: 'HH', icon: huyethaImg },
   { name: 'Thần Tương', hex: '#4d8fea', short: 'TT', icon: thantuongImg },
   { name: 'Toái Mộng', hex: '#22d3ee', short: 'TM', icon: toaimongImg },
-  { name: 'Thiết Y',  hex: '#f5c518', short: 'TY', icon: thietyImg },
+  { name: 'Thiết Y',  hex: '#f97316', short: 'TY', icon: thietyImg },
   { name: 'Long Ngâm', hex: '#34d399', short: 'LN', icon: longngamImg },
   { name: 'Cửu Linh', hex: '#a78bfa', short: 'CL', icon: cuulinhImg },
 ];

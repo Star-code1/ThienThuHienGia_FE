@@ -16,6 +16,20 @@ apiClient.interceptors.request.use((config) => {
   return config;
 }, (error) => Promise.reject(error));
 
+// Token hết hạn / không hợp lệ: xoá phiên đăng nhập và đưa về trang chủ
+apiClient.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const url = error.config?.url || '';
+    if (error.response?.status === 401 && localStorage.getItem('ttm_token') && !url.includes('/auth/discord')) {
+      localStorage.removeItem('ttm_token');
+      localStorage.removeItem('ttm_user');
+      if (window.location.pathname !== '/') window.location.assign('/');
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default {
   // Lấy danh sách events đang active
   getActiveEvents() {
