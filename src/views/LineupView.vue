@@ -488,11 +488,11 @@ const captureScreenshot = async () => {
   padding-bottom 3rem
 
   &.lineup-light
-    background #f8fafc
-    color #0f172a
+    background var(--color-bg-subtle)
+    color var(--color-text)
 
   &.lineup-dark
-    background #060a12
+    background #120b0c
     color #f8fafc
 
 .lineup-toolbar
@@ -509,13 +509,13 @@ const captureScreenshot = async () => {
   backdrop-filter blur(12px)
 
   .lineup-light &
-    background rgba(255, 255, 255, 0.85)
-    border-color #e2e8f0
+    background rgba(255, 250, 240, 0.9)
+    border-color var(--color-border)
     box-shadow var(--shadow-sm)
 
   .lineup-dark &
-    background rgba(11, 17, 32, 0.85)
-    border-color #1e293b
+    background rgba(18, 10, 13, 0.85)
+    border-color #3b2327
     box-shadow var(--shadow-sm)
 
 .toolbar-left
@@ -538,7 +538,7 @@ const captureScreenshot = async () => {
   margin 0
 
   .lineup-light &
-    color #0f172a
+    color var(--color-text)
 
   .lineup-dark &
     color #f8fafc
@@ -546,10 +546,10 @@ const captureScreenshot = async () => {
 .toolbar-subtitle
   font-size 0.75rem
   font-weight 600
-  color #3b82f6
+  color var(--color-brand)
 
   .lineup-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .toolbar-actions
   display flex
@@ -601,13 +601,13 @@ const captureScreenshot = async () => {
 
   &.btn-mode
     &.mode-edit
-      background #eff6ff
+      background var(--color-brand-subtle)
       border-color #bfdbfe
-      color #2563eb
+      color var(--color-brand)
       .lineup-dark &
         background rgba(37, 99, 235, 0.2)
         border-color rgba(59, 130, 246, 0.4)
-        color #93c5fd
+        color var(--color-brand)
     &.mode-view
       background var(--color-bg-subtle)
       border-color var(--color-border)
@@ -615,12 +615,12 @@ const captureScreenshot = async () => {
 
   &.btn-add-member
     background #f0f9ff
-    border-color #bae6fd
-    color #0284c7
+    border-color var(--color-brand-subtle)
+    color var(--color-brand)
     .lineup-dark &
       background rgba(56, 189, 248, 0.15)
       border-color rgba(56, 189, 248, 0.3)
-      color #38bdf8
+      color var(--color-brand)
 
   &.btn-inherit
     background #fdf4ff
@@ -644,12 +644,12 @@ const captureScreenshot = async () => {
       color #c084fc
 
   &.btn-save
-    background #3b82f6
-    border-color #2563eb
+    background var(--color-brand)
+    border-color var(--color-brand)
     color #ffffff
     box-shadow 0 2px 8px rgba(59, 130, 246, 0.3)
     &:hover
-      background #2563eb
+      background var(--color-brand)
 
   &.btn-notify
     background #eab308
@@ -658,8 +658,8 @@ const captureScreenshot = async () => {
     font-weight 700
     box-shadow 0 2px 8px rgba(234, 179, 8, 0.35)
     .lineup-dark &
-      background #d97706
-      border-color #b45309
+      background #9b1c31
+      border-color #9b1c31
       color #ffffff
       box-shadow 0 2px 10px rgba(217, 119, 6, 0.4)
     &:hover:not(:disabled)
@@ -694,17 +694,17 @@ const captureScreenshot = async () => {
   font-size 0.75rem
 
   .lineup-light &
-    background #ffffff
-    border-color #e2e8f0
+    background var(--color-surface)
+    border-color var(--color-border)
 
   .lineup-dark &
-    background #0b1120
-    border-color #1e293b
+    background #201315
+    border-color #3b2327
 
 .legend-label
   font-weight 700
   text-transform uppercase
-  color #64748b
+  color var(--color-muted)
   letter-spacing 0.05em
 
 .legend-item
@@ -748,15 +748,46 @@ const captureScreenshot = async () => {
   box-shadow var(--shadow-md)
 
   &.matrix-light
-    background #ffffff
-    border-color #e2e8f0
+    background var(--color-surface)
+    border-color var(--color-border)
 
   &.matrix-dark
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
 
 .divisions-list-container
   display flex
   flex-direction column
   gap 0.75rem
+
+/* ---------- Mobile / tablet nhỏ ---------- */
+@media (max-width: 899px)
+  .lineup-workspace
+    flex-direction column
+    padding 0.6rem
+    gap 0.6rem
+
+  .attendance-pool-col
+    width 100%
+
+  .lineup-matrix-box
+    padding 0.6rem
+    overflow-x auto
+    -webkit-overflow-scrolling touch
+
+  .sect-legend-bar
+    flex-wrap nowrap
+    justify-content flex-start
+    overflow-x auto
+    gap 0.8rem
+    white-space nowrap
+
+  .legend-item
+    flex-shrink 0
+
+  .toolbar-actions
+    width 100%
+
+  .btn-action
+    min-height 40px
 </style>

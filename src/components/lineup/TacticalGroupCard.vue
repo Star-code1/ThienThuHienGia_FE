@@ -154,12 +154,12 @@ const handleClearTeam = async () => {
   box-shadow var(--shadow-sm)
 
   &.card-light
-    background #ffffff
-    border-color #e2e8f0
+    background var(--color-surface)
+    border-color var(--color-border)
 
   &.card-dark
-    background #0b1120
-    border-color #1e293b
+    background #201315
+    border-color #3b2327
     box-shadow var(--shadow-md)
 
 .team-card-header
@@ -171,12 +171,12 @@ const handleClearTeam = async () => {
   gap 0.35rem
 
   .card-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .card-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
 
 .header-left
   display flex
@@ -202,10 +202,10 @@ const handleClearTeam = async () => {
   font-weight 700
   letter-spacing 0.02em
   margin 0
-  color #2563eb
+  color var(--color-brand)
 
   .card-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .team-name-input
   font-family var(--font-body)
@@ -219,8 +219,8 @@ const handleClearTeam = async () => {
   background var(--color-surface)
 
   .card-dark &
-    background #1e293b
-    border-color #3b82f6
+    background var(--color-surface)
+    border-color var(--color-brand)
     color #ffffff
 
 .header-actions
@@ -244,7 +244,7 @@ const handleClearTeam = async () => {
     gap 0.25rem
     background rgba(245, 158, 11, 0.12)
     border-color rgba(245, 158, 11, 0.35)
-    color #d97706
+    color #9b1c31
     padding 0.2rem 0.45rem
     border-radius var(--radius-xs, 4px)
     position relative
@@ -279,14 +279,14 @@ const handleClearTeam = async () => {
   border-bottom 1px solid
 
   .card-light &
-    background #f1f5f9
-    border-color #e2e8f0
-    color #475569
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
 
   .card-dark &
-    background #172554
-    border-color #1e293b
-    color #93c5fd
+    background #543237
+    border-color #3b2327
+    color var(--color-brand)
 
 .th-col
   &.th-ingame
@@ -304,7 +304,7 @@ const handleClearTeam = async () => {
 .slot-row-wrapper
   &.drag-over
     background rgba(59, 130, 246, 0.15)
-    outline 2px dashed #3b82f6
+    outline 2px dashed var(--color-brand)
 
 .slot-draggable
   &.is-draggable

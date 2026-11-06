@@ -914,9 +914,9 @@ onUnmounted(() => {
   --tm-surface: #ffffff;
   --tm-subtle: #f1f5f9;
   --tm-border: #e2e8f0;
-  --tm-text: #0f172a;
-  --tm-text-secondary: #475569;
-  --tm-muted: #64748b;
+  --tm-text: #2a191c;
+  --tm-text-secondary: #693f45;
+  --tm-muted: #8b535c;
   --tm-brand: #3b82f6;
   --tm-brand-hover: #2563eb;
   --tm-panel-bg: rgba(255, 255, 255, 0.95);
@@ -932,22 +932,22 @@ onUnmounted(() => {
 
 /* Dark Theme Tokens */
 .tactical-container.tactical-dark {
-  --tm-bg: #0b1120;
-  --tm-surface: #0f172a;
-  --tm-subtle: #1e293b;
-  --tm-border: #1e293b;
+  --tm-bg: #201315;
+  --tm-surface: #2a191c;
+  --tm-subtle: #3b2327;
+  --tm-border: #3b2327;
   --tm-text: #f8fafc;
   --tm-text-secondary: #94a3b8;
-  --tm-muted: #64748b;
+  --tm-muted: #8b535c;
   --tm-brand: #60a5fa;
   --tm-brand-hover: #93c5fd;
-  --tm-panel-bg: rgba(15, 23, 42, 0.95);
-  --tm-dock-bg: rgba(15, 23, 42, 0.92);
+  --tm-panel-bg: rgba(18, 10, 13, 0.95);
+  --tm-dock-bg: rgba(18, 10, 13, 0.92);
   --tm-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   --tm-shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
   --tm-active-btn: #3b82f6;
   --tm-active-text: #ffffff;
-  --tm-stage-bg: #060911;
+  --tm-stage-bg: #110a0b;
   color: var(--tm-text);
   background: var(--tm-bg);
 }
@@ -1553,7 +1553,7 @@ kbd {
   margin-top: 3px;
   padding: 3px 8px;
   border-radius: var(--radius-sm, 6px);
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(18, 10, 13, 0.92);
   border: 1px solid var(--tm-border);
   color: #ffffff;
   font-family: var(--font-sans);

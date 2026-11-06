@@ -82,7 +82,7 @@ radius-md = 8px
 
 // Stylus Mixin
 glass-card()
-  background: rgba(15, 23, 42, 0.75)
+  background: rgba(18, 10, 13, 0.75)
   backdrop-filter: blur(12px)
   border: 1px solid border-color
   border-radius: radius-lg

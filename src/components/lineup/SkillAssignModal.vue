@@ -104,13 +104,13 @@ const handleToggle = (skill) => {
   box-shadow var(--shadow-modal)
 
   &.modal-light
-    background #ffffff
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
 
   &.modal-dark
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
     color #f8fafc
 
 .modal-header
@@ -122,10 +122,10 @@ const handleToggle = (skill) => {
   background var(--color-bg-subtle)
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .header-title-box
   display flex
@@ -144,10 +144,10 @@ const handleToggle = (skill) => {
 .modal-subtitle
   font-size 0.75rem
   font-weight 600
-  color #3b82f6
+  color var(--color-brand)
 
   .modal-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .btn-close
   background none
@@ -190,16 +190,16 @@ const handleToggle = (skill) => {
   gap 0.35rem
   padding 0.3rem 0.65rem
   border-radius var(--radius-full, 9999px)
-  background #eff6ff
+  background var(--color-brand-subtle)
   border 1px solid #bfdbfe
-  color #2563eb
+  color var(--color-brand)
   cursor pointer
   transition all 0.15s ease
 
   .modal-dark &
     background rgba(37, 99, 235, 0.2)
     border-color rgba(59, 130, 246, 0.4)
-    color #93c5fd
+    color var(--color-brand)
 
   &:hover
     background #fef2f2
@@ -220,7 +220,7 @@ const handleToggle = (skill) => {
 
 .chip-remove
   font-size 0.75rem
-  color #64748b
+  color var(--color-muted)
   margin-left 0.2rem
 
 .skills-grid
@@ -239,28 +239,28 @@ const handleToggle = (skill) => {
   transition all 0.2s ease
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
     &:hover
-      background #ffffff
-      border-color #3b82f6
+      background var(--color-surface)
+      border-color var(--color-brand)
 
     &.is-selected
-      background #eff6ff
-      border-color #3b82f6
+      background var(--color-brand-subtle)
+      border-color var(--color-brand)
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
 
     &:hover
-      background #1e293b
-      border-color #60a5fa
+      background var(--color-surface)
+      border-color var(--color-brand)
 
     &.is-selected
       background rgba(37, 99, 235, 0.2)
-      border-color #60a5fa
+      border-color var(--color-brand)
 
 .pick-card-left
   display flex
@@ -295,10 +295,10 @@ const handleToggle = (skill) => {
 .check-indicator
   font-size 0.85rem
   font-weight 900
-  color #3b82f6
+  color var(--color-brand)
 
   .modal-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .modal-footer
   padding 0.75rem 1.25rem
@@ -308,22 +308,22 @@ const handleToggle = (skill) => {
   align-items center
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .btn-manage-skills
   background none
   border none
-  color #3b82f6
+  color var(--color-brand)
   font-size 0.75rem
   font-weight 600
   cursor pointer
   padding 0.3rem 0.5rem
 
   .modal-dark &
-    color #60a5fa
+    color var(--color-brand)
 
   &:hover
     text-decoration underline
@@ -331,7 +331,7 @@ const handleToggle = (skill) => {
 .btn-done
   padding 0.45rem 1.25rem
   border-radius var(--radius-md, 12px)
-  background #3b82f6
+  background var(--color-brand)
   color #ffffff
   border none
   font-family var(--font-body)
@@ -342,7 +342,7 @@ const handleToggle = (skill) => {
   box-shadow var(--shadow-sm)
 
   &:hover
-    background #2563eb
+    background var(--color-brand)
 
 .empty-assign-box
   padding 2rem 1rem
@@ -366,7 +366,7 @@ const handleToggle = (skill) => {
 .btn-add-prompt
   padding 0.4rem 0.85rem
   border-radius var(--radius-sm, 8px)
-  background #3b82f6
+  background var(--color-brand)
   color #ffffff
   border none
   font-size 0.75rem
@@ -375,5 +375,5 @@ const handleToggle = (skill) => {
   transition all 0.2s ease
 
   &:hover
-    background #2563eb
+    background var(--color-brand)
 </style>

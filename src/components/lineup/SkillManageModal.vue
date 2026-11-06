@@ -229,13 +229,13 @@ const handleDeleteSkill = async (id, name) => {
   box-shadow var(--shadow-modal)
 
   &.modal-light
-    background #ffffff
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
 
   &.modal-dark
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
     color #f8fafc
 
 .modal-header
@@ -247,10 +247,10 @@ const handleDeleteSkill = async (id, name) => {
   background var(--color-bg-subtle)
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .header-title-box
   display flex
@@ -297,12 +297,12 @@ const handleDeleteSkill = async (id, name) => {
   gap 0.85rem
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
 
 .section-heading
   font-family var(--font-body)
@@ -336,7 +336,7 @@ const handleDeleteSkill = async (id, name) => {
   transition border-color 0.2s ease
 
   &:focus
-    border-color #3b82f6
+    border-color var(--color-brand)
 
 .full-width
   grid-column 1 / -1
@@ -452,7 +452,7 @@ const handleDeleteSkill = async (id, name) => {
 .btn-submit-skill
   padding 0.6rem 1.35rem
   border-radius var(--radius-md, 12px)
-  background linear-gradient(135deg, #f59e0b, #d97706)
+  background linear-gradient(135deg, #f59e0b, #9b1c31)
   color #ffffff
   border none
   font-weight 700
@@ -500,12 +500,12 @@ const handleDeleteSkill = async (id, name) => {
   transition all 0.2s ease
 
   &.item-light
-    background #ffffff
-    border-color #e2e8f0
+    background var(--color-surface)
+    border-color var(--color-border)
 
   &.item-dark
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
 
 .skill-item-left
   display flex
@@ -556,10 +556,10 @@ const handleDeleteSkill = async (id, name) => {
   justify-content flex-end
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .btn-close-modal
   padding 0.45rem 1.25rem

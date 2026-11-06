@@ -276,13 +276,13 @@ const handleApply = async () => {
   animation modalPop 0.25s ease-out
 
   &.modal-light
-    background #ffffff
-    border 1px solid #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border 1px solid var(--color-border)
+    color var(--color-text)
 
   &.modal-dark
-    background #0b1120
-    border 1px solid #1e293b
+    background #201315
+    border 1px solid #3b2327
     color #f8fafc
 
 @keyframes modalPop
@@ -302,12 +302,12 @@ const handleApply = async () => {
   flex-shrink 0
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .modal-dark &
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
 
 .header-left
   display flex
@@ -328,7 +328,7 @@ const handleApply = async () => {
   margin 0
 
   .modal-light &
-    color #0f172a
+    color var(--color-text)
 
   .modal-dark &
     color #f8fafc
@@ -336,7 +336,7 @@ const handleApply = async () => {
 .modal-subtitle
   font-size 0.72rem
   font-weight 600
-  color #64748b
+  color var(--color-muted)
   letter-spacing 0.04em
   margin-top 0.15rem
 
@@ -345,7 +345,7 @@ const handleApply = async () => {
   border none
   font-size 1.25rem
   cursor pointer
-  color #94a3b8
+  color var(--color-text-secondary)
   transition color 0.15s
 
   &:hover
@@ -368,23 +368,23 @@ const handleApply = async () => {
   font-size 0.85rem
 
   .modal-light &
-    background #eff6ff
+    background var(--color-brand-subtle)
     border 1px solid #bfdbfe
     color #1e40af
 
   .modal-dark &
     background rgba(30, 58, 138, 0.25)
     border 1px solid rgba(59, 130, 246, 0.3)
-    color #93c5fd
+    color var(--color-brand)
 
 .banner-label
   font-weight 600
 
 .banner-value
   font-weight 800
-  color #3b82f6
+  color var(--color-brand)
   .modal-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .form-group
   display flex
@@ -399,7 +399,7 @@ const handleApply = async () => {
   gap 0.25rem
 
   .modal-light &
-    color #334155
+    color #553338
   .modal-dark &
     color #cbd5e1
 
@@ -418,18 +418,18 @@ const handleApply = async () => {
   transition border-color 0.2s
 
   .modal-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
     &:focus
-      border-color #3b82f6
+      border-color var(--color-brand)
 
   .modal-dark &
-    background #1e293b
-    border-color #334155
+    background var(--color-surface)
+    border-color var(--color-border)
     color #f8fafc
     &:focus
-      border-color #60a5fa
+      border-color var(--color-brand)
 
 .loading-box
   display flex
@@ -438,7 +438,7 @@ const handleApply = async () => {
   gap 0.75rem
   padding 2rem
   font-size 0.85rem
-  color #94a3b8
+  color var(--color-text-secondary)
 
 .stats-grid
   display grid
@@ -484,8 +484,8 @@ const handleApply = async () => {
   &.stat-skipped
     .modal-light &
       background #fffbeb
-      border-color #fde68a
-      color #b45309
+      border-color #ecd49e
+      color #9b1c31
     .modal-dark &
       background rgba(245, 158, 11, 0.15)
       border-color rgba(245, 158, 11, 0.3)
@@ -493,13 +493,13 @@ const handleApply = async () => {
 
   &.stat-pool
     .modal-light &
-      background #eff6ff
+      background var(--color-brand-subtle)
       border-color #bfdbfe
-      color #1d4ed8
+      color var(--color-brand)
     .modal-dark &
       background rgba(59, 130, 246, 0.15)
       border-color rgba(59, 130, 246, 0.3)
-      color #60a5fa
+      color var(--color-brand)
 
 .options-row
   display flex
@@ -509,11 +509,11 @@ const handleApply = async () => {
   border-radius var(--radius-md, 12px)
 
   .modal-light &
-    background #f8fafc
-    border 1px solid #e2e8f0
+    background var(--color-bg-subtle)
+    border 1px solid var(--color-border)
   .modal-dark &
-    background rgba(15, 23, 42, 0.6)
-    border 1px solid #1e293b
+    background rgba(18, 10, 13, 0.6)
+    border 1px solid #3b2327
 
 .checkbox-label
   display flex
@@ -534,11 +534,11 @@ const handleApply = async () => {
   border 1px solid
 
   .modal-light &
-    border-color #e2e8f0
-    background #ffffff
+    border-color var(--color-border)
+    background var(--color-surface)
   .modal-dark &
-    border-color #1e293b
-    background rgba(15, 23, 42, 0.4)
+    border-color #3b2327
+    background rgba(18, 10, 13, 0.4)
 
 .section-header
   display flex
@@ -555,7 +555,7 @@ const handleApply = async () => {
 
 .section-toggle
   font-size 0.72rem
-  color #3b82f6
+  color var(--color-brand)
 
 .member-chip-list
   display flex
@@ -568,9 +568,9 @@ const handleApply = async () => {
 
   .modal-light &
     border-color #f1f5f9
-    background #f8fafc
+    background var(--color-bg-subtle)
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
     background rgba(2, 6, 23, 0.4)
 
 .member-chip
@@ -608,23 +608,23 @@ const handleApply = async () => {
 
   &.chip-pool
     background rgba(59, 130, 246, 0.18)
-    color #3b82f6
+    color var(--color-brand)
     border 1px solid rgba(59, 130, 246, 0.3)
 
 .empty-hint
   padding 1.5rem
   text-align center
   font-size 0.82rem
-  color #64748b
+  color var(--color-muted)
   border-radius var(--radius-md, 12px)
   border 1px dashed
 
   .modal-light &
-    border-color #cbd5e1
-    background #f8fafc
+    border-color var(--color-border)
+    background var(--color-bg-subtle)
   .modal-dark &
-    border-color #334155
-    background rgba(15, 23, 42, 0.3)
+    border-color var(--color-border)
+    background rgba(18, 10, 13, 0.3)
 
   &.empty-warning
     color #f59e0b
@@ -639,11 +639,11 @@ const handleApply = async () => {
   flex-shrink 0
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
   .modal-dark &
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
 
 .btn-cancel
   padding 0.55rem 1.25rem
@@ -655,17 +655,17 @@ const handleApply = async () => {
   transition all 0.15s
 
   .modal-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #475569
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
     &:hover
-      background #f1f5f9
+      background var(--color-bg-subtle)
   .modal-dark &
-    background #1e293b
-    border-color #334155
+    background var(--color-surface)
+    border-color var(--color-border)
     color #cbd5e1
     &:hover
-      background #334155
+      background #553338
 
 .btn-apply
   padding 0.55rem 1.4rem
@@ -674,7 +674,7 @@ const handleApply = async () => {
   font-weight 700
   cursor pointer
   border none
-  background linear-gradient(135deg, #3b82f6, #2563eb)
+  background linear-gradient(135deg, var(--color-brand), var(--color-brand))
   color #ffffff
   display flex
   align-items center

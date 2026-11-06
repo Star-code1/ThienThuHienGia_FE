@@ -125,14 +125,14 @@ const handleSubmit = () => {
   backdrop-filter blur(12px)
 
   &.modal-light
-    background #ffffff
-    border 1px solid #e2e8f0
+    background var(--color-surface)
+    border 1px solid var(--color-border)
     box-shadow var(--shadow-modal)
-    color #0f172a
+    color var(--color-text)
 
   &.modal-dark
-    background #0f172a
-    border 1px solid #1e293b
+    background #2a191c
+    border 1px solid #3b2327
     box-shadow var(--shadow-modal)
     color #f8fafc
 
@@ -145,10 +145,10 @@ const handleSubmit = () => {
   margin-bottom 1rem
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .header-left
   display flex
@@ -166,7 +166,7 @@ const handleSubmit = () => {
   margin 0
 
   .modal-light &
-    color #0f172a
+    color var(--color-text)
 
   .modal-dark &
     color #f8fafc
@@ -190,17 +190,17 @@ const handleSubmit = () => {
   transition all 0.2s ease
 
   .modal-light &
-    background #f1f5f9
-    border-color #e2e8f0
-    color #64748b
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-muted)
     &:hover
       color #ef4444
       border-color #fecaca
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
-    color #94a3b8
+    background #321e21
+    border-color #3b2327
+    color var(--color-text-secondary)
     &:hover
       color #ffffff
       border-color #ef4444
@@ -222,7 +222,7 @@ const handleSubmit = () => {
   margin-bottom 0.35rem
 
   .modal-light &
-    color #0f172a
+    color var(--color-text)
 
   .modal-dark &
     color #e2e8f0
@@ -243,23 +243,23 @@ const handleSubmit = () => {
   transition all 0.2s ease
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text)
     &::placeholder
-      color #94a3b8
+      color var(--color-text-secondary)
     &:focus
-      border-color #3b82f6
+      border-color var(--color-brand)
       box-shadow 0 0 0 3px rgba(59, 130, 246, 0.15)
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
     color #ffffff
     &::placeholder
-      color #64748b
+      color var(--color-muted)
     &:focus
-      border-color #60a5fa
+      border-color var(--color-brand)
       box-shadow 0 0 0 3px rgba(96, 165, 250, 0.15)
 
 .class-grid
@@ -280,32 +280,32 @@ const handleSubmit = () => {
   background none
 
   .modal-light &
-    background #f8fafc
-    border-color #e2e8f0
-    color #475569
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
     &:hover
-      border-color #3b82f6
-      color #0f172a
+      border-color var(--color-brand)
+      color var(--color-text)
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
-    color #94a3b8
+    background #321e21
+    border-color #3b2327
+    color var(--color-text-secondary)
     &:hover
-      border-color #60a5fa
+      border-color var(--color-brand)
       color #ffffff
 
   &.selected
     .modal-light &
-      background #eff6ff
-      border-color #3b82f6
-      color #2563eb
+      background var(--color-brand-subtle)
+      border-color var(--color-brand)
+      color var(--color-brand)
       box-shadow var(--shadow-sm)
 
     .modal-dark &
       background rgba(37, 99, 235, 0.2)
-      border-color #60a5fa
-      color #93c5fd
+      border-color var(--color-brand)
+      color var(--color-brand)
       box-shadow var(--shadow-sm)
 
 .class-icon
@@ -334,14 +334,14 @@ const handleSubmit = () => {
   font-size 0.75rem
 
   .modal-light &
-    background #f1f5f9
-    border-color #e2e8f0
-    color #475569
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
 
   .modal-dark &
-    background #141f32
-    border-color #1e293b
-    color #94a3b8
+    background #321e21
+    border-color #3b2327
+    color var(--color-text-secondary)
 
 .target-label
   font-size 0.6rem
@@ -365,10 +365,10 @@ const handleSubmit = () => {
   gap 0.65rem
 
   .modal-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .modal-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .btn-cancel
   padding 0.5rem 1rem
@@ -391,11 +391,11 @@ const handleSubmit = () => {
   cursor pointer
   transition all 0.2s ease
   border none
-  background #3b82f6
+  background var(--color-brand)
   color #ffffff
   box-shadow 0 2px 8px rgba(59, 130, 246, 0.3)
   &:hover
-    background #2563eb
+    background var(--color-brand)
     transform translateY(-1px)
 
 .fade-enter-active, .fade-leave-active

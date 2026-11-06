@@ -229,14 +229,14 @@ const handleSave = () => {
     opacity 1
 
 .modal-dark
-  background #0b1120
+  background #201315
   border 1px solid rgba(224, 184, 84, 0.25)
   color #f1f5f9
 
 .modal-light
-  background #ffffff
-  border 1px solid #e2e8f0
-  color #0f172a
+  background var(--color-surface)
+  border 1px solid var(--color-border)
+  color var(--color-text)
 
 .modal-header
   display flex
@@ -265,13 +265,13 @@ const handleSave = () => {
   .modal-subtitle
     display block
     font-size 0.8rem
-    color #94a3b8
+    color var(--color-text-secondary)
     margin-top 0.15rem
 
   .close-btn
     background transparent
     border none
-    color #94a3b8
+    color var(--color-text-secondary)
     font-size 1.25rem
     cursor pointer
     padding 0.35rem 0.6rem
@@ -286,11 +286,11 @@ const handleSave = () => {
   display flex
   gap 0.5rem
   padding 0.75rem 1.5rem
-  background rgba(15, 23, 42, 0.4)
+  background rgba(18, 10, 13, 0.4)
   border-bottom 1px solid rgba(148, 163, 184, 0.1)
 
 .modal-light .scope-tabs-bar
-  background #f8fafc
+  background var(--color-bg-subtle)
 
 .tab-btn
   flex 1
@@ -302,7 +302,7 @@ const handleSave = () => {
   border-radius 10px
   border 1px solid transparent
   background transparent
-  color #94a3b8
+  color var(--color-text-secondary)
   font-weight 600
   font-size 0.88rem
   cursor pointer
@@ -319,14 +319,14 @@ const handleSave = () => {
     box-shadow 0 4px 12px rgba(245, 158, 11, 0.15)
 
 .modal-light .tab-btn
-  color #64748b
+  color var(--color-muted)
   &:hover
-    color #0f172a
+    color var(--color-text)
     background #e2e8f0
   &.active
-    background #fef3c7
+    background #f3e3c0
     border-color #f59e0b
-    color #b45309
+    color #9b1c31
 
 .tab-badge
   font-size 0.65rem
@@ -353,8 +353,8 @@ const handleSave = () => {
   border 1px solid rgba(148, 163, 184, 0.1)
 
 .modal-light .info-header
-  background #f1f5f9
-  border-color #e2e8f0
+  background var(--color-bg-subtle)
+  border-color var(--color-border)
 
 .member-avatar-chip
   display inline-flex
@@ -379,13 +379,13 @@ const handleSave = () => {
 
   .member-sub
     font-size 0.78rem
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .modal-light .member-details
   .member-name
-    color #0f172a
+    color var(--color-text)
   .member-sub
-    color #64748b
+    color var(--color-muted)
 
 .team-info-banner, .division-info-banner
   display flex
@@ -407,15 +407,15 @@ const handleSave = () => {
 
   .banner-sub
     font-size 0.8rem
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .modal-light .team-info-banner, .modal-light .division-info-banner
-  background #f1f5f9
-  border-color #e2e8f0
+  background var(--color-bg-subtle)
+  border-color var(--color-border)
   .banner-title
-    color #0f172a
+    color var(--color-text)
   .banner-sub
-    color #64748b
+    color var(--color-muted)
 
 .form-group
   display flex
@@ -431,11 +431,11 @@ const handleSave = () => {
   color #cbd5e1
 
 .modal-light .form-label
-  color #334155
+  color #553338
 
 .char-count
   font-size 0.75rem
-  color #64748b
+  color var(--color-muted)
   font-weight normal
 
 .form-textarea
@@ -449,8 +449,8 @@ const handleSave = () => {
   outline none
   transition all 0.2s
 
-  background #0f172a
-  border 1px solid #334155
+  background #2a191c
+  border 1px solid var(--color-border)
   color #f8fafc
 
   &:focus
@@ -458,9 +458,9 @@ const handleSave = () => {
     box-shadow 0 0 0 3px rgba(245, 158, 11, 0.15)
 
 .modal-light .form-textarea
-  background #ffffff
-  border-color #cbd5e1
-  color #0f172a
+  background var(--color-surface)
+  border-color var(--color-border)
+  color var(--color-text)
 
   &:focus
     border-color #f59e0b
@@ -468,7 +468,7 @@ const handleSave = () => {
 
 .form-hint
   font-size 0.75rem
-  color #64748b
+  color var(--color-muted)
   font-style italic
 
 .modal-footer
@@ -484,9 +484,9 @@ const handleSave = () => {
   border-radius 10px
   font-size 0.88rem
   font-weight 600
-  border 1px solid #475569
+  border 1px solid #693f45
   background transparent
-  color #94a3b8
+  color var(--color-text-secondary)
   cursor pointer
   transition all 0.2s
   &:hover
@@ -494,11 +494,11 @@ const handleSave = () => {
     color #f1f5f9
 
 .modal-light .btn-cancel
-  border-color #cbd5e1
-  color #64748b
+  border-color var(--color-border)
+  color var(--color-muted)
   &:hover
-    background #f1f5f9
-    color #0f172a
+    background var(--color-bg-subtle)
+    color var(--color-text)
 
 .btn-submit
   display flex
@@ -510,8 +510,8 @@ const handleSave = () => {
   font-weight 700
   border none
   cursor pointer
-  background linear-gradient(135deg, #f59e0b 0%, #d97706 100%)
-  color #0f172a
+  background linear-gradient(135deg, #f59e0b 0%, #9b1c31 100%)
+  color var(--color-text)
   box-shadow 0 4px 14px rgba(245, 158, 11, 0.3)
   transition all 0.2s
   &:hover

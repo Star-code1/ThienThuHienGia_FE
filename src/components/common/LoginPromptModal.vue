@@ -112,19 +112,19 @@ const handleLogin = () => {
   margin-top 0.5rem
 
   .modal-light &
-    color #475569
+    color var(--color-text-secondary)
 
   .modal-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .highlight-text
   font-weight 700
 
   .modal-light &
-    color #2563eb
+    color var(--color-brand)
 
   .modal-dark &
-    color #60a5fa
+    color var(--color-brand)
 
 .modal-actions
   display flex
@@ -167,19 +167,19 @@ const handleLogin = () => {
   transition all 0.2s ease
 
   .modal-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #475569
+    background var(--color-bg-subtle)
+    border 1px solid var(--color-border)
+    color var(--color-text-secondary)
     &:hover
       background #e2e8f0
-      color #0f172a
+      color var(--color-text)
 
   .modal-dark &
-    background #111c2e
-    border 1px solid #1e304d
-    color #94a3b8
+    background #2e1c1e
+    border 1px solid #4d2e33
+    color var(--color-text-secondary)
     &:hover
-      background #1b2b45
+      background #45292e
       color #ffffff
 
 .fade-enter-active, .fade-leave-active

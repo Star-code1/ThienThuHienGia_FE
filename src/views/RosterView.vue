@@ -161,13 +161,13 @@ const filteredMembers = computed(() => {
   box-shadow var(--shadow-md)
 
   .roster-light &
-    background #ffffff
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
 
   .roster-dark &
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
     color #f8fafc
 
 @media (min-width: 768px)
@@ -232,7 +232,7 @@ const filteredMembers = computed(() => {
 .btn-lineup
   padding 0.5rem 1.25rem
   border-radius var(--radius-md, 12px)
-  background #3b82f6
+  background var(--color-brand)
   color #ffffff
   font-size 0.75rem
   font-weight 700
@@ -242,7 +242,7 @@ const filteredMembers = computed(() => {
   text-decoration none
   transition all 0.2s ease
   &:hover
-    background #2563eb
+    background var(--color-brand)
     transform translateY(-1px)
     box-shadow var(--shadow-md)
 
@@ -271,15 +271,15 @@ const filteredMembers = computed(() => {
   box-shadow var(--shadow-sm)
 
   .roster-light &
-    background #f8fafc
+    background var(--color-bg-subtle)
     &:hover
-      background #ffffff
+      background var(--color-surface)
       border-color var(--color-brand)
       transform translateY(-2px)
       box-shadow var(--shadow-md)
 
   .roster-dark &
-    background #141f32
+    background #321e21
     &:hover
       border-color var(--color-brand)
       transform translateY(-2px)
@@ -287,12 +287,12 @@ const filteredMembers = computed(() => {
 
   &.selected
     .roster-light &
-      background #eff6ff
-      border-color #3b82f6
+      background var(--color-brand-subtle)
+      border-color var(--color-brand)
 
     .roster-dark &
       background rgba(37, 99, 235, 0.2)
-      border-color #60a5fa
+      border-color var(--color-brand)
 
 .class-card-icon
   width 2rem
@@ -339,6 +339,7 @@ const filteredMembers = computed(() => {
 
 .roster-table
   width 100%
+  min-width 560px
   text-align left
   font-size 0.8rem
   border-collapse separate
@@ -425,9 +426,9 @@ const filteredMembers = computed(() => {
 
   &.role-duong-gia
     .roster-light &
-      background #fef3c7
-      color #b45309
-      border-color #fde68a
+      background #f3e3c0
+      color #9b1c31
+      border-color #ecd49e
     .roster-dark &
       background rgba(245, 197, 24, 0.2)
       color #f5c518
@@ -435,23 +436,23 @@ const filteredMembers = computed(() => {
 
   &.role-duong-chu
     .roster-light &
-      background #e0f2fe
-      color #0284c7
-      border-color #bae6fd
+      background var(--color-brand-subtle)
+      color var(--color-brand)
+      border-color var(--color-brand-subtle)
     .roster-dark &
       background rgba(56, 189, 248, 0.2)
-      color #38bdf8
+      color var(--color-brand)
       border-color rgba(56, 189, 248, 0.4)
 
   &.role-bang-chung
     .roster-light &
-      background #f1f5f9
-      color #475569
-      border-color #cbd5e1
+      background var(--color-bg-subtle)
+      color var(--color-text-secondary)
+      border-color var(--color-border)
     .roster-dark &
-      background #1e293b
-      color #94a3b8
-      border-color #334155
+      background var(--color-surface)
+      color var(--color-text-secondary)
+      border-color var(--color-border)
 
 .status-pill
   font-size 0.65rem
@@ -477,11 +478,11 @@ const filteredMembers = computed(() => {
   font-size 0.75rem
   font-weight 600
   text-decoration none
-  color #2563eb
+  color var(--color-brand)
 
   &:hover
     text-decoration underline
 
   .roster-dark &
-    color #60a5fa
+    color var(--color-brand)
 </style>

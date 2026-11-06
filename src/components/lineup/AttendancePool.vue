@@ -175,13 +175,13 @@ const onDropToPool = (evt) => {
   box-shadow var(--shadow-sm)
 
   &.pool-light
-    background #ffffff
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
 
   &.pool-dark
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
     color #f8fafc
 
 .pool-header
@@ -193,10 +193,10 @@ const onDropToPool = (evt) => {
   align-items center
 
   .pool-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .pool-dark &
-    border-color #1e293b
+    border-color #3b2327
 
 .pool-title
   font-size 0.8rem
@@ -207,7 +207,7 @@ const onDropToPool = (evt) => {
   margin 0
 
   .pool-light &
-    color #0f172a
+    color var(--color-text)
 
   .pool-dark &
     color #f8fafc
@@ -221,13 +221,13 @@ const onDropToPool = (evt) => {
   border 1px solid
 
   .pool-light &
-    background #eff6ff
-    color #2563eb
+    background var(--color-brand-subtle)
+    color var(--color-brand)
     border-color #bfdbfe
 
   .pool-dark &
     background rgba(37, 99, 235, 0.2)
-    color #93c5fd
+    color var(--color-brand)
     border-color rgba(59, 130, 246, 0.4)
 
 .search-box
@@ -246,23 +246,23 @@ const onDropToPool = (evt) => {
   transition all 0.2s ease
 
   .pool-light &
-    background #f8fafc
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text)
     &::placeholder
-      color #94a3b8
+      color var(--color-text-secondary)
     &:focus
-      border-color #3b82f6
+      border-color var(--color-brand)
       box-shadow 0 0 0 3px rgba(59, 130, 246, 0.15)
 
   .pool-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
     color #ffffff
     &::placeholder
-      color #64748b
+      color var(--color-muted)
     &:focus
-      border-color #60a5fa
+      border-color var(--color-brand)
       box-shadow 0 0 0 3px rgba(96, 165, 250, 0.15)
 
 .clear-search-btn
@@ -275,12 +275,12 @@ const onDropToPool = (evt) => {
   cursor pointer
 
   .pool-light &
-    color #94a3b8
+    color var(--color-text-secondary)
     &:hover
-      color #0f172a
+      color var(--color-text)
 
   .pool-dark &
-    color #64748b
+    color var(--color-muted)
     &:hover
       color #ffffff
 
@@ -301,18 +301,18 @@ const onDropToPool = (evt) => {
   transition border-color 0.2s ease
 
   .pool-light &
-    background #ffffff
-    border-color #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text)
     &:focus
-      border-color #3b82f6
+      border-color var(--color-brand)
 
   .pool-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
     color #cbd5e1
     &:focus
-      border-color #60a5fa
+      border-color var(--color-brand)
 
 .active-filter-row
   margin-bottom 0.5rem
@@ -320,7 +320,7 @@ const onDropToPool = (evt) => {
   justify-content space-between
   align-items center
   font-size 0.65rem
-  color #2563eb
+  color var(--color-brand)
 
 .reset-filter-btn
   font-weight 600
@@ -359,8 +359,8 @@ const onDropToPool = (evt) => {
   font-style italic
 
   .pool-light &
-    color #64748b
+    color var(--color-muted)
 
   .pool-dark &
-    color #64748b
+    color var(--color-muted)
 </style>

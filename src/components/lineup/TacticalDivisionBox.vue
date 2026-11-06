@@ -122,12 +122,12 @@ const handleDeleteDivision = async () => {
   transition all 0.2s ease
 
   .div-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .div-dark &
-    background #141f32
-    border-color #1e293b
+    background #321e21
+    border-color #3b2327
 
 .bar-left
   display flex
@@ -149,7 +149,7 @@ const handleDeleteDivision = async () => {
   transition all 0.2s ease
 
   &:hover
-    border-color #3b82f6
+    border-color var(--color-brand)
     background rgba(59, 130, 246, 0.1)
 
 .bar-center
@@ -164,7 +164,7 @@ const handleDeleteDivision = async () => {
   margin 0
 
   .div-light &
-    color #0f172a
+    color var(--color-text)
 
   .div-dark &
     color #f8fafc
@@ -176,7 +176,7 @@ const handleDeleteDivision = async () => {
   text-align center
   padding 0.25rem 0.65rem
   border-radius var(--radius-sm, 8px)
-  border 1px solid #3b82f6
+  border 1px solid var(--color-brand)
   outline none
   background var(--color-surface)
   color inherit
@@ -202,21 +202,21 @@ const handleDeleteDivision = async () => {
   gap 0.25rem
 
   &.btn-add-team
-    background #eff6ff
+    background var(--color-brand-subtle)
     border-color #bfdbfe
-    color #2563eb
+    color var(--color-brand)
     .div-dark &
       background rgba(37, 99, 235, 0.2)
       border-color rgba(59, 130, 246, 0.4)
-      color #93c5fd
+      color var(--color-brand)
     &:hover
-      background #3b82f6
+      background var(--color-brand)
       color #ffffff
 
   &.btn-div-note
     background rgba(245, 158, 11, 0.12)
     border-color rgba(245, 158, 11, 0.35)
-    color #d97706
+    color #9b1c31
     .div-dark &
       background rgba(245, 158, 11, 0.18)
       border-color rgba(245, 158, 11, 0.45)

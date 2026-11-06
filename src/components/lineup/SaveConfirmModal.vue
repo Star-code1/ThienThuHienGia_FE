@@ -62,18 +62,18 @@ const themeStore = useThemeStore();
   overflow hidden
 
   &.card-light
-    background #ffffff
-    border 1px solid #e2e8f0
-    color #0f172a
+    background var(--color-surface)
+    border 1px solid var(--color-border)
+    color var(--color-text)
 
   &.card-dark
-    background #0f172a
-    border 1px solid #1e293b
+    background #2a191c
+    border 1px solid #3b2327
     color #f8fafc
 
 .top-gold-bar
   height 3px
-  background linear-gradient(to right, #60a5fa, #3b82f6)
+  background linear-gradient(to right, var(--color-brand), var(--color-brand))
 
 .card-body
   padding 1.5rem
@@ -142,7 +142,7 @@ const themeStore = useThemeStore();
   font-size 0.8rem
   font-weight 600
   color #ffffff
-  background #3b82f6
+  background var(--color-brand)
   border none
   cursor pointer
   display flex
@@ -152,7 +152,7 @@ const themeStore = useThemeStore();
   box-shadow var(--shadow-sm)
 
   &:hover
-    background #2563eb
+    background var(--color-brand)
 
   &:disabled
     opacity 0.6

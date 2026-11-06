@@ -915,7 +915,7 @@ const getEvalText = (score, totalAbsent) => {
 .btn-lineup-link
   padding 0.5rem 1.25rem
   border-radius var(--radius-md, 12px)
-  background #3b82f6
+  background var(--color-brand)
   color #ffffff
   font-size 0.75rem
   font-weight 700
@@ -924,7 +924,7 @@ const getEvalText = (score, totalAbsent) => {
   text-decoration none
   transition all 0.2s ease
   &:hover
-    background #2563eb
+    background var(--color-brand)
     transform translateY(-1px)
     box-shadow var(--shadow-md)
 
@@ -1116,7 +1116,7 @@ const getEvalText = (score, totalAbsent) => {
   &.val-amber
     color #fbbf24
   &.val-blue
-    color #60a5fa
+    color var(--color-brand)
 
 .metric-sub
   font-size 0.7rem
@@ -1130,7 +1130,7 @@ const getEvalText = (score, totalAbsent) => {
   &.sub-amber
     color #fbbf24
   &.sub-blue
-    color #60a5fa
+    color var(--color-brand)
 
 // Unvoted Section
 .unvoted-section
@@ -1441,7 +1441,7 @@ const getEvalText = (score, totalAbsent) => {
     border 1px solid rgba(245, 158, 11, 0.3)
   &.pill-late
     background rgba(59, 130, 246, 0.15)
-    color #93c5fd
+    color var(--color-brand)
     border 1px solid rgba(59, 130, 246, 0.3)
 
 .pill-danger-tag
@@ -1744,7 +1744,7 @@ const getEvalText = (score, totalAbsent) => {
   fill transparent
 
 .chart-progress
-  stroke #3b82f6
+  stroke var(--color-brand)
   stroke-width 8
   fill transparent
   stroke-linecap round
@@ -1972,7 +1972,7 @@ const getEvalText = (score, totalAbsent) => {
       order 1
 
   &.podium-bronze
-    border-color #d97706
+    border-color #9b1c31
     background radial-gradient(circle at top, rgba(217, 119, 6, 0.2), transparent 70%), rgba(20, 24, 36, 0.8)
     order 3
 
@@ -2005,7 +2005,7 @@ const getEvalText = (score, totalAbsent) => {
   justify-content center
   font-size 0.7rem
   font-weight 800
-  background #0f172a
+  background #2a191c
   border 1px solid var(--color-border)
   color #ffffff
 
@@ -2243,7 +2243,7 @@ const getEvalText = (score, totalAbsent) => {
   &.rank-3
     background rgba(217, 119, 6, 0.2)
     color #f59e0b
-    border 1px solid #d97706
+    border 1px solid #9b1c31
   &.rank-other
     color var(--color-muted)
 
@@ -2416,7 +2416,7 @@ const getEvalText = (score, totalAbsent) => {
     border 1px solid rgba(16, 185, 129, 0.3)
   &.eval-good
     background rgba(59, 130, 246, 0.15)
-    color #93c5fd
+    color var(--color-brand)
     border 1px solid rgba(59, 130, 246, 0.3)
   &.eval-danger
     background rgba(239, 68, 68, 0.2)

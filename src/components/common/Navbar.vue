@@ -382,7 +382,7 @@ onUnmounted(() => {
   line-height 1.2
 
   .nav-light &
-    color #0f172a
+    color #2a191c
 
   .nav-dark &
     color #ffffff
@@ -413,12 +413,12 @@ onUnmounted(() => {
   &.role-bang-chung
     .nav-light &
       background #e2e8f0
-      color #475569
+      color #693f45
       border 1px solid #cbd5e1
     .nav-dark &
-      background #1e293b
+      background #3b2327
       color #94a3b8
-      border 1px solid #334155
+      border 1px solid #553338
 
 .user-class
   font-size 0.55rem
@@ -439,7 +439,7 @@ onUnmounted(() => {
   margin-left 0.25rem
 
   .nav-light &
-    color #64748b
+    color #8b535c
 
   .nav-dark &
     color #94a3b8
@@ -461,8 +461,8 @@ onUnmounted(() => {
     box-shadow 0 10px 25px rgba(0, 0, 0, 0.1)
 
   .nav-dark &
-    background #080d19
-    border 1px solid #1e304d
+    background #190f10
+    border 1px solid #4d2e33
     box-shadow 0 15px 30px rgba(0, 0, 0, 0.5)
 
 .dropdown-header
@@ -490,7 +490,7 @@ onUnmounted(() => {
   font-size 0.6rem
 
   .nav-light &
-    color #64748b
+    color #8b535c
 
   .nav-dark &
     color #94a3b8
@@ -534,7 +534,7 @@ onUnmounted(() => {
   transition all 0.15s ease
 
   .nav-light &
-    color #0f172a
+    color #2a191c
 
     &:hover
       background #f1f5f9
@@ -544,7 +544,7 @@ onUnmounted(() => {
     color #e2e8f0
 
     &:hover
-      background #1e293b
+      background #3b2327
       color #f5c518
 
 .theme-status-tag

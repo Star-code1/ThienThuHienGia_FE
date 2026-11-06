@@ -683,7 +683,7 @@ onMounted(() => {
   gap 0.5rem
   transition all 0.2s ease
   border 1px solid transparent
-  background linear-gradient(135deg, #f59e0b, #d97706)
+  background linear-gradient(135deg, #f59e0b, #9b1c31)
   color #ffffff
   box-shadow var(--shadow-sm)
 
@@ -693,8 +693,8 @@ onMounted(() => {
     filter brightness(1.05)
 
   .analysis-dark &
-    background linear-gradient(135deg, #fbbf24, #d97706)
-    color #0f172a
+    background linear-gradient(135deg, #fbbf24, #9b1c31)
+    color var(--color-text)
 
 .permission-tag
   padding 0.4rem 0.85rem
@@ -753,9 +753,9 @@ onMounted(() => {
     color #ef4444
 
   &.label-images
-    color #0284c7
+    color var(--color-brand)
     .analysis-dark &
-      color #38bdf8
+      color var(--color-brand)
 
 .stat-value
   font-size 1.5rem
@@ -770,9 +770,9 @@ onMounted(() => {
     color #ef4444
 
   &.val-images
-    color #0284c7
+    color var(--color-brand)
     .analysis-dark &
-      color #38bdf8
+      color var(--color-brand)
 
 .loading-box, .empty-box
   padding 4rem 1.5rem
@@ -1177,7 +1177,7 @@ onMounted(() => {
   border-radius var(--radius-md, 8px)
   border 1px solid rgba(2, 132, 199, 0.3)
   background rgba(2, 132, 199, 0.1)
-  color #0284c7
+  color var(--color-brand)
   cursor pointer
   transition all 0.2s ease
 
@@ -1187,7 +1187,7 @@ onMounted(() => {
   .analysis-dark &
     background rgba(56, 189, 248, 0.15)
     border-color rgba(56, 189, 248, 0.3)
-    color #38bdf8
+    color var(--color-brand)
 
 .images-list
   display flex
@@ -1358,7 +1358,7 @@ onMounted(() => {
   font-family var(--font-heading)
   cursor pointer
   border none
-  background linear-gradient(135deg, #f59e0b, #d97706)
+  background linear-gradient(135deg, #f59e0b, #9b1c31)
   color #ffffff
   box-shadow var(--shadow-sm)
   transition all 0.2s ease

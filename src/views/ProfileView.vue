@@ -314,8 +314,8 @@ const userPrimaryRole = computed(() => {
   border 1px solid
 
   &.role-duong-gia
-    background #fef3c7
-    border-color #fde68a
+    background #f3e3c0
+    border-color #ecd49e
     color #92400e
     .prof-dark &
       background rgba(245, 197, 24, 0.15)
@@ -323,22 +323,22 @@ const userPrimaryRole = computed(() => {
       color #fbbf24
 
   &.role-duong-chu
-    background #e0f2fe
-    border-color #bae6fd
-    color #0284c7
+    background var(--color-brand-subtle)
+    border-color var(--color-brand-subtle)
+    color var(--color-brand)
     .prof-dark &
       background rgba(56, 189, 248, 0.15)
       border-color rgba(56, 189, 248, 0.3)
-      color #38bdf8
+      color var(--color-brand)
 
   &.role-bang-chung
-    background #f1f5f9
-    border-color #e2e8f0
-    color #475569
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
     .prof-dark &
       background rgba(148, 163, 184, 0.12)
       border-color rgba(148, 163, 184, 0.25)
-      color #94a3b8
+      color var(--color-text-secondary)
 
 .info-details-grid
   display grid
@@ -365,15 +365,15 @@ const userPrimaryRole = computed(() => {
   letter-spacing 0.03em
   font-family var(--font-heading)
   margin 0
-  color #b45309
+  color #9b1c31
 
   .prof-dark &
     color #fbbf24
 
   &.title-blue
-    color #0284c7
+    color var(--color-brand)
     .prof-dark &
-      color #38bdf8
+      color var(--color-brand)
 
 .info-rows-list
   display flex
@@ -401,7 +401,7 @@ const userPrimaryRole = computed(() => {
 
   &.val-gold
     font-weight 700
-    color #d97706
+    color #9b1c31
     .prof-dark &
       color #fbbf24
 

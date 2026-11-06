@@ -363,7 +363,7 @@ onUnmounted(() => {
   font-weight 700
   font-family var(--font-body)
   color #ffffff
-  background #3b82f6
+  background var(--color-brand)
   border 1px solid transparent
   box-shadow var(--shadow-sm)
   text-decoration none
@@ -374,7 +374,7 @@ onUnmounted(() => {
   transition all 0.2s ease
 
   &:hover
-    background #2563eb
+    background var(--color-brand)
     transform translateY(-1px)
     box-shadow var(--shadow-md)
 
@@ -440,21 +440,21 @@ onUnmounted(() => {
   border 1px solid
 
   &.pill-gold
-    background #fef3c7
+    background #f3e3c0
     color #92400e
-    border-color #fde68a
+    border-color #ecd49e
     .sched-dark &
       background rgba(245, 197, 24, 0.2)
       color #f5c518
       border-color rgba(245, 197, 24, 0.4)
 
   &.pill-blue
-    background #e0f2fe
-    color #0284c7
-    border-color #bae6fd
+    background var(--color-brand-subtle)
+    color var(--color-brand)
+    border-color var(--color-brand-subtle)
     .sched-dark &
       background rgba(56, 189, 248, 0.2)
-      color #38bdf8
+      color var(--color-brand)
       border-color rgba(56, 189, 248, 0.4)
 
 .countdown-body-row
@@ -493,10 +493,10 @@ onUnmounted(() => {
   font-family 'Be Vietnam Pro', sans-serif
 
   .sched-light &
-    color #475569
+    color var(--color-text-secondary)
 
   .sched-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .digital-timer-grid
   display grid
@@ -507,12 +507,12 @@ onUnmounted(() => {
 .timer-box
   padding 0.75rem
   .sched-light &
-    background #f8fafc
-    border-color #cbd5e1
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .sched-dark &
-    background #050912
-    border-color #1e304d
+    background #120b0c
+    border-color #4d2e33
 
 .timer-val
   font-size 1.5rem
@@ -522,7 +522,7 @@ onUnmounted(() => {
 
   &.val-gold
     .sched-light &
-      color #b45309
+      color #9b1c31
     .sched-dark &
       color #f5c518
 
@@ -537,10 +537,10 @@ onUnmounted(() => {
   margin-top 0.25rem
 
   .sched-light &
-    color #64748b
+    color var(--color-muted)
 
   .sched-dark &
-    color #64748b
+    color var(--color-muted)
 
 .tabs-section
   display flex
@@ -562,10 +562,10 @@ onUnmounted(() => {
   margin 0
 
   .sched-light &
-    color #1d4ed8
+    color var(--color-brand)
 
   .sched-dark &
-    color #93c5fd
+    color var(--color-brand)
 
 .cycle-flow-badges
   display flex
@@ -577,10 +577,10 @@ onUnmounted(() => {
   font-weight 700
 
   .sched-light &
-    color #64748b
+    color var(--color-muted)
 
   .sched-dark &
-    color #64748b
+    color var(--color-muted)
 
 .flow-pill
   padding 0.15rem 0.5rem
@@ -590,9 +590,9 @@ onUnmounted(() => {
 
   &.pill-gold
     .sched-light &
-      background #fef3c7
-      color #b45309
-      border 1px solid #fde68a
+      background #f3e3c0
+      color #9b1c31
+      border 1px solid #ecd49e
     .sched-dark &
       background rgba(245, 197, 24, 0.2)
       color #f5c518
@@ -600,20 +600,20 @@ onUnmounted(() => {
 
   &.pill-blue
     .sched-light &
-      background #e0f2fe
-      color #0284c7
-      border 1px solid #bae6fd
+      background var(--color-brand-subtle)
+      color var(--color-brand)
+      border 1px solid var(--color-brand-subtle)
     .sched-dark &
       background rgba(59, 130, 246, 0.2)
-      color #60a5fa
+      color var(--color-brand)
       border 1px solid rgba(59, 130, 246, 0.4)
 
 .flow-arrow
   .sched-light &
-    color #94a3b8
+    color var(--color-text-secondary)
 
   .sched-dark &
-    color #64748b
+    color var(--color-muted)
 
 .tabs-grid
   display grid
@@ -634,30 +634,30 @@ onUnmounted(() => {
   gap 0.25rem
 
   .sched-light &
-    background #ffffff
-    border-color #cbd5e1
-    color #475569
+    background var(--color-surface)
+    border-color var(--color-border)
+    color var(--color-text-secondary)
     &:hover
-      border-color #b45309
-      color #0f172a
+      border-color #9b1c31
+      color var(--color-text)
 
   .sched-dark &
-    background rgba(8, 13, 25, 0.8)
-    border-color #1c2e4a
-    color #94a3b8
+    background rgba(18, 10, 13, 0.8)
+    border-color #4a2c31
+    color var(--color-text-secondary)
     &:hover
-      border-color #334b73
+      border-color #73454c
       color #ffffff
 
   &.active
     .sched-light &
-      background #fef3c7
-      border-color #b45309
-      color #b45309
+      background #f3e3c0
+      border-color #9b1c31
+      color #9b1c31
       box-shadow 0 4px 15px rgba(180, 83, 9, 0.15)
 
     .sched-dark &
-      background #0f1d36
+      background #362024
       border-color #f5c518
       color #ffffff
       box-shadow 0 10px 25px rgba(245, 197, 24, 0.15)
@@ -676,7 +676,7 @@ onUnmounted(() => {
 
   &.badge-gold
     .sched-light &
-      background #fde68a
+      background #ecd49e
       color #78350f
     .sched-dark &
       background rgba(217, 119, 6, 0.2)
@@ -684,11 +684,11 @@ onUnmounted(() => {
 
   &.badge-blue
     .sched-light &
-      background #bae6fd
+      background var(--color-brand-subtle)
       color #0369a1
     .sched-dark &
       background rgba(59, 130, 246, 0.2)
-      color #60a5fa
+      color var(--color-brand)
 
 .week-details-section
   display flex
@@ -705,13 +705,13 @@ onUnmounted(() => {
   gap 1rem
 
   .sched-light &
-    background #ffffff
-    border-color #cbd5e1
+    background var(--color-surface)
+    border-color var(--color-border)
     box-shadow 0 4px 15px rgba(0, 0, 0, 0.04)
 
   .sched-dark &
-    background rgba(8, 13, 25, 0.9)
-    border-color #1e304d
+    background rgba(18, 10, 13, 0.9)
+    border-color #4d2e33
     box-shadow 0 10px 25px rgba(0, 0, 0, 0.3)
 
   &.saturday-card
@@ -726,10 +726,10 @@ onUnmounted(() => {
   border-bottom 1px solid
 
   .sched-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .sched-dark &
-    border-color #17253b
+    border-color #3b2327
 
 .card-icon
   font-size 1.25rem
@@ -742,7 +742,7 @@ onUnmounted(() => {
   margin 0
 
   .sched-light &
-    color #0f172a
+    color var(--color-text)
 
   .sched-dark &
     color #ffffff
@@ -766,14 +766,14 @@ onUnmounted(() => {
   transition all 0.2s ease
 
   .sched-light &
-    background #f8fafc
-    border-color #cbd5e1
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
     &:hover
-      border-color #2563eb
+      border-color var(--color-brand)
 
   .sched-dark &
-    background #050912
-    border-color #1c2e4a
+    background #120b0c
+    border-color #4a2c31
     &:hover
       border-color rgba(56, 189, 248, 0.6)
 
@@ -789,13 +789,13 @@ onUnmounted(() => {
 
   &.box-cyan
     .sched-light &
-      background #e0f2fe
-      border 1px solid #bae6fd
-      color #0284c7
+      background var(--color-brand-subtle)
+      border 1px solid var(--color-brand-subtle)
+      color var(--color-brand)
     .sched-dark &
       background rgba(56, 189, 248, 0.1)
       border 1px solid rgba(56, 189, 248, 0.3)
-      color #38bdf8
+      color var(--color-brand)
 
   &.box-purple
     .sched-light &
@@ -831,7 +831,7 @@ onUnmounted(() => {
   margin 0
 
   .sched-light &
-    color #0f172a
+    color var(--color-text)
 
   .sched-dark &
     color #ffffff
@@ -844,11 +844,11 @@ onUnmounted(() => {
 
   &.tag-cyan
     .sched-light &
-      background #e0f2fe
-      color #0284c7
+      background var(--color-brand-subtle)
+      color var(--color-brand)
     .sched-dark &
       background rgba(56, 189, 248, 0.2)
-      color #38bdf8
+      color var(--color-brand)
 
   &.tag-purple
     .sched-light &
@@ -864,10 +864,10 @@ onUnmounted(() => {
   margin 0
 
   .sched-light &
-    color #475569
+    color var(--color-text-secondary)
 
   .sched-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .saturday-header-row
   display flex
@@ -879,10 +879,10 @@ onUnmounted(() => {
   border-bottom 1px solid
 
   .sched-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .sched-dark &
-    border-color #1c2e4a
+    border-color #4a2c31
 
 .saturday-title-group
   display flex
@@ -894,10 +894,10 @@ onUnmounted(() => {
   margin-top 0.1rem
 
   .sched-light &
-    color #64748b
+    color var(--color-muted)
 
   .sched-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .week-mode-badge
   padding 0.35rem 0.85rem
@@ -908,9 +908,9 @@ onUnmounted(() => {
 
   &.badge-gold
     .sched-light &
-      background #fef3c7
-      color #b45309
-      border 1px solid #fde68a
+      background #f3e3c0
+      color #9b1c31
+      border 1px solid #ecd49e
     .sched-dark &
       background rgba(217, 119, 6, 0.2)
       color #f5c518
@@ -918,12 +918,12 @@ onUnmounted(() => {
 
   &.badge-blue
     .sched-light &
-      background #e0f2fe
-      color #0284c7
-      border 1px solid #bae6fd
+      background var(--color-brand-subtle)
+      color var(--color-brand)
+      border 1px solid var(--color-brand-subtle)
     .sched-dark &
       background rgba(59, 130, 246, 0.2)
-      color #60a5fa
+      color var(--color-brand)
       border 1px solid rgba(59, 130, 246, 0.5)
 
 .match-timeline
@@ -941,11 +941,11 @@ onUnmounted(() => {
   transition all 0.2s ease
 
   .sched-light &
-    background #f8fafc
-    border-color #cbd5e1
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .sched-dark &
-    background #050912
+    background #120b0c
 
 @media (min-width: 640px)
   .event-row
@@ -981,9 +981,9 @@ onUnmounted(() => {
 
   &.box-gold
     .sched-light &
-      background #fef3c7
-      border-color #fde68a
-      color #b45309
+      background #f3e3c0
+      border-color #ecd49e
+      color #9b1c31
     .sched-dark &
       background rgba(245, 197, 24, 0.15)
       border-color rgba(245, 197, 24, 0.4)
@@ -1011,13 +1011,13 @@ onUnmounted(() => {
 
   &.box-blue
     .sched-light &
-      background #e0f2fe
-      border-color #bae6fd
-      color #0284c7
+      background var(--color-brand-subtle)
+      border-color var(--color-brand-subtle)
+      color var(--color-brand)
     .sched-dark &
       background rgba(59, 130, 246, 0.15)
       border-color rgba(59, 130, 246, 0.4)
-      color #60a5fa
+      color var(--color-brand)
 
 .time-main
   font-size 0.875rem
@@ -1044,7 +1044,7 @@ onUnmounted(() => {
   margin 0
 
   .sched-light &
-    color #0f172a
+    color var(--color-text)
 
   .sched-dark &
     color #ffffff
@@ -1066,8 +1066,8 @@ onUnmounted(() => {
 
   &.tag-gold
     .sched-light &
-      background #fef3c7
-      color #b45309
+      background #f3e3c0
+      color #9b1c31
     .sched-dark &
       background rgba(245, 197, 24, 0.2)
       color #f5c518
@@ -1090,21 +1090,21 @@ onUnmounted(() => {
 
   &.tag-blue
     .sched-light &
-      background #e0f2fe
-      color #0284c7
+      background var(--color-brand-subtle)
+      color var(--color-brand)
     .sched-dark &
       background rgba(59, 130, 246, 0.2)
-      color #60a5fa
+      color var(--color-brand)
 
 .event-desc
   font-size 0.75rem
   margin 0
 
   .sched-light &
-    color #475569
+    color var(--color-text-secondary)
 
   .sched-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .event-time-start
   font-size 0.75rem
@@ -1117,7 +1117,7 @@ onUnmounted(() => {
 
   &.time-gold
     .sched-light &
-      color #b45309
+      color #9b1c31
     .sched-dark &
       color #f5c518
 
@@ -1132,9 +1132,9 @@ onUnmounted(() => {
 
   &.time-blue
     .sched-light &
-      color #0284c7
+      color var(--color-brand)
     .sched-dark &
-      color #60a5fa
+      color var(--color-brand)
 
 @keyframes ping
   75%, 100%

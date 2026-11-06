@@ -278,20 +278,20 @@ const isActive = (path) => {
   transition all 0.2s ease
 
   .drawer-light &
-    background #f1f5f9
-    border 1px solid #cbd5e1
-    color #64748b
+    background var(--color-bg-subtle)
+    border 1px solid var(--color-border)
+    color var(--color-muted)
     &:hover
       background #e2e8f0
-      color #0f172a
+      color var(--color-text)
 
   .drawer-dark &
-    background #0f172a
-    border 1px solid #1e293b
-    color #94a3b8
+    background #2a191c
+    border 1px solid #3b2327
+    color var(--color-text-secondary)
     &:hover
       color #ffffff
-      border-color #3b82f6
+      border-color var(--color-brand)
 
 .settings-bar
   padding 0.65rem 1.25rem
@@ -302,12 +302,12 @@ const isActive = (path) => {
   font-size 0.75rem
 
   .drawer-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .drawer-dark &
-    background #050810
-    border-color #131f33
+    background #100a0b
+    border-color #331f22
 
 .setting-row
   display flex
@@ -318,7 +318,7 @@ const isActive = (path) => {
     padding-top 0.4rem
     border-top 1px solid
     .drawer-light &
-      border-color #e2e8f0
+      border-color var(--color-border)
     .drawer-dark &
       border-color rgba(19, 31, 51, 0.6)
 
@@ -327,10 +327,10 @@ const isActive = (path) => {
   font-weight 600
 
   .drawer-light &
-    color #64748b
+    color var(--color-muted)
 
   .drawer-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .btn-group-sm
   display flex
@@ -339,12 +339,12 @@ const isActive = (path) => {
   border 1px solid
 
   .drawer-light &
-    background #ffffff
-    border-color #cbd5e1
+    background var(--color-surface)
+    border-color var(--color-border)
 
   .drawer-dark &
-    background #0f172a
-    border-color #1e293b
+    background #2a191c
+    border-color #3b2327
 
 .setting-btn
   padding 0.15rem 0.5rem
@@ -356,7 +356,7 @@ const isActive = (path) => {
   transition all 0.15s ease
 
   &.btn-active
-    background #2563eb
+    background var(--color-brand)
     color #ffffff
 
   &.btn-dark-active
@@ -372,12 +372,12 @@ const isActive = (path) => {
     background transparent
 
     .drawer-light &
-      color #64748b
+      color var(--color-muted)
       &:hover
-        color #0f172a
+        color var(--color-text)
 
     .drawer-dark &
-      color #94a3b8
+      color var(--color-text-secondary)
       &:hover
         color #ffffff
 
@@ -404,32 +404,32 @@ const isActive = (path) => {
   &.link-active
     .drawer-light &
       background linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.05))
-      border-color #2563eb
-      color #1d4ed8
+      border-color var(--color-brand)
+      color var(--color-brand)
 
     .drawer-dark &
       background linear-gradient(to right, rgba(29, 78, 216, 0.3), rgba(59, 130, 246, 0.1))
-      border-color #3b82f6
+      border-color var(--color-brand)
       color #ffffff
       box-shadow 0 0 15px rgba(59, 130, 246, 0.2)
 
   &.link-inactive
     .drawer-light &
-      background #ffffff
-      border-color #e2e8f0
-      color #475569
+      background var(--color-surface)
+      border-color var(--color-border)
+      color var(--color-text-secondary)
       &:hover
-        background #f8fafc
-        border-color #cbd5e1
-        color #0f172a
+        background var(--color-bg-subtle)
+        border-color var(--color-border)
+        color var(--color-text)
 
     .drawer-dark &
       background rgba(10, 16, 29, 0.6)
-      border-color #142033
-      color #94a3b8
+      border-color #331f22
+      color var(--color-text-secondary)
       &:hover
-        background #101a2d
-        border-color #2b4166
+        background #2d1b1e
+        border-color #663d43
         color #ffffff
 
 .active-indicator
@@ -440,7 +440,7 @@ const isActive = (path) => {
   width 4px
   border-top-right-radius 4px
   border-bottom-right-radius 4px
-  background #3b82f6
+  background var(--color-brand)
 
 .link-icon
   font-size 1.25rem
@@ -467,9 +467,9 @@ const isActive = (path) => {
   text-transform uppercase
 
   .drawer-light &
-    background #fef3c7
-    color #b45309
-    border 1px solid #fde68a
+    background #f3e3c0
+    color #9b1c31
+    border 1px solid #ecd49e
 
   .drawer-dark &
     background rgba(245, 197, 24, 0.2)
@@ -485,22 +485,22 @@ const isActive = (path) => {
   text-overflow ellipsis
 
   .drawer-light &
-    color #64748b
+    color var(--color-muted)
 
   .drawer-dark &
-    color #64748b
+    color var(--color-muted)
 
 .drawer-footer
   padding 1rem
   border-top 1px solid
 
   .drawer-light &
-    background #f8fafc
-    border-color #e2e8f0
+    background var(--color-bg-subtle)
+    border-color var(--color-border)
 
   .drawer-dark &
-    background #050912
-    border-color #18263e
+    background #120b0c
+    border-color #3e2529
 
 .user-card
   padding 0.75rem
@@ -508,12 +508,12 @@ const isActive = (path) => {
   border 1px solid
 
   .drawer-light &
-    background #ffffff
-    border-color #cbd5e1
+    background var(--color-surface)
+    border-color var(--color-border)
 
   .drawer-dark &
-    background #0b1220
-    border-color #1a2942
+    background #201315
+    border-color #42282c
 
 .user-main-row
   display flex
@@ -547,7 +547,7 @@ const isActive = (path) => {
   text-overflow ellipsis
 
   .drawer-light &
-    color #0f172a
+    color var(--color-text)
 
   .drawer-dark &
     color #ffffff
@@ -567,18 +567,18 @@ const isActive = (path) => {
   transition all 0.15s ease
 
   .drawer-light &
-    background #e0f2fe
-    color #0284c7
-    border 1px solid #bae6fd
+    background var(--color-brand-subtle)
+    color var(--color-brand)
+    border 1px solid var(--color-brand-subtle)
     &:hover
-      background #bae6fd
+      background var(--color-brand-subtle)
 
   .drawer-dark &
-    background #16233b
-    color #38bdf8
-    border 1px solid #233859
+    background #3b2327
+    color var(--color-brand)
+    border 1px solid #59353b
     &:hover
-      background #253956
+      background #563439
 
 .user-sub-row
   display flex
@@ -590,30 +590,30 @@ const isActive = (path) => {
   border-top 1px solid
 
   .drawer-light &
-    border-color #e2e8f0
+    border-color var(--color-border)
 
   .drawer-dark &
-    border-color #142033
+    border-color #331f22
 
 .sub-label
   .drawer-light &
-    color #64748b
+    color var(--color-muted)
 
   .drawer-dark &
-    color #94a3b8
+    color var(--color-text-secondary)
 
 .role-value
   font-weight 700
 
   &.role-duong-gia
-    color #b45309
+    color #9b1c31
     .drawer-dark &
       color #f5c518
 
   &.role-duong-chu
-    color #0284c7
+    color var(--color-brand)
     .drawer-dark &
-      color #38bdf8
+      color var(--color-brand)
 
 .discord-login-btn
   width 100%

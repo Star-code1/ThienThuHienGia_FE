@@ -123,15 +123,15 @@ const onSkillsClick = () => {
 
   &.row-light
     border-color #f1f5f9
-    background #ffffff
+    background var(--color-surface)
     &:hover
-      background #f8fafc
+      background var(--color-bg-subtle)
 
   &.row-dark
-    border-color #1e293b
-    background #0b1120
+    border-color #3b2327
+    background #201315
     &:hover
-      background #141f32
+      background #321e21
 
   &:last-child
     border-bottom none
@@ -205,20 +205,20 @@ const onSkillsClick = () => {
   width 100%
   height 26px
   border-radius var(--radius-full, 9999px)
-  border 1px dashed #cbd5e1
+  border 1px dashed var(--color-border)
   display flex
   align-items center
   justify-content center
   gap 0.25rem
-  color #94a3b8
+  color var(--color-text-secondary)
   font-size 0.68rem
   font-weight 600
   background rgba(148, 163, 184, 0.05)
   transition all 0.2s ease
 
   &:hover
-    border-color #3b82f6
-    color #3b82f6
+    border-color var(--color-brand)
+    color var(--color-brand)
     background rgba(59, 130, 246, 0.08)
 
 .empty-icon
@@ -236,14 +236,14 @@ const onSkillsClick = () => {
   border-radius var(--radius-xs, 4px)
   border 1px solid rgba(56, 189, 248, 0.4)
   overflow hidden
-  background #0f172a
+  background #2a191c
   flex-shrink 0
   box-shadow var(--shadow-sm)
   transition transform 0.15s ease
 
   &:hover
     transform scale(1.15)
-    border-color #38bdf8
+    border-color var(--color-brand)
 
 .skill-mini-icon
   width 100%
@@ -253,7 +253,7 @@ const onSkillsClick = () => {
 .add-skill-placeholder
   font-size 0.65rem
   font-weight 600
-  color #3b82f6
+  color var(--color-brand)
   opacity 0.75
   padding 0.15rem 0.4rem
   border-radius var(--radius-sm, 8px)
@@ -261,7 +261,7 @@ const onSkillsClick = () => {
   transition all 0.2s ease
 
   .row-dark &
-    color #60a5fa
+    color var(--color-brand)
     border-color rgba(96, 165, 250, 0.4)
 
   &:hover

@@ -120,8 +120,8 @@ onMounted(async () => {
     box-shadow 0 20px 40px rgba(0, 0, 0, 0.1)
 
   .auth-dark &
-    background rgba(8, 13, 25, 0.9)
-    border 1px solid #1e304d
+    background rgba(18, 10, 13, 0.9)
+    border 1px solid #4d2e33
     box-shadow 0 20px 40px rgba(0, 0, 0, 0.5)
 
 .state-box
@@ -193,7 +193,7 @@ onMounted(async () => {
   font-size 0.75rem
 
   .auth-light &
-    color #64748b
+    color #8b535c
 
   .auth-dark &
     color #94a3b8
@@ -224,7 +224,7 @@ onMounted(async () => {
   font-weight 700
 
   .auth-light &
-    color #0f172a
+    color #2a191c
 
   .auth-dark &
     color #ffffff
@@ -306,7 +306,7 @@ onMounted(async () => {
 
   .auth-dark &
     background linear-gradient(to right, #d97706, #f5c518)
-    color #020617
+    color #170e0f
 
 .btn-home-link
   padding 0.65rem
@@ -320,11 +320,11 @@ onMounted(async () => {
   .auth-light &
     background #f1f5f9
     border-color #cbd5e1
-    color #475569
+    color #693f45
 
   .auth-dark &
-    background #111c2e
-    border-color #1e304d
+    background #2e1c1e
+    border-color #4d2e33
     color #94a3b8
 
 @keyframes spin
