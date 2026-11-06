@@ -47,7 +47,7 @@
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #050811; }
 ::-webkit-scrollbar-thumb { background: #172439; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #f5c518; }
+::-webkit-scrollbar-thumb:hover { background: #e2b857; }
 
 html.light ::-webkit-scrollbar-track,
 [data-theme="light"] ::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -74,7 +74,7 @@ html.light,
   .bg-\[\#0a101d\],
   .bg-\[\#050912\],
   .bg-\[\#050810\] {
-    background-color: #ffffff !important;
+    background-color: #fffaf0 !important;
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
   }
 
@@ -86,10 +86,10 @@ html.light,
   .bg-\[\#060a12\]\/90,
   .bg-\[\#0d1526\]\/90,
   .bg-\[\#0d172a\]\/90 {
-    background-color: rgba(255, 255, 255, 0.94) !important;
+    background-color: rgba(255, 250, 240, 0.94) !important;
   }
 
-  .bg-\[\#0f172a\],
+  .bg-\[\#2a1a14\],
   .bg-\[\#121c2d\],
   .bg-\[\#1e293b\],
   .bg-\[\#16233b\],
@@ -97,11 +97,11 @@ html.light,
   .bg-\[\#101a2d\],
   .bg-\[\#142033\],
   .bg-\[\#18263e\] {
-    background-color: #f1f5f9 !important;
+    background-color: #efe4cf !important;
   }
 
   .bg-\[\#060a12\]\/90 {
-    background-color: rgba(248, 250, 252, 0.92) !important;
+    background-color: rgba(246, 239, 225, 0.92) !important;
   }
 
   /* Borders in Light Mode */
@@ -114,21 +114,21 @@ html.light,
   .border-\[\#233758\],
   .border-\[\#263750\],
   .border-\[\#1e293b\],
-  .border-\[\#334155\],
+  .border-\[\#5e4a3e\],
   .border-\[\#182740\],
   .border-\[\#1a2942\],
   .border-\[\#233859\],
   .border-\[\#2b4166\] {
-    border-color: #cbd5e1 !important;
+    border-color: #e0d0b0 !important;
   }
 
   /* Text colors */
   .text-\[\#e2e8f0\] {
-    color: #0f172a !important;
+    color: #2a1a14 !important;
   }
 
   .text-\[\#94a3b8\] {
-    color: #334155 !important;
+    color: #5e4a3e !important;
   }
 
   .text-\[\#64748b\] {
@@ -137,28 +137,28 @@ html.light,
 
   /* Accent titles & buttons */
   .text-\[\#f5c518\] {
-    color: #d97706 !important;
+    color: #9b1c31 !important;
   }
 
   .border-\[\#f5c518\]\/50,
   .border-\[\#f5c518\]\/40,
   .border-\[\#f5c518\]\/30 {
-    border-color: rgba(217, 119, 6, 0.4) !important;
+    border-color: rgba(155, 28, 49, 0.4) !important;
   }
 
   /* Form inputs & Selects */
   input, select, textarea {
-    background-color: #ffffff !important;
-    color: #0f172a !important;
-    border-color: #cbd5e1 !important;
+    background-color: #fffaf0 !important;
+    color: #2a1a14 !important;
+    border-color: #e0d0b0 !important;
   }
 
   input:focus, select:focus, textarea:focus {
-    border-color: #d97706 !important;
+    border-color: #9b1c31 !important;
   }
 
   option {
-    background-color: #ffffff !important;
-    color: #0f172a !important;
+    background-color: #fffaf0 !important;
+    color: #2a1a14 !important;
   }
 }

@@ -12,7 +12,7 @@ header.navbar-header(
       span.menu-text Bảng Chức Năng
 
     RouterLink.brand-link(to="/")
-      .brand-icon 📜
+      img.brand-logo(src="/assets/img/logo-96.webp" alt="Thiên Thư Môn" width="36" height="36")
       .brand-text
         h1.brand-title THIÊN THƯ MÔN
         span.brand-subtitle QUẢN TRỊ TIÊN MÔN
@@ -207,6 +207,16 @@ onUnmounted(() => {
 @media (max-width: 639px)
   .menu-text
     display none
+  .brand-subtitle
+    display none
+  .theme-label
+    display none
+  .navbar-header
+    padding 0.6rem 0.75rem
+  .brand-title
+    font-size 0.95rem
+  .login-btn .btn-text
+    display none
 
 .brand-link
   display flex
@@ -214,17 +224,14 @@ onUnmounted(() => {
   gap 0.75rem
   text-decoration none
 
-.brand-icon
+.brand-logo
   width 2.25rem
   height 2.25rem
-  border-radius var(--radius-md, 12px)
-  display flex
-  align-items center
-  justify-content center
-  font-size 1.2rem
-  background var(--color-brand-subtle)
-  border 1px solid var(--color-border)
-  box-shadow var(--shadow-sm)
+  border-radius 50%
+  object-fit cover
+  flex-shrink 0
+  border 1.5px solid var(--color-gold-leaf)
+  box-shadow 0 0 0 2px rgba(226, 184, 87, 0.18), var(--shadow-sm)
 
 .brand-title
   font-size 1.1rem
@@ -297,20 +304,20 @@ onUnmounted(() => {
     border-color var(--color-brand)
 
   .nav-light &
-    background #fef3c7
-    border-color #fde68a
-    color #92400e
+    background #f3e3c0
+    border-color #e0c68a
+    color #7a1426
 
     &:hover
-      background #fde68a
+      background #ecd49e
 
   .nav-dark &
-    background #172554
-    border-color #1e3a8a
-    color #93c5fd
+    background #2a1a1e
+    border-color #4a2a30
+    color #e2b857
 
     &:hover
-      background #1e3a8a
+      background #3a2227
 
 .user-section
   position relative
@@ -326,15 +333,15 @@ onUnmounted(() => {
   transition all 0.2s ease
 
   .nav-light &
-    background #ffffff
-    border 1px solid #cbd5e1
+    background #fffaf0
+    border 1px solid #e0d0b0
 
     &:hover
-      border-color #b45309
+      border-color #9b1c31
 
   .nav-dark &
-    background #0c1424
-    border 1px solid #1e304d
+    background #1f1216
+    border 1px solid #3d2428
 
     &:hover
       border-color rgba(245, 197, 24, 0.6)

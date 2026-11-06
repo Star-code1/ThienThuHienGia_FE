@@ -1,33 +1,33 @@
 /* src/styles/theme.css - Modern Soft Pastel & Rounded Design Tokens */
 :root {
   /* 1. MÀU NỀN & BỀ MẶT */
-  --color-bg-light: #f8fafc;
-  --color-bg-dark: #0b1120;
-  --color-surface-light: #ffffff;
-  --color-surface-dark: #1e293b;
-  --color-bg-subtle-light: #f1f5f9;
-  --color-bg-subtle-dark: #151f32;
+  --color-bg-light: #f6efe1;
+  --color-bg-dark: #120a0d;
+  --color-surface-light: #fffaf0;
+  --color-surface-dark: #1f1216;
+  --color-bg-subtle-light: #efe4cf;
+  --color-bg-subtle-dark: #190e12;
 
   /* 2. ĐƯỜNG VIỀN & CHỮ */
-  --color-border-light: #e2e8f0;
-  --color-border-dark: #334155;
-  --color-border-subtle-light: #edf2f7;
-  --color-border-subtle-dark: #1e293b;
+  --color-border-light: #e0d0b0;
+  --color-border-dark: #3d2428;
+  --color-border-subtle-light: #ece0c6;
+  --color-border-subtle-dark: #2a1a1e;
 
-  --color-text-light: #0f172a;
-  --color-text-dark: #f8fafc;
-  --color-text-secondary-light: #475569;
-  --color-text-secondary-dark: #94a3b8;
-  --color-muted-light: #64748b;
-  --color-muted-dark: #64748b;
+  --color-text-light: #2a1a14;
+  --color-text-dark: #f6ecdc;
+  --color-text-secondary-light: #5e4a3e;
+  --color-text-secondary-dark: #c9b8a4;
+  --color-muted-light: #85705f;
+  --color-muted-dark: #94806f;
 
   /* 3. MÀU NHẤN PASTEL (BLUE / GOLD / EMERALD) */
-  --color-brand-light: #3b82f6;
-  --color-brand-dark: #60a5fa;
-  --color-brand-hover-light: #2563eb;
-  --color-brand-hover-dark: #93c5fd;
-  --color-brand-subtle-light: #eff6ff;
-  --color-brand-subtle-dark: rgba(59, 130, 246, 0.15);
+  --color-brand-light: #9b1c31;
+  --color-brand-dark: #e2b857;
+  --color-brand-hover-light: #7a1426;
+  --color-brand-hover-dark: #f0cd7c;
+  --color-brand-subtle-light: #f8e4e2;
+  --color-brand-subtle-dark: rgba(226, 184, 87, 0.14);
 
   --color-gold-light: #d97706;
   --color-gold-dark: #f5c518;
@@ -56,6 +56,9 @@
   --color-brand: var(--color-brand-light);
   --color-brand-hover: var(--color-brand-hover-light);
   --color-brand-subtle: var(--color-brand-subtle-light);
+  --color-on-brand: #fffaf0;
+  --color-crimson: #9b1c31;
+  --color-gold-leaf: #e2b857;
 
   /* 4. BO TRÒN HIỆN ĐẠI (ROUNDED) */
   --radius-xs: 4px;
@@ -93,6 +96,7 @@
   --color-brand: var(--color-brand-dark);
   --color-brand-hover: var(--color-brand-hover-dark);
   --color-brand-subtle: var(--color-brand-subtle-dark);
+  --color-on-brand: #2a1208;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
@@ -127,7 +131,7 @@
 
 .modern-button, .btn-primary {
   background: var(--color-brand) !important;
-  color: #ffffff !important;
+  color: var(--color-on-brand) !important;
   border: 1px solid transparent !important;
   border-radius: var(--radius-md, 12px) !important;
   box-shadow: var(--shadow-sm) !important;
@@ -256,10 +260,10 @@ input[type="checkbox"] {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(160, 120, 90, 0.45);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.7);
+  background: rgba(200, 150, 90, 0.75);
 }
