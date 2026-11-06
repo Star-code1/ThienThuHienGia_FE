@@ -169,6 +169,8 @@ onMounted(async () => {
 <style lang="stylus" scoped>
 .profile-container
   position relative
+  width 100%
+  box-sizing border-box
   min-height calc(100vh - 57px)
   padding 1.5rem
   max-width 56rem
@@ -237,6 +239,7 @@ onMounted(async () => {
     background var(--color-surface-hover)
 
 .profile-main-card
+  overflow hidden
   position relative
   padding 1.75rem
   border-radius var(--radius-xl, 20px)

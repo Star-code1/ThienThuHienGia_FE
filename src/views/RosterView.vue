@@ -147,6 +147,8 @@ const filteredMembers = computed(() => {
 <style lang="stylus" scoped>
 .roster-container
   position relative
+  width 100%
+  box-sizing border-box
   min-height calc(100vh - 57px)
   padding 1.5rem
   border-radius var(--radius-xl, 20px)

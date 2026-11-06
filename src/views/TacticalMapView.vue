@@ -1594,4 +1594,10 @@ kbd {
   .dock-top { flex-wrap: wrap; }
   .panel-right { top: auto; bottom: 76px; }
 }
+
+/* Màn rất nhỏ (<=360px): thu gọn nút công cụ */
+@media (max-width: 359px) {
+  .seg-btn { padding: 0 8px; gap: 4px; }
+  .seg { gap: 2px; }
+}
 </style>

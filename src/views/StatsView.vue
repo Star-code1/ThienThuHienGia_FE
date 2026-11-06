@@ -855,6 +855,8 @@ const getEvalText = (score, totalAbsent) => {
 <style lang="stylus" scoped>
 .stats-container
   position relative
+  width 100%
+  box-sizing border-box
   min-height calc(100vh - 57px)
   padding 1.5rem
   max-width 80rem
@@ -2127,6 +2129,8 @@ const getEvalText = (score, totalAbsent) => {
   display flex
   align-items center
   gap 0.4rem
+  min-width 0
+  max-width 100%
 
 .filter-label
   font-size 0.65rem
@@ -2135,6 +2139,8 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-muted)
 
 .filter-select
+  min-width 0
+  max-width 100%
   padding 0.4rem 0.6rem
   border-radius 0.5rem
   border 1px solid var(--color-border)
