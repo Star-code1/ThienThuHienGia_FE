@@ -12,6 +12,43 @@
 
     RouterLink.btn-home(to="/") 🏠 Trang Chủ
 
+  //- Thẻ bài tu sĩ: cảnh giới, thành tích & huy hiệu
+  .cultivator-card(:style="{ '--c': classHex, '--r': realm.hex }")
+    .cc-head
+      .cc-avatar-wrap
+        img.cc-avatar(:src="user?.avatar" :alt="user?.username")
+        img.cc-class-icon(v-if="classIcon" :src="classIcon" :alt="user?.className")
+      .cc-id
+        h2.cc-name {{ user?.nickname || user?.globalName || user?.username }}
+        .cc-tags
+          span.cc-tag(:style="{ color: classHex, borderColor: classHex }") {{ user?.className || 'Bang Chúng' }}
+          span.cc-tag.cc-role {{ userPrimaryRole }}
+    .cc-realm
+      .cc-realm-top
+        span.cc-realm-name {{ realm.icon }} {{ realm.name }}
+        span.cc-realm-next(v-if="realm.next") còn {{ realm.remaining }} trận lên {{ realm.next.name }}
+        span.cc-realm-next(v-else) Đã đạt cảnh giới cao nhất
+      .cc-bar
+        .cc-bar-fill(:style="{ width: Math.round(realm.progress * 100) + '%' }")
+    .cc-stats(v-if="myStats")
+      .cc-stat
+        span.cc-stat-val {{ myStats.attendedCount }}
+        span.cc-stat-label Trận tham chiến
+      .cc-stat
+        span.cc-stat-val {{ attendRate }}%
+        span.cc-stat-label Chuyên cần
+      .cc-stat
+        span.cc-stat-val(:class="myStats.reputationScore < 0 ? 'neg' : 'pos'") {{ myStats.reputationScore > 0 ? '+' : '' }}{{ myStats.reputationScore }}
+        span.cc-stat-label Điểm công tội
+      .cc-stat
+        span.cc-stat-val {{ myStats.totalAbsentCount }}
+        span.cc-stat-label Lần vắng
+    p.cc-empty(v-else-if="statsLoaded") Chưa có dữ liệu điểm danh cho đạo hữu.
+    p.cc-empty(v-else) Đang tải thành tích...
+    .cc-badges(v-if="badges.length")
+      span.cc-badge(v-for="b in badges" :key="b.name" :title="b.desc")
+        | {{ b.icon }} {{ b.name }}
+
   //- Main Profile Card
   .profile-main-card
     .bg-watermark 📜
@@ -84,7 +121,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import api from '../services/api';
+import { getRealm, getBadges } from '../utils/cultivation';
 import { useAuthStore } from '../stores/authStore';
 import { useThemeStore } from '../stores/themeStore';
 import { getClassInfo } from '../theme/classColors';
@@ -103,6 +142,27 @@ const userPrimaryRole = computed(() => {
   if (user.value?.roles && user.value.roles.includes('Đường Chủ')) return 'Đường Chủ';
   if (user.value?.canEdit) return 'Đương Gia';
   return 'Bang Chúng';
+});
+// Thành tích điểm danh của chính mình (lấy từ bảng xếp hạng, khớp theo Discord ID)
+const myStats = ref(null);
+const statsLoaded = ref(false);
+const realm = computed(() => getRealm(myStats.value?.attendedCount || 0));
+const badges = computed(() => (myStats.value ? getBadges(myStats.value) : []));
+const attendRate = computed(() => {
+  const m = myStats.value;
+  return m && m.totalEvents > 0 ? Math.round((m.attendedCount / m.totalEvents) * 100) : 0;
+});
+
+onMounted(async () => {
+  try {
+    const res = await api.getAbsentRankings({ limit: 500 });
+    const list = res.data?.data || [];
+    myStats.value = list.find((m) => m.userId === user.value?.discordId) || null;
+  } catch (e) {
+    myStats.value = null;
+  } finally {
+    statsLoaded.value = true;
+  }
 });
 </script>
 
@@ -415,4 +475,156 @@ const userPrimaryRole = computed(() => {
   width 0.95rem
   height 0.95rem
   object-fit contain
+
+.cultivator-card
+  position relative
+  padding 1.1rem
+  border-radius var(--radius-2xl)
+  border 1px solid var(--color-border)
+  border-top 4px solid var(--c)
+  background linear-gradient(160deg, var(--color-surface), var(--color-bg-subtle))
+  box-shadow var(--shadow-lg)
+  display flex
+  flex-direction column
+  gap 1rem
+
+.cc-head
+  display flex
+  align-items center
+  gap 0.9rem
+
+.cc-avatar-wrap
+  position relative
+  flex-shrink 0
+
+.cc-avatar
+  width 4.5rem
+  height 4.5rem
+  border-radius 50%
+  object-fit cover
+  border 3px solid var(--c)
+  background var(--color-bg-subtle)
+
+.cc-class-icon
+  position absolute
+  right -4px
+  bottom -4px
+  width 1.7rem
+  height 1.7rem
+  padding 2px
+  border-radius 50%
+  background var(--color-surface)
+  border 1px solid var(--color-border)
+
+.cc-id
+  min-width 0
+
+.cc-name
+  margin 0
+  font-family var(--font-heading)
+  font-size 1.25rem
+  font-weight 800
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.cc-tags
+  display flex
+  flex-wrap wrap
+  gap 0.4rem
+  margin-top 0.35rem
+
+.cc-tag
+  padding 0.1rem 0.6rem
+  border-radius 999px
+  border 1px solid var(--color-border)
+  font-size 0.72rem
+  font-weight 700
+
+.cc-role
+  color var(--color-text-secondary)
+
+.cc-realm-top
+  display flex
+  justify-content space-between
+  align-items baseline
+  gap 0.5rem
+  flex-wrap wrap
+  margin-bottom 0.35rem
+
+.cc-realm-name
+  font-family var(--font-heading)
+  font-weight 800
+  font-size 1rem
+  color var(--r)
+
+.cc-realm-next
+  font-size 0.72rem
+  color var(--color-muted)
+
+.cc-bar
+  height 0.6rem
+  border-radius 999px
+  background var(--color-bg-subtle)
+  overflow hidden
+
+.cc-bar-fill
+  height 100%
+  border-radius 999px
+  background linear-gradient(90deg, var(--r), var(--color-gold-leaf))
+  transition width 0.6s ease
+
+.cc-stats
+  display grid
+  grid-template-columns repeat(2, 1fr)
+  gap 0.5rem
+
+.cc-stat
+  display flex
+  flex-direction column
+  align-items center
+  padding 0.6rem 0.3rem
+  border-radius var(--radius-md)
+  background var(--color-bg-subtle)
+
+.cc-stat-val
+  font-family var(--font-heading)
+  font-size 1.35rem
+  font-weight 800
+  color var(--color-text)
+
+  &.pos
+    color #10b981
+
+  &.neg
+    color #ef4444
+
+.cc-stat-label
+  font-size 0.68rem
+  color var(--color-muted)
+  text-transform uppercase
+  letter-spacing 0.05em
+
+.cc-empty
+  margin 0
+  font-size 0.8rem
+  color var(--color-muted)
+
+.cc-badges
+  display flex
+  flex-wrap wrap
+  gap 0.4rem
+
+.cc-badge
+  padding 0.25rem 0.7rem
+  border-radius 999px
+  font-size 0.75rem
+  font-weight 700
+  background var(--color-brand-subtle)
+  color var(--color-brand)
+  border 1px solid var(--color-gold-leaf)
+
+@media (min-width: 640px)
+  .cc-stats
+    grid-template-columns repeat(4, 1fr)
 </style>

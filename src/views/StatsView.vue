@@ -352,6 +352,12 @@
             span.podium-rate-breakdown ⚔️ {{ podiumMembers[2].attendedCount }} đánh • 🚫 {{ podiumMembers[2].totalAbsentCount }} vắng
             span.podium-rate Tỷ lệ vắng: {{ podiumMembers[2].absenceRate }}%
 
+    //- Biểu đồ chuyên cần theo Võ Phái
+    .class-chart-card(v-if="classChartRows.length")
+      h3.section-heading 📊 CHUYÊN CẦN THEO VÕ PHÁI
+      p.chart-note Tỷ lệ lượt vote đánh/dự bị trên tổng số trận áp dụng của từng phái
+      ClassBarChart(:rows="classChartRows" :max="100")
+
     //- Controls & Filters Bar
     .leaderboard-controls
       .controls-left
@@ -497,6 +503,7 @@ import { useAuthStore } from '../stores/authStore';
 import { useThemeStore } from '../stores/themeStore';
 import { CLASS_LIST, getClassHex, getClassIcon } from '../theme/classColors';
 import api from '../services/api';
+import ClassBarChart from '../components/ClassBarChart.vue';
 import Swal from 'sweetalert2';
 
 const store = useLineupStore();
@@ -727,6 +734,25 @@ const highScorersCount = computed(() => {
 
 const lowScorersCount = computed(() => {
   return absentRankings.value.filter((m) => (m.reputationScore || 0) < 0).length;
+});
+
+// Dữ liệu biểu đồ: tỷ lệ chuyên cần gộp theo từng Võ Phái
+const classChartRows = computed(() => {
+  return CLASS_LIST.map((c) => {
+    const members = absentRankings.value.filter((m) => m.className === c.name);
+    const events = members.reduce((sum, m) => sum + (m.totalEvents || 0), 0);
+    const attended = members.reduce((sum, m) => sum + (m.attendedCount || 0), 0);
+    const rate = events > 0 ? Math.round((attended / events) * 100) : 0;
+    return {
+      name: c.name,
+      hex: c.hex,
+      icon: c.icon,
+      count: members.length,
+      value: rate,
+      display: members.length ? `${rate}%` : '—',
+      sub: `${members.length} đệ tử • ${attended} lượt đánh`,
+    };
+  }).filter((r) => r.count > 0);
 });
 
 const filteredRankings = computed(() => {
@@ -2470,4 +2496,22 @@ const getEvalText = (score, totalAbsent) => {
   font-size 0.75rem
   color var(--color-muted)
   max-width 24rem
+
+.class-chart-card
+  padding 1rem 1.1rem
+  border-radius var(--radius-lg, 16px)
+  border 1px solid var(--color-border)
+  background var(--color-surface)
+  box-shadow var(--shadow-sm)
+  display flex
+  flex-direction column
+  gap 0.6rem
+
+  .section-heading
+    margin 0
+
+.chart-note
+  margin 0 0 0.4rem
+  font-size 0.75rem
+  color var(--color-muted)
 </style>
