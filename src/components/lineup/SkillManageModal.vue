@@ -33,6 +33,7 @@ Teleport(to="body")
                 option(value="Lưu Phái") Lưu Phái
                 option(value="Đồng Hành") Đồng Hành
                 option(value="Rèn") Rèn
+                option(value="Nội Công") Nội Công
 
             .form-group.full-width
               label.form-label Icon / Ảnh Kỹ Năng (Tải ảnh từ thiết bị) *
