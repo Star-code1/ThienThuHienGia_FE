@@ -467,7 +467,7 @@ const handleApply = async () => {
     font-weight 800
 
   .stat-sub
-    font-size 0.68rem
+    font-size 0.72rem
     opacity 0.8
     margin-top 0.15rem
 
@@ -583,7 +583,7 @@ const handleApply = async () => {
   font-weight 600
 
   .member-loc
-    font-size 0.65rem
+    font-size 0.72rem
     opacity 0.75
     font-family monospace
 
@@ -591,7 +591,7 @@ const handleApply = async () => {
     font-weight 700
 
   .member-class
-    font-size 0.65rem
+    font-size 0.72rem
     padding 0.1rem 0.35rem
     border-radius 4px
     background var(--shade-1)

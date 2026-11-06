@@ -391,7 +391,7 @@ const handleDeleteSkill = async (id, name) => {
   color var(--color-text)
 
 .upload-sub-text
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-text-muted)
 
 .dropzone-preview-card
@@ -426,7 +426,7 @@ const handleDeleteSkill = async (id, name) => {
   text-overflow ellipsis
 
 .preview-badge
-  font-size 0.7rem
+  font-size 0.72rem
   color #10b981
   font-weight 600
 
@@ -535,7 +535,7 @@ const handleDeleteSkill = async (id, name) => {
   text-overflow ellipsis
 
 .skill-category
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
 
 .btn-delete-skill

@@ -89,7 +89,7 @@ const handleLogin = () => {
   gap 0.35rem
 
 .modal-tag
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   letter-spacing 0.12em
   text-transform uppercase

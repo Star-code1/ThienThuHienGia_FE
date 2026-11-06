@@ -902,7 +902,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .header-subtitle
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 600
   letter-spacing 0.05em
   text-transform uppercase
@@ -1019,7 +1019,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .mode-sub
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
   margin-top 0.2rem
 
@@ -1062,7 +1062,7 @@ const getEvalText = (score, totalAbsent) => {
   flex-direction column
 
 .event-label
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   color var(--color-muted)
@@ -1083,7 +1083,7 @@ const getEvalText = (score, totalAbsent) => {
     width auto
 
 .select-label
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 600
   color var(--color-text-secondary)
   flex-shrink 0
@@ -1126,7 +1126,7 @@ const getEvalText = (score, totalAbsent) => {
   box-shadow var(--shadow-sm)
 
 .metric-label
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   color var(--color-text-secondary)
@@ -1147,7 +1147,7 @@ const getEvalText = (score, totalAbsent) => {
     color var(--color-brand)
 
 .metric-sub
-  font-size 0.7rem
+  font-size 0.72rem
   margin-top 0.25rem
   display block
 
@@ -1205,13 +1205,13 @@ const getEvalText = (score, totalAbsent) => {
   border-radius 9999px
   background rgba(245, 158, 11, 0.15)
   border 1px solid rgba(245, 158, 11, 0.4)
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 800
   font-family monospace
   color #fbbf24
 
 .unvoted-desc
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-muted)
   margin 0
 
@@ -1325,7 +1325,7 @@ const getEvalText = (score, totalAbsent) => {
   white-space nowrap
 
 .unvoted-sub
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
   flex-shrink 0
 
@@ -1339,7 +1339,7 @@ const getEvalText = (score, totalAbsent) => {
   display inline-block
   padding 0.15rem 0.45rem
   border-radius 0.3rem
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   background rgba(245, 158, 11, 0.18)
   color #fbbf24
@@ -1396,7 +1396,7 @@ const getEvalText = (score, totalAbsent) => {
   margin 0
 
 .noshow-desc
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-muted)
   margin 0.2rem 0 0 0
 
@@ -1428,7 +1428,7 @@ const getEvalText = (score, totalAbsent) => {
 
   th
     padding 0.75rem 1rem
-    font-size 0.65rem
+    font-size 0.72rem
     font-weight 800
     text-transform uppercase
     color var(--color-muted)
@@ -1453,7 +1453,7 @@ const getEvalText = (score, totalAbsent) => {
   display inline-block
   padding 0.2rem 0.55rem
   border-radius 0.35rem
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
 
   &.pill-present
@@ -1475,7 +1475,7 @@ const getEvalText = (score, totalAbsent) => {
   background rgba(239, 68, 68, 0.25)
   border 1px solid #ef4444
   color #f87171
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 800
   animation pulse 2s infinite
 
@@ -1485,7 +1485,7 @@ const getEvalText = (score, totalAbsent) => {
   background rgba(16, 185, 129, 0.15)
   border 1px solid rgba(16, 185, 129, 0.3)
   color #34d399
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
 
 .btn-toggle-noshow
@@ -1494,7 +1494,7 @@ const getEvalText = (score, totalAbsent) => {
   background rgba(239, 68, 68, 0.15)
   border 1px solid rgba(239, 68, 68, 0.5)
   color #ef4444
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   cursor pointer
   transition all 0.2s ease
@@ -1509,7 +1509,7 @@ const getEvalText = (score, totalAbsent) => {
   background rgba(16, 185, 129, 0.2)
   border 1px solid rgba(16, 185, 129, 0.5)
   color #34d399
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   cursor pointer
   transition all 0.2s ease
@@ -1611,7 +1611,7 @@ const getEvalText = (score, totalAbsent) => {
     font-size 0.75rem
     color var(--color-text)
   span
-    font-size 0.65rem
+    font-size 0.72rem
     color var(--color-muted)
 
 // Absent Section (Event)
@@ -1693,7 +1693,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .absent-reason
-  font-size 0.625rem
+  font-size 0.72rem
   color #fca5a5
 
 // Class stats
@@ -1790,7 +1790,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .chart-text
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   color var(--color-muted)
@@ -1916,7 +1916,7 @@ const getEvalText = (score, totalAbsent) => {
   flex-direction column
 
 .overview-label
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   color var(--color-muted)
@@ -1929,7 +1929,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .overview-sub
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-text-secondary)
   margin-top 0.2rem
 
@@ -2028,7 +2028,7 @@ const getEvalText = (score, totalAbsent) => {
   display flex
   align-items center
   justify-content center
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 800
   background #2a191c
   border 1px solid var(--color-border)
@@ -2040,7 +2040,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .podium-class
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   margin-top 0.15rem
 
@@ -2068,16 +2068,16 @@ const getEvalText = (score, totalAbsent) => {
   font-family monospace
 
 .score-unit
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
 
 .podium-rate-breakdown
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-text-secondary)
   margin-top 0.4rem
 
 .podium-rate
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
   margin-top 0.2rem
 
@@ -2133,7 +2133,7 @@ const getEvalText = (score, totalAbsent) => {
   max-width 100%
 
 .filter-label
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   color var(--color-muted)
@@ -2186,13 +2186,13 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .table-subtitle
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
 
 .badge-mode-indicator
   padding 0.35rem 0.75rem
   border-radius 9999px
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 800
   font-family monospace
   align-self flex-start
@@ -2218,7 +2218,7 @@ const getEvalText = (score, totalAbsent) => {
 
   th
     padding 0.75rem 1rem
-    font-size 0.65rem
+    font-size 0.72rem
     font-weight 800
     text-transform uppercase
     letter-spacing 0.05em
@@ -2296,7 +2296,7 @@ const getEvalText = (score, totalAbsent) => {
   color var(--color-text)
 
 .user-sub
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
 
 .class-pill
@@ -2306,7 +2306,7 @@ const getEvalText = (score, totalAbsent) => {
   padding 0.2rem 0.6rem
   border-radius 9999px
   border 1px solid
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
 
 .pill-icon
@@ -2337,7 +2337,7 @@ const getEvalText = (score, totalAbsent) => {
   font-size 1.05rem
 
 .score-unit
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
 
 .absent-count-badge
@@ -2356,7 +2356,7 @@ const getEvalText = (score, totalAbsent) => {
   font-family monospace
 
 .badge-txt
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
 
 .breakdown-box
@@ -2371,7 +2371,7 @@ const getEvalText = (score, totalAbsent) => {
   align-items center
 
 .breakdown-item
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   padding 0.12rem 0.45rem
   border-radius 0.3rem
@@ -2430,7 +2430,7 @@ const getEvalText = (score, totalAbsent) => {
   display inline-block
   padding 0.2rem 0.5rem
   border-radius 0.35rem
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
 
   &.eval-gold
@@ -2515,4 +2515,63 @@ const getEvalText = (score, totalAbsent) => {
   margin 0 0 0.4rem
   font-size 0.75rem
   color var(--color-muted)
+
+/* Mobile: bảng xếp hạng thành thẻ (mỗi đệ tử một thẻ) */
+@media (max-width: 639px)
+  .leaderboard-table
+    display block
+    min-width 0
+    border 0
+    background transparent
+
+  .leaderboard-table thead
+    display none
+
+  .leaderboard-table tbody
+    display flex
+    flex-direction column
+    gap 0.6rem
+    padding 0.6rem
+
+  .leaderboard-table tbody tr
+    display grid
+    grid-template-columns auto 1fr auto
+    gap 0.45rem 0.6rem
+    align-items center
+    padding 0.7rem
+    border 1px solid var(--color-border)
+    border-radius var(--radius-lg)
+    background var(--color-bg-subtle)
+
+  .leaderboard-table tbody td
+    display block
+    padding 0
+    border 0
+    text-align left
+
+  /* hàng 1: hạng | tên | điểm */
+  .leaderboard-table tbody td:nth-child(1)
+    grid-area 1 / 1
+  .leaderboard-table tbody td:nth-child(2)
+    grid-area 1 / 2
+    min-width 0
+  .leaderboard-table tbody td:nth-child(4)
+    grid-area 1 / 3
+  /* hàng 2: phái | số trận tham chiến */
+  .leaderboard-table tbody td:nth-child(3)
+    grid-area 2 / 1 / 3 / 3
+  .leaderboard-table tbody td:nth-child(5)
+    grid-area 2 / 3
+    font-size 0.78rem
+  /* các hàng còn lại chiếm cả chiều ngang */
+  .leaderboard-table tbody td:nth-child(n+6)
+    grid-column 1 / -1
+    font-size 0.8rem
+
+  .leaderboard-table tbody td:nth-child(6)::before
+    content 'Tổng vắng: '
+    color var(--color-muted)
+  .leaderboard-table tbody td:nth-child(8)::before
+    content 'Tỷ lệ vắng: '
+    color var(--color-muted)
 </style>

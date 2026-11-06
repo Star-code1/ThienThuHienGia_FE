@@ -162,7 +162,7 @@ const onSkillsClick = () => {
   padding 0 0.45rem
   gap 0.3rem
   font-family var(--font-body)
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 600
   letter-spacing -0.015em
   box-shadow var(--shadow-sm)
@@ -188,15 +188,15 @@ const onSkillsClick = () => {
   flex 1
   min-width 0
   text-align left
-  font-size 0.68rem
+  font-size 0.72rem
   line-height 1.2
 
 .pill-ext-badge
-  font-size 0.65rem
+  font-size 0.72rem
   flex-shrink 0
 
 .pill-note-badge
-  font-size 0.7rem
+  font-size 0.72rem
   margin-left auto
   flex-shrink 0
   filter drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4))
@@ -211,7 +211,7 @@ const onSkillsClick = () => {
   justify-content center
   gap 0.25rem
   color var(--color-text-secondary)
-  font-size 0.68rem
+  font-size 0.72rem
   font-weight 600
   background rgba(148, 163, 184, 0.05)
   transition all 0.2s ease
@@ -222,7 +222,7 @@ const onSkillsClick = () => {
     background rgba(59, 130, 246, 0.08)
 
 .empty-icon
-  font-size 0.65rem
+  font-size 0.72rem
 
 .skills-icons-row
   display flex
@@ -251,7 +251,7 @@ const onSkillsClick = () => {
   object-fit cover
 
 .add-skill-placeholder
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 600
   color var(--color-brand)
   opacity 0.75
@@ -284,7 +284,7 @@ const onSkillsClick = () => {
   width 18px
   height 18px
   border-radius 50%
-  font-size 0.65rem
+  font-size 0.72rem
   display flex
   align-items center
   justify-content center

@@ -329,7 +329,7 @@ const handleSave = () => {
     color #9b1c31
 
 .tab-badge
-  font-size 0.65rem
+  font-size 0.72rem
   color #eab308
 
 .modal-body

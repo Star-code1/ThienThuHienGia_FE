@@ -293,7 +293,7 @@ const onDropToPool = (evt) => {
 .filter-select
   width 100%
   border 1px solid
-  font-size 0.7rem
+  font-size 0.72rem
   border-radius var(--radius-sm, 8px)
   padding 0.35rem 0.5rem
   outline none
@@ -319,7 +319,7 @@ const onDropToPool = (evt) => {
   display flex
   justify-content space-between
   align-items center
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-brand)
 
 .reset-filter-btn

@@ -351,7 +351,7 @@ onUnmounted(() => {
   margin 0
 
 .banner-sub-desc
-  font-size 0.7rem
+  font-size 0.72rem
   font-family var(--font-body)
   color var(--color-brand)
   margin-top 0.15rem
@@ -434,7 +434,7 @@ onUnmounted(() => {
 .cycle-pill
   padding 0.25rem 0.65rem
   border-radius var(--radius-full, 9999px)
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   font-family var(--font-body)
   border 1px solid
@@ -530,7 +530,7 @@ onUnmounted(() => {
     color #ef4444
 
 .timer-label
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   display block
@@ -585,7 +585,7 @@ onUnmounted(() => {
 .flow-pill
   padding 0.15rem 0.5rem
   border-radius 0.25rem
-  font-size 0.625rem
+  font-size 0.72rem
   font-weight 700
 
   &.pill-gold
@@ -668,7 +668,7 @@ onUnmounted(() => {
   text-transform uppercase
 
 .tab-btn-badge
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   font-family monospace
   padding 0.1rem 0.5rem
@@ -812,7 +812,7 @@ onUnmounted(() => {
   font-weight 800
 
 .time-sub
-  font-size 0.55rem
+  font-size 0.72rem
   font-family monospace
 
 .act-content
@@ -837,7 +837,7 @@ onUnmounted(() => {
     color #ffffff
 
 .act-tag
-  font-size 0.55rem
+  font-size 0.72rem
   font-weight 700
   padding 0.1rem 0.4rem
   border-radius 0.25rem
@@ -1025,7 +1025,7 @@ onUnmounted(() => {
   font-family monospace
 
 .time-label
-  font-size 0.55rem
+  font-size 0.72rem
   font-weight 700
 
 .event-info
@@ -1050,7 +1050,7 @@ onUnmounted(() => {
     color #ffffff
 
 .event-tag
-  font-size 0.55rem
+  font-size 0.72rem
   font-weight 700
   padding 0.1rem 0.4rem
   border-radius 0.25rem

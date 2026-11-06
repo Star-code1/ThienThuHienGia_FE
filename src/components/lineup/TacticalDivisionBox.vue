@@ -246,4 +246,27 @@ const handleDeleteDivision = async () => {
 
   @media (max-width: 1200px)
     grid-template-columns repeat(auto-fit, minmax(200px, 1fr))
+
+/* Mobile: tiêu đề Đoàn xếp 2 hàng (toggle + hành động / tên đoàn) */
+@media (max-width: 639px)
+  .division-bar
+    flex-wrap wrap
+    gap 0.5rem
+    padding 0.5rem 0.6rem
+
+  .bar-left
+    flex 0 0 auto
+    order 1
+
+  .bar-right
+    flex 1
+    order 2
+
+  .bar-center
+    flex 1 0 100%
+    order 3
+
+  .division-title-input
+    width 100%
+    box-sizing border-box
 </style>

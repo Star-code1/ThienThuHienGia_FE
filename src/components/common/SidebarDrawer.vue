@@ -259,7 +259,7 @@ const isActive = (path) => {
   margin 0
 
 .brand-subtitle
-  font-size 0.65rem
+  font-size 0.72rem
   letter-spacing 0.05em
   text-transform uppercase
   font-family var(--font-heading)
@@ -323,7 +323,7 @@ const isActive = (path) => {
       border-color rgba(19, 31, 51, 0.6)
 
 .setting-label
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 600
 
   .drawer-light &
@@ -348,7 +348,7 @@ const isActive = (path) => {
 
 .setting-btn
   padding 0.15rem 0.5rem
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 600
   border-radius 0.25rem
   border none
@@ -460,7 +460,7 @@ const isActive = (path) => {
   font-size 0.85rem
 
 .item-badge
-  font-size 0.55rem
+  font-size 0.72rem
   padding 0.1rem 0.4rem
   border-radius 9999px
   font-weight 800
@@ -477,7 +477,7 @@ const isActive = (path) => {
     border 1px solid rgba(245, 197, 24, 0.3)
 
 .link-desc
-  font-size 0.65rem
+  font-size 0.72rem
   display block
   margin-top 0.15rem
   white-space nowrap
@@ -553,7 +553,7 @@ const isActive = (path) => {
     color #ffffff
 
 .user-class
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 600
   display block
   color #10b981
@@ -561,7 +561,7 @@ const isActive = (path) => {
 .profile-btn
   padding 0.25rem 0.65rem
   border-radius 0.5rem
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   text-decoration none
   transition all 0.15s ease
@@ -584,7 +584,7 @@ const isActive = (path) => {
   display flex
   align-items center
   justify-content space-between
-  font-size 0.65rem
+  font-size 0.72rem
   padding-top 0.4rem
   margin-top 0.4rem
   border-top 1px solid

@@ -248,7 +248,7 @@ const handleSubmit = () => {
     color #f8fafc
 
 .modal-subtitle
-  font-size 0.65rem
+  font-size 0.72rem
   font-family var(--font-body)
   display block
   color var(--color-muted)
@@ -397,7 +397,7 @@ const handleSubmit = () => {
   margin-bottom 0.25rem
 
 .class-name
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 700
   white-space nowrap
   overflow hidden
@@ -420,7 +420,7 @@ const handleSubmit = () => {
     color var(--color-text-secondary)
 
 .target-label
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   display block
@@ -513,7 +513,7 @@ const handleSubmit = () => {
   padding 0 0.45rem
   border-radius 999px
   background rgba(0, 0, 0, 0.2)
-  font-size 0.7rem
+  font-size 0.72rem
 
 /* ---------- Danh sách đã vote ---------- */
 .voted-panel
@@ -606,7 +606,7 @@ const handleSubmit = () => {
   white-space nowrap
 
 .voted-class
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-muted)
 
 .voted-pick

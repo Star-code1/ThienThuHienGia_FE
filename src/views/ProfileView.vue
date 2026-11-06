@@ -53,41 +53,6 @@
   .profile-main-card
     .bg-watermark 📜
 
-    //- Top Profile Overview
-    .profile-top-row
-      .avatar-wrapper
-        img.avatar-img(
-          :src="user?.avatar"
-          :alt="user?.username"
-        )
-        span.status-check-badge(title="Trạng thái quy phục") ✓
-
-      .profile-info
-        .name-class-row
-          h2.user-display-name {{ user?.nickname || user?.globalName || user?.username }}
-
-          span.class-pill-badge(
-            :style="{ backgroundColor: `${classHex}20`, borderColor: `${classHex}60`, color: classHex }"
-            title="Môn Phái được đồng bộ tự động từ Discord Server"
-          )
-            img.class-icon(v-if="classIcon" :src="classIcon")
-            span {{ user?.className || 'Bang Chúng' }}
-
-        span.discord-handle Discord Handle: @{{ user?.username }}
-
-        .roles-list
-          span.role-pill.role-duong-gia(v-if="userPrimaryRole === 'Đương Gia'")
-            span ⭐
-            span ĐƯƠNG GIA (Chưởng Quản Môn Phái)
-
-          span.role-pill.role-duong-chu(v-else-if="userPrimaryRole === 'Đường Chủ'")
-            span 👑
-            span ĐƯỜNG CHỦ (Chưởng Quản Trận Đồ)
-
-          span.role-pill.role-bang-chung(v-else)
-            span 📜
-            span BANG CHÚNG (Xuất Trận Chiêm Ngưỡng)
-
     //- Information Details Grid
     .info-details-grid
       .info-card
@@ -603,7 +568,7 @@ onMounted(async () => {
     color #ef4444
 
 .cc-stat-label
-  font-size 0.68rem
+  font-size 0.72rem
   color var(--color-muted)
   text-transform uppercase
   letter-spacing 0.05em
@@ -630,4 +595,15 @@ onMounted(async () => {
 @media (min-width: 640px)
   .cc-stats
     grid-template-columns repeat(4, 1fr)
+
+/* Mobile: bỏ khung lồng nhau cho gọn */
+@media (max-width: 639px)
+  .profile-container
+    padding 1rem 0.75rem
+
+  .profile-main-card
+    padding 0
+    border 0
+    background transparent
+    box-shadow none
 </style>

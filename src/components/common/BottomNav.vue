@@ -70,6 +70,6 @@ const isActive = (path) => (path === '/' ? route.path === '/' : route.path.start
     transition transform 0.15s ease
 
   .tab-label
-    font-size 0.65rem
+    font-size 0.72rem
     font-weight 600
 </style>

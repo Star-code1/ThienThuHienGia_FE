@@ -740,7 +740,7 @@ onMounted(() => {
   flex-direction column
 
 .stat-label
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   font-family var(--font-heading)
@@ -850,7 +850,7 @@ onMounted(() => {
 .result-badge
   padding 0.3rem 0.75rem
   border-radius var(--radius-full, 9999px)
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 800
   font-family var(--font-heading)
   text-transform uppercase
@@ -1042,7 +1042,7 @@ onMounted(() => {
   font-size 1.25rem
 
 .image-caption
-  font-size 0.65rem
+  font-size 0.72rem
   color #ffffff
   margin-top 0.25rem
 
@@ -1274,7 +1274,7 @@ onMounted(() => {
   flex-wrap wrap
 
 .dz-badge
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   padding 0.25rem 0.6rem
   border-radius var(--radius-sm, 6px)

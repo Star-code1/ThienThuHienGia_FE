@@ -961,7 +961,7 @@ kbd {
   border-radius: var(--radius-xs, 4px);
   padding: 2px 6px;
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11.5px;
 }
 
 /* NÚT BẤM (MODERN BUTTONS) */
@@ -1030,7 +1030,7 @@ kbd {
 .field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 .field > span {
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1230,7 +1230,7 @@ kbd {
   background: var(--tm-surface);
   color: var(--tm-text);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
@@ -1262,7 +1262,7 @@ kbd {
 #width-group .seg-btn {
   padding: 0 10px;
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 11.5px;
   text-transform: uppercase;
 }
 
@@ -1270,7 +1270,7 @@ kbd {
   min-width: 44px;
   text-align: center;
   font-family: var(--font-mono, monospace);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--tm-brand);
 }
@@ -1321,7 +1321,7 @@ kbd {
 }
 .count {
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--tm-muted);
@@ -1336,7 +1336,7 @@ kbd {
 .hint {
   margin: 0;
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: 11.5px;
   line-height: 1.5;
   color: var(--tm-text-secondary);
 }
@@ -1346,7 +1346,7 @@ kbd {
 .rule { display: flex; align-items: center; gap: 8px; }
 .rule > span {
   font-family: var(--font-heading, sans-serif);
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1386,7 +1386,7 @@ kbd {
   background: var(--tm-surface);
   color: var(--tm-text);
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 600;
   text-align: center;
   cursor: grab;
@@ -1423,7 +1423,7 @@ kbd {
   margin: 0;
   flex-shrink: 0;
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: var(--tm-muted);
@@ -1466,7 +1466,7 @@ kbd {
 }
 .inspector-meta em {
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 11.5px;
   font-style: normal;
   text-transform: uppercase;
   color: var(--tm-muted);
@@ -1488,7 +1488,7 @@ kbd {
   box-shadow: var(--tm-shadow);
   backdrop-filter: blur(8px);
   font-family: var(--font-mono, monospace);
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--tm-text);
@@ -1558,7 +1558,7 @@ kbd {
   border: 1px solid var(--tm-border);
   color: #ffffff;
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   white-space: nowrap;

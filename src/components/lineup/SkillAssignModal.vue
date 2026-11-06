@@ -290,7 +290,7 @@ const handleToggle = (skill) => {
   text-overflow ellipsis
 
 .skill-pick-desc
-  font-size 0.65rem
+  font-size 0.72rem
   color var(--color-muted)
 
 .check-indicator

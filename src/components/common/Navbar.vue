@@ -208,11 +208,26 @@ onUnmounted(() => {
   .menu-text
     display none
   .brand-subtitle
-    display none
+    display none !important
+  .brand-title
+    white-space nowrap
   .theme-label
     display none
+  .theme-toggle-btn
+    display none !important
   .navbar-header
     padding 0.6rem 0.75rem
+    gap 0.4rem
+  .arrow-down
+    display none
+  .nav-right
+    gap 0.4rem
+    flex-shrink 0
+  .nav-left
+    min-width 0
+  .brand-link
+    min-width 0
+    gap 0.5rem
   .brand-title
     font-size 0.95rem
   .login-btn .btn-text
@@ -243,7 +258,7 @@ onUnmounted(() => {
   margin 0
 
 .brand-subtitle
-  font-size 0.6rem
+  font-size 0.72rem
   letter-spacing 0.12em
   text-transform uppercase
   font-family var(--font-body)
@@ -269,7 +284,7 @@ onUnmounted(() => {
     display flex
 
 .time-label
-  font-size 0.6rem
+  font-size 0.72rem
   text-transform uppercase
   font-weight 700
   letter-spacing 0.1em
@@ -388,7 +403,7 @@ onUnmounted(() => {
     color #ffffff
 
 .role-badge
-  font-size 0.55rem
+  font-size 0.72rem
   padding 0.1rem 0.35rem
   border-radius 0.25rem
   font-weight 700
@@ -421,7 +436,7 @@ onUnmounted(() => {
       border 1px solid #553338
 
 .user-class
-  font-size 0.55rem
+  font-size 0.72rem
   font-weight 700
   display flex
   align-items center
@@ -435,7 +450,7 @@ onUnmounted(() => {
   display inline-block
 
 .arrow-down
-  font-size 0.6rem
+  font-size 0.72rem
   margin-left 0.25rem
 
   .nav-light &
@@ -487,7 +502,7 @@ onUnmounted(() => {
   gap 0.5rem
 
 .label-sub
-  font-size 0.6rem
+  font-size 0.72rem
 
   .nav-light &
     color #8b535c
@@ -507,7 +522,7 @@ onUnmounted(() => {
     color #f5c518
 
 .class-pill
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   padding 0.1rem 0.5rem
   border-radius 9999px
@@ -548,7 +563,7 @@ onUnmounted(() => {
       color #f5c518
 
 .theme-status-tag
-  font-size 0.55rem
+  font-size 0.72rem
   padding 0.1rem 0.35rem
   border-radius 0.25rem
   font-weight 700

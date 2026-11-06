@@ -231,7 +231,7 @@ const handleClearTeam = async () => {
 
 .btn-header-action
   padding 0.2rem 0.4rem
-  font-size 0.65rem
+  font-size 0.72rem
   font-weight 600
   border-radius var(--radius-xs, 4px)
   border 1px solid
@@ -272,7 +272,7 @@ const handleClearTeam = async () => {
   display flex
   align-items center
   padding 0.3rem 0.5rem
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   text-transform uppercase
   letter-spacing 0.04em

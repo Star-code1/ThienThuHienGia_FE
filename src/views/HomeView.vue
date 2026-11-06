@@ -130,7 +130,7 @@ onMounted(() => {
   gap 0.6rem
 
 .hero-eyebrow
-  font-size 0.7rem
+  font-size 0.72rem
   letter-spacing 0.2em
   font-weight 700
   color var(--color-brand)
@@ -211,7 +211,7 @@ onMounted(() => {
   color var(--color-brand)
 
 .stat-label
-  font-size 0.7rem
+  font-size 0.72rem
   color var(--color-muted)
   text-transform uppercase
   letter-spacing 0.06em
@@ -324,12 +324,12 @@ onMounted(() => {
   background var(--c)
 
 .sect-name
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 700
   text-align center
 
 .sect-tag
-  font-size 0.6rem
+  font-size 0.72rem
   font-weight 700
   color var(--c)
 

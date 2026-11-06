@@ -802,4 +802,26 @@ const captureScreenshot = async () => {
 
   .btn-action
     min-height 40px
+
+/* Mobile: nút thanh công cụ thành lưới 2 cột cho gọn */
+@media (max-width: 639px)
+  .toolbar-actions
+    display grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+    gap 0.4rem
+
+  .toolbar-actions .btn-action
+    justify-content center
+    padding 0.5rem 0.4rem
+    font-size 0.78rem
+    white-space nowrap
+
+  .toolbar-actions .select-event-box
+    grid-column 1 / -1
+
+  .toolbar-actions .event-select
+    width 100%
+
+  .toolbar-actions .btn-notify
+    grid-column 1 / -1
 </style>

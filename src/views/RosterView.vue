@@ -203,7 +203,7 @@ const filteredMembers = computed(() => {
   color var(--color-text)
 
 .header-subtitle
-  font-size 0.7rem
+  font-size 0.72rem
   font-weight 600
   letter-spacing 0.05em
   text-transform uppercase
@@ -392,7 +392,7 @@ const filteredMembers = computed(() => {
   color var(--color-text)
 
 .user-username
-  font-size 0.7rem
+  font-size 0.72rem
   font-family var(--font-body)
   display block
   color var(--color-text-secondary)
@@ -415,7 +415,7 @@ const filteredMembers = computed(() => {
   object-fit contain
 
 .role-badge
-  font-size 0.7rem
+  font-size 0.72rem
   padding 3px 10px
   border-radius var(--radius-full, 9999px)
   font-weight 700
@@ -457,7 +457,7 @@ const filteredMembers = computed(() => {
       border-color var(--color-border)
 
 .status-pill
-  font-size 0.65rem
+  font-size 0.72rem
   padding 0.2rem 0.65rem
   border-radius var(--radius-full, 9999px)
   font-weight 700
@@ -487,4 +487,46 @@ const filteredMembers = computed(() => {
 
   .roster-dark &
     color var(--color-brand)
+
+/* Mobile: mỗi đệ tử là một thẻ thay vì hàng bảng */
+@media (max-width: 639px)
+  .roster-table
+    min-width 0
+    display block
+    background transparent
+    border 0
+
+  .table-head
+    display none
+
+  .table-body
+    display flex
+    flex-direction column
+    gap 0.6rem
+    padding 0.6rem
+
+  .tr-row
+    display grid
+    grid-template-columns 1fr 1fr
+    gap 0.4rem 0.6rem
+    align-items center
+    padding 0.7rem
+    border 1px solid var(--color-border)
+    border-radius var(--radius-lg)
+    background var(--color-bg-subtle)
+
+  .td-cell
+    display block
+    padding 0
+    border 0
+
+  .user-td
+    grid-column 1 / -1
+    display flex
+    align-items center
+    gap 0.7rem
+
+  .td-cell.text-right
+    grid-column 1 / -1
+    text-align left
 </style>
