@@ -12,11 +12,52 @@ Teleport(to="body")
           .header-left
             span.modal-icon 📜
             .title-group
-              h3.modal-title THÊM THÀNH VIÊN MỚI
-              span.modal-subtitle THÊM ĐỆ TỬ VÀO MA TRẬN ĐỘI HÌNH
+              h3.modal-title {{ showVotedTab ? 'CHỌN NGƯỜI CHƠI CHO VỊ TRÍ' : 'THÊM THÀNH VIÊN MỚI' }}
+              span.modal-subtitle {{ targetSlotInfo ? targetSlotInfo.label : 'THÊM ĐỆ TỬ VÀO MA TRẬN ĐỘI HÌNH' }}
           button.close-btn(@click="$emit('close')") ✕
 
-        form.modal-form(@submit.prevent="handleSubmit")
+        //- 2 tab: chọn người đã vote / nhập lính đánh thuê (tab vote chỉ có khi bấm vào ô trống)
+        .tabs(v-if="showVotedTab")
+          button.tab(type="button" :class="{ active: tab === 'voted' }" @click="tab = 'voted'")
+            | ✅ Đã vote
+            span.tab-count {{ votedMembers.length }}
+          button.tab(type="button" :class="{ active: tab === 'mercenary' }" @click="tab = 'mercenary'")
+            | 🗡️ Lính đánh thuê
+
+        //- TAB 1: danh sách người chơi đã vote (chưa xếp vị trí)
+        .voted-panel(v-if="showVotedTab && tab === 'voted'")
+          input.form-input(v-model="search" type="search" placeholder="🔍 Tìm tên đệ tử...")
+          .chip-row
+            button.chip(type="button" :class="{ active: classFilter === 'all' }" @click="classFilter = 'all'") Tất cả
+            button.chip(
+              v-for="c in CLASS_LIST"
+              :key="c.name"
+              type="button"
+              :class="{ active: classFilter === c.name }"
+              :style="{ '--c': c.hex }"
+              @click="classFilter = c.name"
+            )
+              img.chip-icon(v-if="c.icon" :src="c.icon" :alt="c.name")
+              span {{ c.short }}
+          .voted-list
+            button.voted-item(
+              v-for="m in filteredVoted"
+              :key="m.userId"
+              type="button"
+              :style="{ '--c': classColor(m.className) }"
+              @click="pickVoted(m)"
+            )
+              img.voted-icon(v-if="classIcon(m.className)" :src="classIcon(m.className)" :alt="m.className")
+              span.voted-dot(v-else)
+              .voted-info
+                span.voted-name {{ m.displayName || m.username }}
+                span.voted-class {{ m.className || 'Chưa rõ' }}{{ m.roleName ? ' • ' + m.roleName : '' }}
+              span.voted-pick Chọn ➔
+            p.voted-empty(v-if="!filteredVoted.length")
+              | {{ votedMembers.length ? 'Không có đệ tử phù hợp.' : 'Chưa có ai vote hoặc tất cả đã được xếp vị trí. Hãy dùng tab Lính đánh thuê.' }}
+
+        //- TAB 2: nhập thông tin lính đánh thuê
+        form.modal-form(v-else @submit.prevent="handleSubmit")
           .form-group
             label.form-label
               | Tên Đệ Tử / Biệt Danh 
@@ -58,12 +99,13 @@ Teleport(to="body")
 
           .modal-actions
             button.btn-cancel(type="button" @click="$emit('close')") Hủy
-            button.btn-submit(type="submit") ➕ Thêm Thành Viên
+            button.btn-submit(type="submit") ➕ Thêm Lính Đánh Thuê
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue';
-import { CLASS_LIST } from '../../theme/classColors';
+import { reactive, ref, computed, watch } from 'vue';
+import { CLASS_LIST, getClassInfo } from '../../theme/classColors';
+import { useLineupStore } from '../../stores/lineupStore';
 import { useThemeStore } from '../../stores/themeStore';
 
 const props = defineProps({
@@ -71,8 +113,39 @@ const props = defineProps({
   targetSlotInfo: { type: Object, default: null }
 });
 
-const emit = defineEmits(['close', 'add']);
+const emit = defineEmits(['close', 'add', 'pick']);
 const themeStore = useThemeStore();
+const lineupStore = useLineupStore();
+
+const tab = ref('voted');
+const search = ref('');
+const classFilter = ref('all');
+
+// Người đã vote tham chiến và chưa có vị trí (loại lính đánh thuê / leader)
+const votedMembers = computed(() =>
+  lineupStore.attendancePool.filter(
+    (m) => !m.isExternal && !String(m.userId || '').startsWith('ext_') && !String(m.userId || '').startsWith('leader_')
+  )
+);
+// Tab "Đã vote" chỉ có khi chọn cho một ô trống cụ thể
+const showVotedTab = computed(() => !!props.targetSlotInfo);
+
+const filteredVoted = computed(() => {
+  const q = search.value.trim().toLowerCase();
+  return votedMembers.value.filter((m) => {
+    if (classFilter.value !== 'all' && m.className !== classFilter.value) return false;
+    if (!q) return true;
+    return (m.displayName || m.username || '').toLowerCase().includes(q);
+  });
+});
+
+const classColor = (name) => getClassInfo(name).hex;
+const classIcon = (name) => getClassInfo(name).icon;
+
+const pickVoted = (member) => {
+  emit('pick', member);
+  emit('close');
+};
 
 const form = reactive({
   displayName: '',
@@ -82,6 +155,9 @@ const form = reactive({
 
 watch(() => props.visible, (newVal) => {
   if (newVal) {
+    tab.value = votedMembers.value.length ? 'voted' : 'mercenary';
+    search.value = '';
+    classFilter.value = 'all';
     form.displayName = '';
     form.className = 'Long Ngâm';
     form.note = '';
@@ -106,7 +182,7 @@ const handleSubmit = () => {
   position fixed
   inset 0
   z-index 50
-  background var(--shade-2)
+  background rgba(10, 4, 6, 0.55)
   backdrop-filter blur(4px)
   display flex
   align-items center
@@ -303,7 +379,7 @@ const handleSubmit = () => {
       box-shadow var(--shadow-sm)
 
     .modal-dark &
-      background rgba(37, 99, 235, 0.2)
+      background var(--color-brand-subtle)
       border-color var(--color-brand)
       color var(--color-brand)
       box-shadow var(--shadow-sm)
@@ -403,4 +479,158 @@ const handleSubmit = () => {
 
 .fade-enter-from, .fade-leave-to
   opacity 0
+
+/* ---------- Tabs ---------- */
+.tabs
+  display grid
+  grid-template-columns 1fr 1fr
+  gap 0.4rem
+  margin-bottom 0.9rem
+  padding 0.25rem
+  border-radius var(--radius-md, 12px)
+  background var(--color-bg-subtle)
+
+.tab
+  min-height 40px
+  border 0
+  border-radius var(--radius-sm, 8px)
+  background transparent
+  color var(--color-text-secondary)
+  font-family var(--font-body)
+  font-weight 700
+  font-size 0.8rem
+  cursor pointer
+  display flex
+  align-items center
+  justify-content center
+  gap 0.4rem
+
+  &.active
+    background var(--color-brand)
+    color var(--color-on-brand)
+
+.tab-count
+  padding 0 0.45rem
+  border-radius 999px
+  background rgba(0, 0, 0, 0.2)
+  font-size 0.7rem
+
+/* ---------- Danh sách đã vote ---------- */
+.voted-panel
+  display flex
+  flex-direction column
+  gap 0.6rem
+
+.chip-row
+  display flex
+  gap 0.35rem
+  overflow-x auto
+  padding-bottom 0.2rem
+
+.chip
+  flex-shrink 0
+  display flex
+  align-items center
+  gap 0.25rem
+  min-height 32px
+  padding 0 0.65rem
+  border-radius 999px
+  border 1px solid var(--color-border)
+  background var(--color-bg-subtle)
+  color var(--color-text-secondary)
+  font-size 0.72rem
+  font-weight 700
+  cursor pointer
+
+  &.active
+    border-color var(--c, var(--color-brand))
+    color var(--c, var(--color-brand))
+    background var(--color-brand-subtle)
+
+.chip-icon
+  width 1rem
+  height 1rem
+  object-fit contain
+
+.voted-list
+  display flex
+  flex-direction column
+  gap 0.4rem
+  max-height 42vh
+  overflow-y auto
+  -webkit-overflow-scrolling touch
+
+.voted-item
+  display flex
+  align-items center
+  gap 0.65rem
+  width 100%
+  min-height 52px
+  padding 0.45rem 0.7rem
+  border-radius var(--radius-md, 12px)
+  border 1px solid var(--color-border)
+  border-left 4px solid var(--c)
+  background var(--color-bg-subtle)
+  color var(--color-text)
+  text-align left
+  cursor pointer
+  font-family var(--font-body)
+
+  &:hover, &:active
+    border-color var(--c)
+
+.voted-icon
+  width 1.7rem
+  height 1.7rem
+  object-fit contain
+  flex-shrink 0
+
+.voted-dot
+  width 0.8rem
+  height 0.8rem
+  border-radius 50%
+  background var(--c)
+  flex-shrink 0
+
+.voted-info
+  flex 1
+  min-width 0
+  display flex
+  flex-direction column
+
+.voted-name
+  font-weight 700
+  font-size 0.85rem
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.voted-class
+  font-size 0.7rem
+  color var(--color-muted)
+
+.voted-pick
+  font-size 0.72rem
+  font-weight 700
+  color var(--c)
+
+.voted-empty
+  margin 0
+  padding 1rem 0.5rem
+  text-align center
+  font-size 0.8rem
+  color var(--color-muted)
+
+/* Mobile: modal dạng bottom-sheet */
+@media (max-width: 639px)
+  .modal-overlay
+    align-items flex-end
+    padding 0
+
+  .modal-card
+    max-width 100%
+    max-height 92vh
+    overflow-y auto
+    border-radius 1.25rem 1.25rem 0 0
+    padding-bottom calc(1.25rem + env(safe-area-inset-bottom))
 </style>

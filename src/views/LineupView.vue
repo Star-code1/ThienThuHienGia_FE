@@ -157,6 +157,7 @@
     :targetSlotInfo="targetSlotInfo"
     @close="showAddMemberModal = false"
     @add="handleAddMemberSubmit"
+    @pick="handlePickVoted"
   )
 
   //- Modal confirm chụp ảnh
@@ -389,6 +390,17 @@ const handleAddMemberSubmit = (memberData) => {
   } else {
     store.addExternalMember(memberData);
   }
+};
+
+// Chọn người đã vote cho ô trống đang bấm
+const handlePickVoted = (member) => {
+  if (!targetSlotInfo.value) return;
+  store.assignFromPool({
+    targetDIdx: targetSlotInfo.value.dIdx,
+    targetTIdx: targetSlotInfo.value.tIdx,
+    targetSIdx: targetSlotInfo.value.sIdx,
+    member
+  });
 };
 
 const handleEventChange = () => {

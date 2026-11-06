@@ -1,54 +1,55 @@
 <template lang="pug">
-.assign-modal-overlay(v-if="visible" @click.self="$emit('close')")
-  .assign-modal-container(
-    :class="themeStore.theme === 'light' ? 'modal-light' : 'modal-dark'"
-  )
-    .modal-header
-      .header-title-box
-        span.header-icon 🎯
-        .header-text-group
-          h4.modal-title Phân Công Kỹ Năng / Tuyệt Kỹ
-          span.modal-subtitle(v-if="targetInfo") {{ targetInfo.title }} ({{ targetInfo.memberName || 'Chưa xếp' }})
-      button.btn-close(@click="$emit('close')") ✕
+Teleport(to="body")
+  .assign-modal-overlay(v-if="visible" @click.self="$emit('close')")
+    .assign-modal-container(
+      :class="themeStore.theme === 'light' ? 'modal-light' : 'modal-dark'"
+    )
+      .modal-header
+        .header-title-box
+          span.header-icon 🎯
+          .header-text-group
+            h4.modal-title Phân Công Kỹ Năng / Tuyệt Kỹ
+            span.modal-subtitle(v-if="targetInfo") {{ targetInfo.title }} ({{ targetInfo.memberName || 'Chưa xếp' }})
+        button.btn-close(@click="$emit('close')") ✕
 
-    .modal-body
-      .current-skills-box(v-if="assignedSkills.length > 0")
-        span.section-label Đang gán ({{ assignedSkills.length }}):
-        .selected-skills-row
-          .selected-skill-chip(
-            v-for="s in assignedSkills"
-            :key="s._id || s.id || s.name"
-            @click="handleToggle(s)"
-            title="Click để bỏ gán"
-          )
-            img.chip-img(:src="s.iconUrl" :alt="s.name")
-            span.chip-name {{ s.name }}
-            span.chip-remove ✕
+      .modal-body
+        .current-skills-box(v-if="assignedSkills.length > 0")
+          span.section-label Đang gán ({{ assignedSkills.length }}):
+          .selected-skills-row
+            .selected-skill-chip(
+              v-for="s in assignedSkills"
+              :key="s._id || s.id || s.name"
+              @click="handleToggle(s)"
+              title="Click để bỏ gán"
+            )
+              img.chip-img(:src="s.iconUrl" :alt="s.name")
+              span.chip-name {{ s.name }}
+              span.chip-remove ✕
 
-      .available-skills-section
-        span.section-label Chọn kỹ năng từ Database:
-        .skills-grid(v-if="skillStore.allSkills.length > 0")
-          .skill-pick-card(
-            v-for="skill in skillStore.allSkills"
-            :key="skill._id || skill.id"
-            :class="{ 'is-selected': isSelected(skill) }"
-            @click="handleToggle(skill)"
-          )
-            .pick-card-left
-              img.skill-pick-img(:src="skill.iconUrl" :alt="skill.name")
-              .skill-pick-info
-                span.skill-pick-name {{ skill.name }}
-                span.skill-pick-desc(v-if="skill.category") {{ skill.category }}
-            .check-indicator(v-if="isSelected(skill)") ✓
+        .available-skills-section
+          span.section-label Chọn kỹ năng từ Database:
+          .skills-grid(v-if="skillStore.allSkills.length > 0")
+            .skill-pick-card(
+              v-for="skill in skillStore.allSkills"
+              :key="skill._id || skill.id"
+              :class="{ 'is-selected': isSelected(skill) }"
+              @click="handleToggle(skill)"
+            )
+              .pick-card-left
+                img.skill-pick-img(:src="skill.iconUrl" :alt="skill.name")
+                .skill-pick-info
+                  span.skill-pick-name {{ skill.name }}
+                  span.skill-pick-desc(v-if="skill.category") {{ skill.category }}
+              .check-indicator(v-if="isSelected(skill)") ✓
 
-        .empty-assign-box(v-else)
-          span.empty-icon 📜
-          p.empty-text Chưa có kỹ năng nào trong Database.
-          button.btn-add-prompt(@click="$emit('openSkillManager')") ➕ Thêm kỹ năng mới ngay
+          .empty-assign-box(v-else)
+            span.empty-icon 📜
+            p.empty-text Chưa có kỹ năng nào trong Database.
+            button.btn-add-prompt(@click="$emit('openSkillManager')") ➕ Thêm kỹ năng mới ngay
 
-    .modal-footer
-      button.btn-manage-skills(@click="$emit('openSkillManager')") ⚙️ Quản lý danh mục kỹ năng
-      button.btn-done(@click="$emit('close')") Hoàn tất
+      .modal-footer
+        button.btn-manage-skills(@click="$emit('openSkillManager')") ⚙️ Quản lý danh mục kỹ năng
+        button.btn-done(@click="$emit('close')") Hoàn tất
 </template>
 
 <script setup>
@@ -84,7 +85,7 @@ const handleToggle = (skill) => {
 .assign-modal-overlay
   position fixed
   inset 0
-  background var(--shade-2)
+  background rgba(10, 4, 6, 0.55)
   backdrop-filter blur(4px)
   z-index 9999
   display flex

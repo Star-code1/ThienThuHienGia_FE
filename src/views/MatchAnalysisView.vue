@@ -1059,7 +1059,7 @@ onMounted(() => {
   position fixed
   inset 0
   z-index 50
-  background var(--shade-2)
+  background rgba(10, 4, 6, 0.55)
   backdrop-filter blur(8px)
   display flex
   align-items center

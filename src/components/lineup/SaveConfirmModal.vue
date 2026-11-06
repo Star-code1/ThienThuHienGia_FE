@@ -1,32 +1,33 @@
 <template lang="pug">
-Transition(name="fade")
-  .modal-backdrop(
-    v-if="visible"
-    @click.self="$emit('cancel')"
-  )
-    .confirm-card(
-      :class="themeStore.theme === 'light' ? 'card-light' : 'card-dark'"
+Teleport(to="body")
+  Transition(name="fade")
+    .modal-backdrop(
+      v-if="visible"
+      @click.self="$emit('cancel')"
     )
-      .top-gold-bar
-      .card-body
-        .title-row
-          span.check-badge ✓
-          h3.confirm-title Đã lưu đội hình
+      .confirm-card(
+        :class="themeStore.theme === 'light' ? 'card-light' : 'card-dark'"
+      )
+        .top-gold-bar
+        .card-body
+          .title-row
+            span.check-badge ✓
+            h3.confirm-title Đã lưu đội hình
 
-        p.confirm-desc Bạn có muốn chụp lại ảnh đội hình hiện tại để lưu về máy không?
+          p.confirm-desc Bạn có muốn chụp lại ảnh đội hình hiện tại để lưu về máy không?
 
-        .actions-row
-          button.btn-cancel(
-            @click="$emit('cancel')"
-            :disabled="capturing"
-          ) Bỏ qua
+          .actions-row
+            button.btn-cancel(
+              @click="$emit('cancel')"
+              :disabled="capturing"
+            ) Bỏ qua
 
-          button.btn-confirm(
-            @click="$emit('confirm')"
-            :disabled="capturing"
-          )
-            span.spinner(v-if="capturing")
-            span {{ capturing ? 'Đang chụp...' : 'Chụp ảnh' }}
+            button.btn-confirm(
+              @click="$emit('confirm')"
+              :disabled="capturing"
+            )
+              span.spinner(v-if="capturing")
+              span {{ capturing ? 'Đang chụp...' : 'Chụp ảnh' }}
 </template>
 
 <script setup>

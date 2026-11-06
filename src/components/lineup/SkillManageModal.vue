@@ -1,109 +1,110 @@
 <template lang="pug">
-.modal-overlay(v-if="visible" @click.self="$emit('close')")
-  .modal-container(
-    :class="themeStore.theme === 'light' ? 'modal-light' : 'modal-dark'"
-  )
-    //- Modal Header
-    .modal-header
-      .header-title-box
-        span.header-icon ⚡
-        h3.header-title QUẢN LÝ KỸ NĂNG & PHÂN CÔNG CHIẾN THUẬT
-      button.btn-close(@click="$emit('close')") ✕
+Teleport(to="body")
+  .modal-overlay(v-if="visible" @click.self="$emit('close')")
+    .modal-container(
+      :class="themeStore.theme === 'light' ? 'modal-light' : 'modal-dark'"
+    )
+      //- Modal Header
+      .modal-header
+        .header-title-box
+          span.header-icon ⚡
+          h3.header-title QUẢN LÝ KỸ NĂNG & PHÂN CÔNG CHIẾN THUẬT
+        button.btn-close(@click="$emit('close')") ✕
 
-    //- Modal Body
-    .modal-body
-      //- Tab / Form thêm kỹ năng mới
-      .add-skill-card
-        h4.section-heading ➕ Thêm Kỹ Năng Mới Vào Database
-        .form-grid
-          .form-group
-            label.form-label Tên Kỹ Năng / Phân Công *
-            input.form-input(
-              v-model="newSkillName"
-              placeholder="VD: Thái Cực Đồ, Như Phong Tự Bế..."
-              @keyup.enter="handleCreateSkill"
-            )
-
-          .form-group
-            label.form-label Phân Loại
-            select.form-select(v-model="newSkillCategory")
-              option(value="Tuyệt Kỹ") Tuyệt Kỹ
-              option(value="Bách Gia") Bách Gia
-              option(value="Lưu Phái") Lưu Phái
-              option(value="Đồng Hành") Đồng Hành
-              option(value="Rèn") Rèn
-
-          .form-group.full-width
-            label.form-label Icon / Ảnh Kỹ Năng (Tải ảnh từ thiết bị) *
-            .skill-dropzone(
-              @click="$refs.fileInput.click()"
-              @dragover.prevent="isDragging = true"
-              @dragleave="isDragging = false"
-              @drop.prevent="handleDrop"
-              :class="{ 'is-dragging': isDragging, 'has-file': !!newSkillIconUrl }"
-            )
-              input.hidden-file-input(
-                ref="fileInput"
-                type="file"
-                accept="image/*"
-                @change="handleFileUpload"
+      //- Modal Body
+      .modal-body
+        //- Tab / Form thêm kỹ năng mới
+        .add-skill-card
+          h4.section-heading ➕ Thêm Kỹ Năng Mới Vào Database
+          .form-grid
+            .form-group
+              label.form-label Tên Kỹ Năng / Phân Công *
+              input.form-input(
+                v-model="newSkillName"
+                placeholder="VD: Thái Cực Đồ, Như Phong Tự Bế..."
+                @keyup.enter="handleCreateSkill"
               )
-              template(v-if="!newSkillIconUrl")
-                .dropzone-placeholder
-                  span.upload-icon 📁
-                  .upload-text-group
-                    span.upload-main-text Bấm để chọn file ảnh hoặc kéo thả ảnh vào đây
-                    span.upload-sub-text Hỗ trợ PNG, JPG, WEBP (Tự động tải & lưu trữ an toàn trên Cloudinary)
-              template(v-else)
-                .dropzone-preview-card
-                  img.skill-preview-thumb(:src="newSkillIconUrl" alt="Skill Preview")
-                  .preview-meta
-                    span.preview-filename {{ selectedFileName || 'Ảnh kỹ năng đã chọn' }}
-                    span.preview-badge ☁️ Sẵn sàng lưu vào Cloudinary
-                  button.btn-clear-image(
-                    type="button"
-                    @click.stop="clearSelectedImage"
-                    title="Chọn lại ảnh khác"
-                  ) ✕ Đổi ảnh
 
-        .form-actions
-          button.btn-submit-skill(
-            @click="handleCreateSkill"
-            :disabled="isSubmitting"
-          )
-            span {{ isSubmitting ? 'Đang Tải Lên Cloudinary...' : '💾 Lưu Kỹ Năng Vào Database' }}
+            .form-group
+              label.form-label Phân Loại
+              select.form-select(v-model="newSkillCategory")
+                option(value="Tuyệt Kỹ") Tuyệt Kỹ
+                option(value="Bách Gia") Bách Gia
+                option(value="Lưu Phái") Lưu Phái
+                option(value="Đồng Hành") Đồng Hành
+                option(value="Rèn") Rèn
 
-      //- Danh sách kỹ năng hiện có
-      .skills-catalog-section
-        .catalog-header
-          h4.section-heading 📜 Danh Sách Kỹ Năng Trong Database ({{ skillStore.allSkills.length }})
-          span.catalog-hint Click vào kỹ năng để gán nhanh hoặc bấm xoá
+            .form-group.full-width
+              label.form-label Icon / Ảnh Kỹ Năng (Tải ảnh từ thiết bị) *
+              .skill-dropzone(
+                @click="$refs.fileInput.click()"
+                @dragover.prevent="isDragging = true"
+                @dragleave="isDragging = false"
+                @drop.prevent="handleDrop"
+                :class="{ 'is-dragging': isDragging, 'has-file': !!newSkillIconUrl }"
+              )
+                input.hidden-file-input(
+                  ref="fileInput"
+                  type="file"
+                  accept="image/*"
+                  @change="handleFileUpload"
+                )
+                template(v-if="!newSkillIconUrl")
+                  .dropzone-placeholder
+                    span.upload-icon 📁
+                    .upload-text-group
+                      span.upload-main-text Bấm để chọn file ảnh hoặc kéo thả ảnh vào đây
+                      span.upload-sub-text Hỗ trợ PNG, JPG, WEBP (Tự động tải & lưu trữ an toàn trên Cloudinary)
+                template(v-else)
+                  .dropzone-preview-card
+                    img.skill-preview-thumb(:src="newSkillIconUrl" alt="Skill Preview")
+                    .preview-meta
+                      span.preview-filename {{ selectedFileName || 'Ảnh kỹ năng đã chọn' }}
+                      span.preview-badge ☁️ Sẵn sàng lưu vào Cloudinary
+                    button.btn-clear-image(
+                      type="button"
+                      @click.stop="clearSelectedImage"
+                      title="Chọn lại ảnh khác"
+                    ) ✕ Đổi ảnh
 
-        .skills-grid(v-if="skillStore.allSkills.length > 0")
-          .skill-card-item(
-            v-for="skill in skillStore.allSkills"
-            :key="skill._id || skill.id"
-            :class="themeStore.theme === 'light' ? 'item-light' : 'item-dark'"
-          )
-            .skill-item-left
-              img.skill-thumb(:src="skill.iconUrl" :alt="skill.name")
-              .skill-meta
-                span.skill-name {{ skill.name }}
-                span.skill-category {{ skill.category || 'Chung' }}
+          .form-actions
+            button.btn-submit-skill(
+              @click="handleCreateSkill"
+              :disabled="isSubmitting"
+            )
+              span {{ isSubmitting ? 'Đang Tải Lên Cloudinary...' : '💾 Lưu Kỹ Năng Vào Database' }}
+
+        //- Danh sách kỹ năng hiện có
+        .skills-catalog-section
+          .catalog-header
+            h4.section-heading 📜 Danh Sách Kỹ Năng Trong Database ({{ skillStore.allSkills.length }})
+            span.catalog-hint Click vào kỹ năng để gán nhanh hoặc bấm xoá
+
+          .skills-grid(v-if="skillStore.allSkills.length > 0")
+            .skill-card-item(
+              v-for="skill in skillStore.allSkills"
+              :key="skill._id || skill.id"
+              :class="themeStore.theme === 'light' ? 'item-light' : 'item-dark'"
+            )
+              .skill-item-left
+                img.skill-thumb(:src="skill.iconUrl" :alt="skill.name")
+                .skill-meta
+                  span.skill-name {{ skill.name }}
+                  span.skill-category {{ skill.category || 'Chung' }}
             
-            button.btn-delete-skill(
-              @click="handleDeleteSkill(skill._id || skill.id, skill.name)"
-              title="Xoá kỹ năng khỏi database"
-            ) 🗑️
+              button.btn-delete-skill(
+                @click="handleDeleteSkill(skill._id || skill.id, skill.name)"
+                title="Xoá kỹ năng khỏi database"
+              ) 🗑️
 
-        .empty-skills-box(v-else)
-          span.empty-skills-icon 📜
-          p.empty-skills-msg Chưa có kỹ năng nào trong Database.
-          p.empty-skills-sub Vui lòng nhập tên và tải ảnh ở form phía trên để thêm kỹ năng mới.
+          .empty-skills-box(v-else)
+            span.empty-skills-icon 📜
+            p.empty-skills-msg Chưa có kỹ năng nào trong Database.
+            p.empty-skills-sub Vui lòng nhập tên và tải ảnh ở form phía trên để thêm kỹ năng mới.
 
-    //- Modal Footer
-    .modal-footer
-      button.btn-close-modal(@click="$emit('close')") Đóng
+      //- Modal Footer
+      .modal-footer
+        button.btn-close-modal(@click="$emit('close')") Đóng
 </template>
 
 <script setup>
@@ -209,7 +210,7 @@ const handleDeleteSkill = async (id, name) => {
 .modal-overlay
   position fixed
   inset 0
-  background var(--shade-2)
+  background rgba(10, 4, 6, 0.55)
   backdrop-filter blur(6px)
   z-index 9999
   display flex
@@ -599,4 +600,32 @@ const handleDeleteSkill = async (id, name) => {
   font-size 0.75rem
   color var(--color-text-muted)
   margin 0
+
+/* ---------- Mobile ---------- */
+.form-input, .form-select
+  min-width 0
+
+@media (max-width: 639px)
+  .modal-overlay
+    align-items flex-end
+    padding 0
+
+  .modal-container
+    max-width 100%
+    max-height 92vh
+    border-radius 1.25rem 1.25rem 0 0
+
+  .form-grid
+    grid-template-columns minmax(0, 1fr)
+
+  .skills-grid
+    grid-template-columns minmax(0, 1fr)
+
+  .catalog-header
+    flex-direction column
+    align-items flex-start
+    gap 0.25rem
+
+  .skill-dropzone
+    padding 0.75rem
 </style>
