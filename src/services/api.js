@@ -51,6 +51,18 @@ export default {
   getAbsentRankings(params = {}) {
     return apiClient.get('/attendance/rankings/absent', { params });
   },
+  // Thống kê vote Vắng: tổng quan N tháng gần nhất
+  getAbsenceOverview(params = {}) {
+    return apiClient.get('/attendance/absence-stats/overview', { params });
+  },
+  // Thống kê vote Vắng: chi tiết từng đệ tử trong 1 tháng (YYYY-MM)
+  getAbsenceMonth(month) {
+    return apiClient.get(`/attendance/absence-stats/month/${month}`);
+  },
+  // Lưu/xoá ghi chú cho đệ tử vắng nhiều (chỉ Đương Gia / Đường Chủ)
+  saveAbsenceNote(month, userId, content) {
+    return apiClient.put(`/attendance/absence-stats/month/${month}/note/${userId}`, { content });
+  },
   // Lấy sơ đồ đội hình đã lưu
   getLineup(eventId) {
     return apiClient.get(`/lineup/${eventId}`);

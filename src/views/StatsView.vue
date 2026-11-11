@@ -20,6 +20,10 @@
           :class="{ active: currentTab === 'leaderboard' }"
           @click="currentTab = 'leaderboard'"
         ) 🏆 Bảng Xếp Hạng Tổng Điểm
+        button.tab-btn(
+          :class="{ active: currentTab === 'monthly' }"
+          @click="currentTab = 'monthly'"
+        ) 📅 Vắng Theo Tháng
       RouterLink.btn-lineup-link(to="/lineup") Thiên Thư Trận Phái ➔
 
   //- TAB 1: THỐNG KÊ THEO TRẬN ĐANG CHỌN
@@ -494,6 +498,9 @@
         span.empty-icon 🎉
         h4.empty-title Không có dữ liệu đệ tử trong bộ lọc
         p.empty-desc Hãy thử chọn mốc thời gian khác hoặc xóa từ khóa tìm kiếm.
+
+  //- TAB 3: THỐNG KÊ VOTE VẮNG THEO THÁNG
+  MonthlyAbsenceStats(v-else-if="currentTab === 'monthly'")
 </template>
 
 <script setup>
@@ -504,13 +511,14 @@ import { useThemeStore } from '../stores/themeStore';
 import { CLASS_LIST, getClassHex, getClassIcon } from '../theme/classColors';
 import api from '../services/api';
 import ClassBarChart from '../components/ClassBarChart.vue';
+import MonthlyAbsenceStats from '../components/stats/MonthlyAbsenceStats.vue';
 import Swal from 'sweetalert2';
 
 const store = useLineupStore();
 const authStore = useAuthStore();
 const themeStore = useThemeStore();
 
-// Tab state: 'event' hoặc 'leaderboard'
+// Tab state: 'event' | 'leaderboard' | 'monthly'
 const currentTab = ref('event');
 const selectedMessageId = ref('');
 
