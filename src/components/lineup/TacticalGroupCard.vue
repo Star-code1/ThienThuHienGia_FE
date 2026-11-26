@@ -1,5 +1,6 @@
 <template lang="pug">
 .tactical-group-card(
+  :data-focus-key="`team:${divisionId}:${team.id}`"
   :class="themeStore.theme === 'light' ? 'card-light' : 'card-dark'"
 )
   //- Header của Team
@@ -35,6 +36,7 @@
     .slot-row-wrapper(
       v-for="(slot, sIdx) in team.slots"
       :key="sIdx"
+      :data-focus-key="`slot:${divisionId}:${team.id}:${sIdx}`"
       :class="{ 'drag-over': isEditMode && dragOverIndex === sIdx }"
       @dragover.prevent="dragOverIndex = sIdx"
       @dragleave="dragOverIndex = null"
@@ -58,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import TacticalSlotRow from './TacticalSlotRow.vue';
 import { useLineupStore } from '../../stores/lineupStore';
 import { useThemeStore } from '../../stores/themeStore';
@@ -76,6 +78,7 @@ const emit = defineEmits(['toggleCheck', 'removeSlot', 'clickSlot', 'openSkillAs
 const store = useLineupStore();
 const themeStore = useThemeStore();
 const dragOverIndex = ref(null);
+const divisionId = computed(() => store.divisions[props.divisionIndex]?.id);
 
 const onDragStart = (evt, slot, sIdx) => {
   if (!slot.userId) return;

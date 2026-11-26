@@ -1,5 +1,6 @@
 <template lang="pug">
 .tactical-division-box(
+  :data-focus-key="`div:${division.id}`"
   :class="[themeStore.theme === 'light' ? 'div-light' : 'div-dark', { 'is-collapsed': division.isCollapsed }]"
 )
   //- Division Header Bar

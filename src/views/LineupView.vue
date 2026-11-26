@@ -8,6 +8,20 @@
         h2.toolbar-title THIÊN THƯ TRẬN PHÁI — CÔNG THÀNH CHIẾN
         span.toolbar-subtitle {{ store.title || 'Thiên Thư Môn' }}
 
+      //- Trạng thái real-time + những người đang cùng xem/sửa
+      .presence-bar(v-if="store.eventId")
+        span.live-dot(:class="store.connected ? 'is-live' : 'is-off'" :title="store.connected ? 'Đang đồng bộ real-time' : 'Mất kết nối, đang thử lại...'")
+        span.live-text {{ store.connected ? 'Trực tuyến' : 'Ngoại tuyến' }}
+        .peer-avatars
+          .peer-chip(
+            v-for="p in uniquePeers"
+            :key="p.id"
+            :title="p.name + (p.canEdit ? ' (đang chỉnh sửa)' : ' (đang xem)')"
+            :style="{ borderColor: p.color, backgroundColor: p.color }"
+          )
+            img(v-if="p.avatar" :src="p.avatar" :alt="p.name")
+            span(v-else) {{ (p.name || '?').slice(0, 1).toUpperCase() }}
+
     .toolbar-actions
       //- Nút Thêm Đoàn Mới
       button.btn-action.btn-add-division(
@@ -107,6 +121,8 @@
       ref="lineupCaptureRef"
       :class="themeStore.theme === 'light' ? 'matrix-light' : 'matrix-dark'"
     )
+      //- Con trỏ và khung "đang sửa" của người khác (không đưa vào ảnh xuất)
+      PresenceLayer(:target="lineupCaptureRef")
       //- Danh sách các Đoàn (Divisions)
       .divisions-list-container
         TacticalDivisionBox(
@@ -176,7 +192,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import { toPng } from 'html-to-image';
 import Swal from 'sweetalert2';
 import { useLineupStore } from '../stores/lineupStore';
@@ -190,6 +206,7 @@ import AddMemberModal from '../components/lineup/AddMemberModal.vue';
 import SkillManageModal from '../components/lineup/SkillManageModal.vue';
 import SkillAssignModal from '../components/lineup/SkillAssignModal.vue';
 import InheritLineupModal from '../components/lineup/InheritLineupModal.vue';
+import PresenceLayer from '../components/lineup/PresenceLayer.vue';
 import { CLASS_LIST } from '../theme/classColors';
 
 const store = useLineupStore();
@@ -211,6 +228,34 @@ const showNoteModal = ref(false);
 const targetNoteInfo = ref(null);
 const targetSlotInfo = ref(null);
 const targetSkillSlotInfo = ref(null);
+
+// Mỗi người một chip (một người mở nhiều tab chỉ hiện một lần)
+const uniquePeers = computed(() => {
+  const seen = new Set();
+  return store.peers.filter((p) => (seen.has(p.userId) ? false : seen.add(p.userId)));
+});
+
+// Báo cho người khác biết mình đang mở hộp thoại sửa mục nào
+const focusKeyOf = ({ dIdx, tIdx, sIdx, type }) => {
+  const div = store.divisions[dIdx];
+  if (!div) return null;
+  const team = div.teams?.[tIdx];
+  if (type === 'division') return `div:${div.id}`;
+  if (type === 'team' && team) return `team:${div.id}:${team.id}`;
+  if (sIdx !== undefined && sIdx !== null && team) return `slot:${div.id}:${team.id}:${sIdx}`;
+  return null;
+};
+watch(
+  () => {
+    if (showNoteModal.value && targetNoteInfo.value) return focusKeyOf(targetNoteInfo.value);
+    if (showSkillAssignModal.value && targetSkillSlotInfo.value) return focusKeyOf(targetSkillSlotInfo.value);
+    if (showAddMemberModal.value && targetSlotInfo.value) return focusKeyOf(targetSlotInfo.value);
+    return null;
+  },
+  (key) => store.setFocus(key, 'modal')
+);
+
+onBeforeUnmount(() => store.disconnectRealtime());
 
 const handleOpenMemberNote = (payload) => {
   const dIdx = payload?.dIdx;
@@ -473,6 +518,7 @@ const captureScreenshot = async () => {
       backgroundColor: bgColor,
       pixelRatio: 2,
       cacheBust: true,
+      filter: (node) => !(node.classList && node.classList.contains('presence-layer')),
     });
 
     const link = document.createElement('a');
@@ -562,6 +608,51 @@ const captureScreenshot = async () => {
 
   .lineup-dark &
     color var(--color-brand)
+
+.presence-bar
+  display flex
+  align-items center
+  gap 0.4rem
+  margin-left 0.5rem
+  padding-left 0.75rem
+  border-left 1px solid rgba(148, 163, 184, 0.4)
+
+.live-dot
+  width 8px
+  height 8px
+  border-radius 50%
+  &.is-live
+    background #22c55e
+    box-shadow 0 0 6px #22c55e
+  &.is-off
+    background #94a3b8
+
+.live-text
+  font-size 0.7rem
+  font-weight 600
+  opacity 0.8
+
+.peer-avatars
+  display flex
+  padding-left 0.3rem
+
+.peer-chip
+  width 26px
+  height 26px
+  margin-left -6px
+  border-radius 50%
+  border 2px solid
+  overflow hidden
+  display flex
+  align-items center
+  justify-content center
+  color #fff
+  font-size 0.7rem
+  font-weight 700
+  img
+    width 100%
+    height 100%
+    object-fit cover
 
 .toolbar-actions
   display flex
@@ -752,6 +843,7 @@ const captureScreenshot = async () => {
   flex-shrink 0
 
 .lineup-matrix-box
+  position relative
   flex 1
   min-width 0
   border-radius var(--radius-lg, 16px)

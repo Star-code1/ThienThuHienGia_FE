@@ -2,6 +2,19 @@ import { defineStore } from 'pinia';
 import api from '../services/api';
 import Swal from 'sweetalert2';
 import { getClassInfo } from '../theme/classColors';
+import { useAuthStore } from './authStore';
+import { createLineupSocket } from '../services/lineupSocket';
+import { applyOp, diffLineup, ensureIds, clone } from '../utils/lineupOps';
+
+// ---- Trạng thái đồng bộ real-time (không cần reactive) ----
+const SYNC_DEBOUNCE_MS = 120;
+let socket = null;
+let lastSynced = null; // snapshot {title, divisions} đã đồng bộ với server
+let syncTimer = null;
+let stopSubscribe = null;
+let joinedEventId = '';
+const focusSources = { modal: null, input: null };
+let lastSentFocus = null;
 
 export const useLineupStore = defineStore('lineup', {
   state: () => ({
@@ -20,6 +33,10 @@ export const useLineupStore = defineStore('lineup', {
     
     loading: false,
     events: [],
+
+    // Real-time: kết nối + những người đang cùng mở sơ đồ
+    connected: false,
+    peers: [], // [{ id, name, avatar, color, focus, cursor }]
   }),
 
   getters: {
@@ -89,6 +106,166 @@ export const useLineupStore = defineStore('lineup', {
   },
 
   actions: {
+    // ======================= REAL-TIME =======================
+    _snapshot() {
+      return { title: this.title, divisions: clone(this.divisions) };
+    },
+
+    // Chạy mutator rồi cập nhật lại Hàng Chờ theo ai đang/không còn ở trong slot
+    _withPoolSync(mutator) {
+      const collect = () => {
+        const map = new Map();
+        this.divisions.forEach((d) => (d.teams || []).forEach((t) => (t.slots || []).forEach((sl) => {
+          if (sl.userId) map.set(sl.userId, sl);
+        })));
+        return map;
+      };
+      const before = new Map([...collect()].map(([k, sl]) => [k, clone(sl)]));
+      mutator();
+      const after = collect();
+      before.forEach((sl, uid) => {
+        if (after.has(uid) || uid.startsWith('leader_') || uid.startsWith('ext_')) return;
+        if (this.attendancePool.some((m) => m.userId === uid)) return;
+        this.attendancePool.push({
+          userId: uid,
+          displayName: sl.displayName,
+          username: sl.displayName,
+          className: sl.className || sl.class,
+          roleName: sl.roleName || sl.role,
+          note: sl.note || '',
+        });
+      });
+      this.attendancePool = this.attendancePool.filter((m) => !after.has(m.userId));
+    },
+
+    // Nhận trạng thái chuẩn từ server, giữ lại thay đổi cục bộ chưa gửi
+    _adoptServerState(state) {
+      const pending = lastSynced && useAuthStore().canEdit ? diffLineup(lastSynced, this._snapshot()) : [];
+      this._withPoolSync(() => {
+        this.title = state.title || this.title;
+        const collapsed = new Map(this.divisions.map((d) => [d.id, d.isCollapsed]));
+        this.divisions = clone(state.divisions).map((d) => ({ ...d, isCollapsed: collapsed.get(d.id) ?? false }));
+        this.divisions.forEach((d) => (d.teams || []).forEach((t) => (t.slots || []).forEach((sl, i) => {
+          sl.isLeader = i === 0;
+          if (!sl.skills) sl.skills = [];
+        })));
+        lastSynced = this._snapshot();
+        pending.forEach((op) => applyOp(this, op));
+      });
+      if (pending.length) this._scheduleSync();
+    },
+
+    _scheduleSync() {
+      if (!socket || !socket.connected || !lastSynced || !useAuthStore().canEdit) return;
+      clearTimeout(syncTimer);
+      syncTimer = setTimeout(() => this._flushSync(), SYNC_DEBOUNCE_MS);
+    },
+
+    _flushSync() {
+      if (!socket || !socket.connected || !lastSynced || !useAuthStore().canEdit) return;
+      ensureIds(this.divisions);
+      const now = this._snapshot();
+      const ops = diffLineup(lastSynced, now);
+      if (!ops.length) return;
+      lastSynced = now;
+      socket.emit('lineup:ops', { ops });
+    },
+
+    connectRealtime(eventId) {
+      if (!eventId || !localStorage.getItem('ttm_token')) return;
+      joinedEventId = eventId;
+      this.peers = [];
+
+      if (!socket) {
+        socket = createLineupSocket();
+
+        socket.on('connect', () => {
+          this.connected = true;
+          this._join();
+        });
+        socket.on('disconnect', () => {
+          this.connected = false;
+          this.peers = [];
+        });
+        socket.on('connect_error', () => { this.connected = false; });
+
+        socket.on('lineup:ops', ({ ops }) => {
+          this._withPoolSync(() => {
+            ops.forEach((op) => {
+              applyOp(this, op);
+              if (lastSynced) applyOp(lastSynced, op);
+            });
+          });
+        });
+        socket.on('lineup:state', (state) => this._adoptServerState(state));
+
+        socket.on('presence:join', (p) => {
+          if (!this.peers.some((x) => x.id === p.id)) this.peers.push({ ...p, cursor: null });
+        });
+        socket.on('presence:leave', ({ id }) => {
+          this.peers = this.peers.filter((p) => p.id !== id);
+        });
+        socket.on('presence:cursor', ({ id, pos }) => {
+          const p = this.peers.find((x) => x.id === id);
+          if (p) p.cursor = pos;
+        });
+        socket.on('presence:focus', ({ id, key }) => {
+          const p = this.peers.find((x) => x.id === id);
+          if (p) p.focus = key;
+        });
+
+        stopSubscribe = this.$subscribe(() => this._scheduleSync(), { detached: true, flush: 'sync' });
+      } else if (socket.connected) {
+        this._join();
+      } else {
+        socket.connect();
+      }
+    },
+
+    _join() {
+      if (!joinedEventId) return;
+      const eventId = joinedEventId;
+      socket.emit('lineup:join', { eventId }, (res) => {
+        if (!res || !res.ok || eventId !== joinedEventId) return;
+        this.peers = (res.peers || []).map((p) => ({ ...p, cursor: null }));
+        if (lastSentFocus) socket.emit('presence:focus', lastSentFocus);
+        const server = res.state;
+        if (!server.divisions.length) {
+          // Server chưa có sơ đồ: dùng bản đang có ở máy này làm gốc
+          lastSynced = { title: server.title, divisions: [] };
+          this._scheduleSync();
+        } else {
+          this._adoptServerState(server);
+        }
+        if (!lastSynced) lastSynced = this._snapshot();
+      });
+    },
+
+    disconnectRealtime() {
+      joinedEventId = '';
+      clearTimeout(syncTimer);
+      lastSynced = null;
+      if (stopSubscribe) { stopSubscribe(); stopSubscribe = null; }
+      if (socket) { socket.disconnect(); socket.removeAllListeners(); socket = null; }
+      focusSources.modal = null; focusSources.input = null; lastSentFocus = null;
+      this.connected = false;
+      this.peers = [];
+    },
+
+    // Báo cho người khác biết mình đang sửa mục nào (key = slot:/team:/div:...)
+    // source: 'modal' (đang mở hộp thoại sửa) hoặc 'input' (đang gõ trong ô)
+    setFocus(key, source = 'modal') {
+      focusSources[source] = key || null;
+      const effective = focusSources.modal || focusSources.input || null;
+      if (effective === lastSentFocus) return;
+      lastSentFocus = effective;
+      if (socket && socket.connected) socket.emit('presence:focus', effective);
+    },
+
+    sendCursor(pos) {
+      if (socket && socket.connected) socket.emit('presence:cursor', pos);
+    },
+
     toggleViewMode() {
       this.viewMode = this.viewMode === 'matrix' ? 'edit' : 'matrix';
     },
@@ -316,6 +493,11 @@ export const useLineupStore = defineStore('lineup', {
         this.attendancePool = attendances.filter(
           (item) => item.status === 'present' && !occupiedUserIds.has(item.userId)
         );
+
+        // Bắt đầu đồng bộ real-time cho chiến kỳ này
+        lastSynced = null;
+        ensureIds(this.divisions);
+        this.connectRealtime(eventId);
       } catch (error) {
         console.error('Lỗi khi tải dữ liệu từ DB:', error);
       } finally {
